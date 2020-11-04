@@ -1,0 +1,28 @@
+queremos programar una pequeña calculadora web para + - * y /
+
+constará de dos páginas
+
+    12a-calculadora-formulario.php
+        contendrá un form con
+            un input number para el operando 1 (name="operando1")
+            un select para la operación, con cuatro opciones (name del select = "operacion", values de los option = "sum", "res", "mul", "div")
+                <select name="operacion">   <option value="volvo">Volvo</option>   <option value="saab">Saab</option>   <option value="mercedes">Mercedes</option>   <option value="audi">Audi</option> </select>
+            un input number para el operando 2 (name="operando2")
+            un submit para enviar el formulario
+
+    12b-calculadora-resultado.php
+        contendrá
+            en el primer bloque PHP:
+                recogerá los datos del formulario
+                    $operando1 = ... $operacion = $_REQUEST["operacion"]; $operando2 = ...
+                realizará los cálculos
+                    if ($operacion == "sum") {          $resultado = _ + _; } else if ($operacion == "res") {          ... } ...
+                depositará el $resultado en una variable
+                informará de si $errorDivCero mediante otra variable true/false
+            durante la parte html
+                comprobará o mostrará los valores de las variables preparadas arriba en el lugar adecuado, para presentar con ello el resultado de la operación
+
+hacedlo por fases:
+    primero, no poner el select y hacer siempre SUMA
+    luego, poner el select con suma y resta, y que el 2º PHP lo tenga en cuenta
+    luego, generalizar para todas las operaciones, y para div /0.
