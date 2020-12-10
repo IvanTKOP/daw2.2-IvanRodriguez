@@ -1,7 +1,7 @@
 <?php
     require_once "_Varios.php";
     if (!sesionIniciada()) {
-        redireccionar("SesionInicioComprobar.php");
+        redireccionar("SesionInicioFormulario.php");
     }
 ?>
 
