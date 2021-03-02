@@ -1,0 +1,1 @@
+La idea del proyecto era hacer una especie de app para poder añadir jugadores a tus equipos y anotar sus estadísticas, con alguna función estilo resumen, que te proporcionara un pdf con los máximos goleadores, asistentes, etc 

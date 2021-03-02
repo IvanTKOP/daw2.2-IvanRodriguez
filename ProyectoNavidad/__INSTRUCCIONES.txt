@@ -1,0 +1,59 @@
+PROYECTO DE NAVIDAD
+
+
+
+ENTREGA: 10-ENE 23:59
+
+
+
+POR EQUIPOS:
+
+Entre 3 y 5 integrantes.
+TODOS deben colaborar ACTIVAMENTE.
+
+
+
+TEMA:
+
+Libre pero intentad que sea algo NUEVO.
+Sobre to-do, NO basaros en código anterior.
+
+
+
+TAMAÑO:
+
+¿3+ tablas en la BD?
+¿10-20 PHPs?
+Interfaz: SIMPLE, cero florituras. Si es fea, pero simple, genial.
+
+
+
+GIT:
+
+Cread un NUEVO REPOSITORIO para vuestro proyecto. NO uno por cada integrante.
+LLAMADLE: "proyecto-navidad-FMZ"
+    (Fulanito Menganito y Zutanito)
+*INVITADME* A MÍ ("alainprofe").
+GIT debe ser la forma normal de trabajo. NO vale trabajar offline "y luego ya lo subo todo de golpe".
+Cada integrante debe hacer sus propios commits desde SU cuenta, salvo excepciones.
+Si en un commit han participado dos o más, ponedlo claramente en comentarios indicando qué ha hecho cada uno.
+
+
+
+README:
+
+Incluid un README.txt en la carpeta raíz, explicando:
+En qué consiste la aplicación en 3-5 líneas. NO más: resumid.
+Qué cosas "chulas" habéis hecho (AKA "por qué merecemos buena nota").
+Coḿo os habéis repartido el trabajo inicialmente.
+Qué partes ha hecho cada uno, o de qué forma ha colaborado, finalmente, cada uno.
+Una valoración numérica (en porcentaje, número de horas, o lo que sea) del trabajo aportado por cada integrante.
+
+
+
+EXPOSICIÓN:
+
+Lo expondréis en clase en ¿10-15 minutos?
+Acordaos de la pirámide: lo general lo explico resumido y NO bajo al máximo detalle de todas las cosas, solo de lo destacable/chulo/diferente.
+En estos minutos explicaréis, en modo MUY resumen qué hace la aplicación, demostraréis brevemente cómo funciona y mostraréis las partes de código más destacables (que serán POCAS).
+No hace falta crear un PowerPoint ni nada de eso.
