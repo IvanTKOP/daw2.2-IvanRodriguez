@@ -28,111 +28,123 @@ class DAO
         return $pdo;
     }
 
-    private static function ejecutarConsultaObtener(string $sql, array $parametros): ?array
+    private static function ejecutarConsulta(string $sql, array $parametros): array
     {
-        if(!isset(DAO::$pdo)) DAO::$pdo = 
-        DAO::obtenerPdoConexionBD();
+        if(!isset(Self::$pdo)) Self::$pdo = 
+        Self::obtenerPdoConexionBD();
 
-        $select = DAO::$pdo->prepare($sql);
+        $select = Self::$pdo->prepare($sql);
         $select->execute($parametros);
         $resultado = $select->fetchAll();
         return $resultado;
     }
 
-    public static function ejecutarConsultaActualizar(string $sql, array $parametros): int
-    {
-        if (!isset(DAO::$pdo)) DAO::$pdo = DAO::obtenerPdoConexionBd();
-
-        $sentencia = DAO::$pdo->prepare($sql);
-        $sentencia->execute($parametros);
-        return $sentencia->rowCount();
-    }
-
-    private static function ejecutarConsultaMostrar(string $sql, array $parametros): array
+    private static function ejecutarActualizacion(string $sql, array $parametros): void
     {
         if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
 
-        $select = self::$pdo->prepare($sql);
-        $select->execute($parametros);
-        $rsJugadoresDelaCategoria = $select->fetchAll();
-
-        foreach ($rsJugadoresDelaCategoria as $fila) {
-            echo "$fila[nombre]";
-        }
-        return $rsJugadoresDelaCategoria;
+        $actualizacion = self::$pdo->prepare($sql);
+        $actualizacion->execute($parametros);
     }
+
 
     /*FUNCIONES PARA USUARIO*/
 
-    private static function usuarioCrearDesdeRs(array $usuario):Usuario
+    private static function crearUsuarioDesdeRs(array $rs):Usuario
     {
-        return new Usuario($usuario["id"], $usuario["usuario"], $usuario["contrasenna"]);
+        return new Usuario($rs[0]["id"], $rs[0]["usuario"], $rs[0]["contrasenna"], $rs[0]["codigoCookie"], $rs[0]["email"]);
     }
 
-    public static function obtenerUsuario(string $usuario, string $contrasenna): ? Usuario 
+    public static function usuarioObtenerPorId(int $id): ?Cliente
     {
-        $rs = self::ejecutarConsultaObtener("SELECT * FROM usuario WHERE usuario=? AND contrasenna =?", [$usuario, $contrasenna]);
-        if ($rs) return self::usuarioCrearDesdeRs($rs[0]);
+        $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE id=?", [$id]);
+        if ($rs) return self::crearUsuarioDesdeRs($rs);
         else return null;
     }
 
-    public static function marcarSesionComoIniciada($usuario)
+    public static function usuarioObtenerPorEmailYContrasenna($email, $contrasenna): ?Usuario 
     {
-        $_SESSION["id"] = $usuario->getId();
-        $_SESSION["usuario"] = $usuario->getUsuario();
-        $_SESSION["contrasenna"] = $usuario->getContrasenna();
+        $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE email=? AND contrasenna =?", [$email, $contrasenna]);
+        if ($rs) return self::crearUsuarioDesdeRs($rs);
+        else return null;
     }
 
-    function generarCadenaAleatoria(int $longitud): string
+    public static function usuarioObtenerPorEmailYCodigoCookie($email, $codigoCookie): ?Usuario
+{
+    $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE email=? AND codigoCookie=?", [$email, $codigoCookie]);
+    if ($rs) return self::usuarioCrearDesdeRs($rs);
+    else return null;
+}
+
+public static function usuarioGuardarCodigoCookie(string $email, string $codigoCookie = null)
     {
-        for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')-1; $i != $longitud; $x = rand(0,$z), $s .= $a[$x], $i++);
-        return $s;
+        if ($codigoCookie != null)
+        {
+            self::ejecutarActualizacion("UPDATE usuario SET codigoCookie=? WHERE email=?", [$codigoCookie, $email]);
+        } else {
+            self::ejecutarActualizacion("UPDATE usuario SET codigoCookie=NULL WHERE email=?", [$email]);
+        }
+
     }
 
-    public static function establecerSesionCookie()
+    public static function usuarioCrear(string $email, string $contrasenna, string $usuario): void
     {
-        $arrayUsuario = DAO::obtenerUsuario($_REQUEST["usuario"], $_REQUEST["contrasenna"]);
-        $codigoCookie = generarCadenaAleatoria(32);
-        self::ejecutarConsultaObtener("UPDATE usuario SET codigoCookie=? WHERE usuario=?",
-            [$codigoCookie, $arrayUsuario->getUsuario()]
+        self::ejecutarActualizacion("INSERT INTO usuario (email, contrasenna, codigoCookie, usuario) VALUES (?,?,NULL,?);",
+            [$email, $contrasenna, $usuario]);
+    }
+
+    public static function usuarioActualizar():void
+    {
+        self::ejecutarActualizacion(
+            "UPDATE usuario SET email=\"\*\*\*\*\*\", contrasenna=\"\*\*\*\*\*\", codigoCookie=NULL, usuario=\"\*\*\*\*\*\" WHERE id=?",
+            [ $_SESSION["id"]]
         );
-        $arrayCookies["usuario"] = setcookie("usuario", $arrayUsuario->getUsuario(), time() + 60 * 60);
-        $arrayCookies["codigoCookie"] = setcookie("codigoCookie", $codigoCookie, time() + 60 * 60);
+        self::equipoActualizarDireccion($_SESSION["id"]);
     }
 
-    public static function haySesionIniciada(): bool
+    public static function usuarioObtenerPorEmail($email):bool
     {
-        return isset($_SESSION["id"]) ? true : false;
-    }
-
-    public static function cerrarSesion()
-    {
-        session_destroy();
-        setcookie('codigoCookie', "");
-        setcookie('usuario',"");
-        unset($_SESSION);
-    }
-
-    public static function borrarCookies()
-    {
-        setcookie("usuario", "", time() - 3600);
-        setcookie("codigoCookie", "", time() - 3600);
+        $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE email=? ",
+            [$email]);
+        if ($rs) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
 /* FUNCIONES PARA JUGADOR*/
 
-public static function jugadorObtenerPorId(int $id): ?Jugador
+public static function jugadorObtenerPorId(int $id)
 {
-    $rs = self::ejecutarConsultaObtener("SELECT * FROM jugador WHERE id=?", [$id]);
-    if ($rs) return self::jugadorCrearDesdeRs($rs[0]);
-        else return null;
+    $rs = self::ejecutarConsulta("SELECT * FROM jugador WHERE id=?", [$id]);
+    $oferta = new Jugador($rs[0]["id"], $rs[0]["nombre"], $rs[0]["verssion"], $rs[0]["posicion"]);
+        return $jugador;
 }
 
 public static function jugadorObtenerTodos(): array
 {
     $datos = [];
-    $rs = self::ejecutarConsultaObtener("SELECT * FROM jugador ORDER BY id", []);
+    $rs = self::ejecutarConsulta("SELECT * FROM jugador ORDER BY nombre", []);
+
+    foreach ($rs as $fila) {
+        $oferta = new Jugador($rs[0]["id"], $rs[0]["nombre"], $rs[0]["verssion"], $rs[0]["posicion"]);
+        array_push($datos, $jugador);
+    }
+
+    return $datos;
+}
+
+public static function agregarJugador($nombre, $verssion, $posicion){
+    self::ejecutarActualizacion("INSERT INTO jugador (id, nombre, verssion, posicion) VALUES (NULL, ?, ?, ?);",
+        [$nombre, $verssion, $posicion]);
+}
+
+public static function jugadoresEquipoObtener(): array
+{
+    $datos = [];
+    $rs = self::ejecutarConsulta("SELECT * FROM jugador WHERE fichado=1 ORDER BY id", []);
 
     foreach ($rs as $fila) {
         $jugador = self::jugadorCrearDesdeRs($fila);
@@ -142,184 +154,133 @@ public static function jugadorObtenerTodos(): array
     return $datos;
 }
 
-private static function jugadorCrearDesdeRs(array $fila): Jugador
+public static function jugadorActualizar(int $id, string $nuevoNombre, string $nuevaVerssion, int $nuevaPosicion)
 {
-    return new Jugador($fila["id"], $fila["nombre"], $fila["verssion"], $fila["goles"], $fila["asistencias"], $fila["id"]);
+    self::ejecutarActualizacion("UPDATE jugador SET nombre = ?, verssion = ?, posicion =? WHERE id=?",
+        [$nuevoNombre, $nuevaVerssion, $nuevaPosicion, $id]);
 }
 
-public static function jugadorEliminarPorId(int $id): bool
-    {
-        $sql = "DELETE FROM jugador WHERE id=?";
-        $return = DAO::ejecutarConsultaActualizar($sql, [$id]);
-        if ($return) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    public static function jugadorCrear($nombre, $verssion, $goles, $asistencias, $id): bool
-    {
-        $sql = "INSERT INTO jugador (nombre,verssion,goles,asistencias,id) VALUES (?,?,?,?,?)";
-        $parametros = [$nombre, $verssion, $goles, $asistencias, $id];
-        $datos = DAO::ejecutarConsultaActualizar($sql, $parametros);
-        return $datos;
-    }
+/* CARRITO */
 
-    public static function jugadorModificar($nombre, $verssion, $goles, $asistencias, $idPosicion, $idEquipo): bool
-    {
-        $sql = "UPDATE jugador SET nombre=?,verssion=?,goles=?,asistencias=?,id=? WHERE id=?";
-        $parametros = [$nombre, $verssion, $goles, $asistencias, $idPosicion, $idEquipo];
-        return $datosNoModificados = DAO::ejecutarConsultaActualizar($sql, $parametros);
-    }
-
-    public static function jugadorObtenerPosicion(int $id): string
-    {
-        $rs = self::ejecutarConsultaObtener(
-            "SELECT nombre FROM posicion WHERE id=?",
-            [$id]
-        );
-        return $rs[0]["nombre"];
-    }
-
-    public static function muestraJugadores($id)
-    {
-        return $rs = self::ejecutarConsultaMostrar(
-            "SELECT * FROM jugador WHERE id=? ORDER BY nombre",
-            [$id]
-        );
-    }
-
-    public static function muestraJugadoresEquipo($id)
-    {
-        return   $rs = self::ejecutarConsultaMostrar(
-            "SELECT * FROM jugador WHERE id=? ORDER BY nombre",
-            [$id]
-        );
-
-    }
-
-
-/* FUNCIONES PARA POSICION*/
-
-public static function posicionCrear($nombre): bool
+public static function crearListadoJugadoresUsuario(int $usuarioId): JugadoresGuardados
 {
-        $sql = "INSERT INTO posicion (nombre) VALUES (?)";
-        $parametros = [$nombre];
-        $datos = DAO::ejecutarConsultaActualizar($sql, $parametros);
-        return $datos;
+    self::ejecutarActualizacion("INSERT INTO equipo (usuario_id) VALUES (?) ", [$usuarioId]);
+    $equipo = new JugadoresGuardados($usuarioId, []);
+    return $equipo;
 }
 
-public static function posicionModificar($nombre, $id): bool
+public static function obtenerListadoJugadoresGuardadosId(int $usuarioId): int
 {
-        $sql = "UPDATE posicion SET nombre=? WHERE id=?";
-        $parametros = [$id, $nombre];
-        $datos = DAO::ejecutarConsultaActualizar($sql, $parametros);
-        return $datos;
+    $rsEquipoId = self::ejecutarConsulta(
+        "SELECT id FROM equipo WHERE usuario_id=?",
+        [$usuarioId]
+    );
+    $equipoID = $rsEquipoId[0]["id"];
+    return $equipoID;
 }
 
-private static function posicionCrearDesdeRs(array $fila): Posicion
+public static function obtenerListadoJugadoresGuardadosParaCliente(int $usuarioId)
 {
-     return new Posicion($fila["id"], $fila["nombre"]);
+    $arrayFichajesParaEquipo = array();
+
+    $rs = self::ejecutarConsulta("SELECT * FROM fichaje INNER JOIN equipo ON fichaje.equipo_id = equipo.id WHERE usuario_id=?", [$usuarioId]);
+    if (!$rs) {
+        return null;
+    }
+    foreach ($rs as $fila){
+        $fichaje= new FichajeEquipo(
+            $fila['jugador_id'],
+            $fila['goles'],
+            $fila['asistencias']
+        );
+        array_push($arrayFichajesParaEquipo, $fichaje);
+    }
+    $equipo = new JugadoresGuardados (
+        $rs[0]['usuario_id'],
+        $arrayFichajesParaEquipo
+    );
+
+    return $equipo;
 }
 
-public static function posicionObtenerPorId(int $id): ?Posicion
+public static function agregarJugadorListadoJugadoresGuardados(int $usuarioId, $jugadorId, $goles, $asistencias): void
 {
-        $rs = self::ejecutarConsultaObtener(
-            "SELECT * FROM posicion WHERE id=?",
-            [$id]);
-        if ($rs) return self::posicionCrearDesdeRs($rs[0]);
-        else return null;
+    $equipoId = self::obtenerListadoJugadoressGuardadosId($usuarioId);
+
+    self::ejecutarActualizacion(
+        "INSERT INTO fichaje (equipo_id, jugador_id, goles, asistencias) VALUES (?,?,?,?) ",
+        [$equipoId, $jugadorId, $goles, $asistencias]
+    );
 }
 
-public static function posicionObtenerTodos(): array
+private static function obtenerGolesJugadoresGuardados($equipoId, $jugadorId): int
 {
-        $datos = [];
-
-        $rs = self::ejecutarConsultaObtener(
-            "SELECT * FROM posicion ORDER BY nombre", []);
-
-        foreach ($rs as $fila) {
-            $posicion = self::posicionCrearDesdeRs($fila);
-            array_push($datos, $posicion);
-        }
-
-        return $datos;
+    $rs = self::ejecutarConsulta("SELECT goles FROM fichaje WHERE equipo_id=? AND jugador_id=? ",
+        [$equipoId, $jugadorId]);
+    if (!$rs) {
+        return 0;
+    } else {
+        return $rs[0]['goles'];
     }
+}
 
-    public static function eliminarPosicionPorId(int $id): bool
-    {
-        $sql = "DELETE FROM posicion WHERE id=?";
-        return self::ejecutarConsultaActualizar($sql, [$id]);
+private static function obtenerAsistenciasJugadoresGuardados($equipoId, $jugadorId): int
+{
+    $rs = self::ejecutarConsulta("SELECT asistencias FROM fichaje WHERE equipo_id=? AND jugador_id=? ",
+        [$equipoId, $jugadorId]);
+    if (!$rs) {
+        return 0;
+    } else {
+        return $rs[0]['asistencias'];
     }
+}
 
-
-
-    /* FUNCIONES PARA EQUIPO */
-
-    public static function crearEquipo($nombre): bool
-    {
-        $equipo = self::ejecutarConsultaActualizar("INSERT INTO equipo(nombre) VALUES (?) ", [$nombre]);
-        return $equipo;
-    }
-
-    private static function crearEquipoDesdeRs(array $fila): Equipo
-    {
-        return new Equipo($fila["id"], $fila["nombre"]);
-    }
-
-    public static function modificarEquipo($nombre, $id): bool
-    {
-        $equipo = self::ejecutarConsultaActualizar("UPDATE equipo SET nombre=? WHERE id=?;",
-            [$id, $nombre]);
-        return $equipo;
-    }
-
-    public static function obtenerEquipoId(int $id): int
-    {
-        $rsEquipoId = self::ejecutarConsultaObtener(
-            "SELECT * FROM equipo WHERE id=?",
-            [$id]);
-            if ($rs) return self::crearEquipoDesdeRs($rs[0]);
-            else return null;
-    }
-
-    public static function obtenerEquipoTodos(): array
-    {
-        $datos = [];
-
-        $rs = self::ejecutarConsultaObtener(
-            "SELECT id, nombre FROM equipo ORDER BY nombre",
-            []
-        );
-
-        foreach ($rs as $fila) {
-            $equipo = self::crearEquipoDesdeRs($fila);
-            array_push($datos, $equipo);
-        }
-
-        return $datos;
-    }
-
-    public static function agregarJugadorEquipo(int $id, $id): void
-    {
-        $equipoId = self::obtenerListadoEquipoId($id);
-
-        self::ejecutarConsultaActualizar(
-            "INSERT INTO jugador_equipo (id, id) VALUES (?,?) ",
-            [$equipoId, $id]
+public static function listadoGoles($jugadorId, $nuevoGoles, $equipoId): void
+{
+    $golesIniciales = self::obtenerNumeroJugadoresGuardados($equipoId, $jugadorId);
+    if ($golesIniciales <= 0) {
+        self::ejecutarActualizacion(
+            "INSERT INTO fichaje (equipo_id, jugador_id, goles) VALUES (?,?,?)",
+            [$equipoId, $jugadorId, $nuevoGoles]
         );
     }
-
- /* JUGADOR_EQUIPO */
-    public static function equipoEliminar(int $id): ?int
-    {
-        $resultado = self::ejecutarActualizacion(
-            "DELETE FROM equipo WHERE id=?",
-            [$id]
+    else if ($nuevoGoles<=0){
+        self::fichajeEliminar($equipoId, $jugadorId);
+    }
+    else {
+        self::ejecutarActualizacion(
+            "UPDATE fichaje SET goles=? WHERE equipo_id=? AND jugador_id=?",
+            [$nuevoGoles, $equipoId, $jugadorId]
         );
+    }
+}
 
-        return $resultado;
+public static function listadoAsistencias($jugadorId, $nuevoAsistencias, $equipoId): void
+{
+    $asistenciasIniciales = self::obtenerNumeroJugadoresGuardados($equipoId, $jugadorId);
+    if ($asistenciasIniciales <= 0) {
+        self::ejecutarActualizacion(
+            "INSERT INTO fichaje (equipo_id, jugador_id, asistencias) VALUES (?,?,?)",
+            [$equipoId, $jugadorId, $nuevoAsistencias]
+        );
+    }
+    else if ($nuevoAsistencias<=0){
+        self::fichajeEliminar($equipoId, $jugadorId);
+    }
+    else {
+        self::ejecutarActualizacion(
+            "UPDATE fichaje SET asistencias=? WHERE equipo_id=? AND jugador_id=?",
+            [$nuevoAsistencias, $equipoId, $jugadorId]
+        );
+    }
+}
+
+public static function fichajeEliminar($equipoId, $jugadorId)
+    {
+        self::ejecutarActualizacion(
+            "DELETE from fichaje WHERE equipo_id=? AND jugador_id=?",
+            [$equipoId, $jugadorId]);
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+
 function obtenerPdoConexionBD(): PDO
 {
     $servidor = "localhost";
@@ -22,6 +23,8 @@ function obtenerPdoConexionBD(): PDO
 
     return $conexion;
 }
+
+
 
 // Esta función redirige a otra página y deja de ejecutar el PHP que la llamó:
 function redireccionar(string $url)

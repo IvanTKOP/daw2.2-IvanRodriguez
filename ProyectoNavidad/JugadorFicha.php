@@ -6,7 +6,6 @@ require_once "_com/_Sesion.php";
 $id = (int)$_REQUEST["id"];
 
 $nuevaEntrada = ($id == -1);
-$posiciones = DAO::posicionObtenerTodos();
 
 
 if ($nuevaEntrada) {
@@ -14,16 +13,18 @@ if ($nuevaEntrada) {
     $verssion = "";
     $goles = 0;
     $asistencias = 0;
-    $idJ = 0;
+    $posicion = "";
+    $fichado = 0;
 
 } else {
     $jugador = DAO::jugadorObtenerPorId($id);
     $id = $jugador->getId();
-    $nombre = $jugador->getnombre();
+    $nombre = $jugador->getNombre();
     $verssion = $jugador->getVerssion();
     $goles = $jugador->getGoles();
     $asistencias = $jugador->getAsistencias();
-    $idJ = $jugador->getidJ();
+    $posicion = $jugador->getPosicion();
+    $fichado = $jugador->getFichado();
 }
 ?>
 
@@ -60,20 +61,15 @@ if ($nuevaEntrada) {
         <label for='asistencias'>Asistencias</label>
         <input type='text' name='asistencias' value='<?= $asistencias ?>' placeholder="Asistencias" />
         <br />
-        <label for='idJ'>Posición</label>
-        <select name='idJ'>
-            <?php
-            foreach ($posiciones as $posicion) {
-                $id = (int) $posicion->getId();
-                $nombre = $posicion->getnombre();
-
-                if ($id == $idJ) $select = "selected='true'";
-                else                                     $select = "";
-
-                echo "<option value='$id' $seleccion>$nombre</option>";
-            }
-            ?>
+        <label for='posicion'>Posición</label>
+        <select name='posicion'>
+            
+            <option value='<?= $posicion ?>'>Portero</option>
+            <option value='<?= $posicion ?>'>Defensa</option>
+            <option value='<?= $posicion ?>'>Medio</option>
+            <option value='<?= $posicion ?>'>Atacante</option>
         </select>
+
         <br />
         <br />
 
@@ -87,7 +83,7 @@ if ($nuevaEntrada) {
 
     <?php if (!$nuevaEntrada) { ?>
         <br />
-        <a href='JugadorEliminar.php?id=<?= $id ?>'>Eliminar Ficha Jugador</a>
+        <a href='JugadorEliminar.php?id=<?= $id ?>'>Eliminar Jugador</a>
     <?php } ?>
 
     <br />
