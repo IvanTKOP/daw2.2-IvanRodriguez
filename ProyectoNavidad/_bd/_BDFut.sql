@@ -105,9 +105,6 @@ TRUNCATE TABLE equipo;
 -- Volcado de datos para la tabla equipo
 --
 
-INSERT INTO equipo (id, usuario_id, nombre) VALUES
-(1, 1, 'FutSemana1'),
-(2, 2, 'FutSemana2');
 
 -- --------------------------------------------------------
 
