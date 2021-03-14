@@ -1,10 +1,10 @@
 <?php
 
-require_once "/_com/comunes-app.php";
+require_once "../_com/comunes-app.php";
 
 if (isset($_REQUEST['agregar']))
 {
-    $equipo = DAO::obtenerListadoJugadorGuardadasParaUsuario($_SESSION["id"]);
+    $equipo = DAO::obtenerListadoJugadoresGuardadosParaUsuario($_SESSION["id"]);
     $variacionUnidades=1;
     if ($_REQUEST["variacionUnidades"])
     {
@@ -12,9 +12,9 @@ if (isset($_REQUEST['agregar']))
     }
     if (!$equipo)
     {
-        $equipo = DAO::crearListadoJugadorGuardados($_SESSION["id"]);
+        $equipo = DAO::crearListadoJugadoresUsuario($_SESSION["id"]);
     }
-    foreach ($equipo->getFichaje() as $fichaje)
+    foreach ($equipo->getFichajes() as $fichaje)
     {
         if ($fichaje->getJugadorId() == $_REQUEST['jugadorId'])
         {
@@ -29,6 +29,6 @@ if (isset($_REQUEST['agregar']))
 if (isset($_REQUEST['eliminar']))
 {
     $equipoId = DAO::listadoVariarUnidades($_SESSION["id"], $_REQUEST["jugadorId"], 0);
-    redireccionar("jugador-guardadas.php");
+    redireccionar("jugadores-guardados.php");
 }
 

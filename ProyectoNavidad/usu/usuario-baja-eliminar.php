@@ -1,5 +1,5 @@
 <?php
-require_once "/_com/comunes-app.php";
+require_once "../_com/comunes-app.php";
 
 if (isset($_REQUEST["cancelar"])){
     redireccionar("usuario-detalle.php");

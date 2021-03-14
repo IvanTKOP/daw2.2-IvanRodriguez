@@ -1,11 +1,13 @@
 <?php
 
-require_once "/_com/comunes-app.php";
+require_once "../_com/comunes-app.php";
 
 $nombre = $_REQUEST["nombre"];
 $verssion = $_REQUEST["verssion"];
 $posicion = $_REQUEST["posicion"];
-$jugador = new Jugador( NULL,$nombre, $verssion, $posicion);
+$goles = $_REQUEST["goles"];
+$asistencias = $_REQUEST["asistencias"];
+$jugador = new Jugador( NULL,$nombre, $verssion, $posicion, $goles, $asistencias);
 ?>
 
 

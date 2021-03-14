@@ -1,12 +1,11 @@
 <?php
 
-require_once "/_com/comunes-app.php";
+require_once "../_com/comunes-app.php";
+require "../_com/_Sesion.php";
 
 $id = $_SESSION["id"];
 
-$jugador = DAO::jugadorObtenerPorId($id);
-
-require "/_com/_Sesion.php";
+$usuario = DAO::usuarioObtenerPorId($id);
 
 ?>
 
@@ -42,8 +41,8 @@ require "/_com/_Sesion.php";
 </style>
 
 <body>
-<p>Nombre: <?=$cliente->getUsuario()?></p>
-<p>Email: <?=$cliente->getEmail()?></p>
+<p>Nombre: <?=$usuario->getUsuario()?></p>
+<p>Email: <?=$usuario->getEmail()?></p>
 
 <br>
 

@@ -1,8 +1,8 @@
 <?php
 
-require_once "/_com/comunes-app.php";
+require_once "../_com/comunes-app.php";
 
-require "/_com/_Sesion.php";
+require "../_com/_Sesion.php";
 
 ?>
 
@@ -18,9 +18,14 @@ require "/_com/_Sesion.php";
     Nombre<br>
     <input type="text" name="nombre" required><br><br>
     Versión<br>
-    <textarea name="verssion" cols="40" rows="5" required></textarea><br><br>
+    <input type="text" name="verssion" required><br><br>
     Posición<br>
-    <input type="number" min="0" step="any" name="posicion" required><br><br>
+    <input type="text" name="posicion" required><br><br>
+    Goles<br>
+    <input type="number" min="0" step="any" name="goles" required><br><br>
+    Asistencias<br>
+    <input type="number" min="0" step="any" name="asistencias"
+    required><br><br>
     <input type="submit">
     </form><br>
 <a href="jugador-listado.php">Volver a listado de jugadores</a>

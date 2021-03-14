@@ -1,7 +1,7 @@
 <?
-require_once "/_com/requireonces-comunes.php";
+require_once "../_com/requireonces-comunes.php";
 
-if (haySesionRamIniciada()) redireccionar("jugador-listado.php");
+if (haySesionIniciada()) redireccionar("jugador-listado.php");
 
 ?>
 

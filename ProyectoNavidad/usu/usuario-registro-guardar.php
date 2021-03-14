@@ -1,5 +1,6 @@
 <?php
-require_once "/_com/requireonces-comunes.php";
+require_once "../_com/requireonces-comunes.php";
+
 if (isset($_REQUEST["email"]) && $_REQUEST["email"]!=""){
     $email=$_REQUEST["email"];
     $existeEmail=DAO::usuarioObtenerPorEmail($email);

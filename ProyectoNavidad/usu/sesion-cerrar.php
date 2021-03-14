@@ -1,6 +1,6 @@
 <?php
 
-require_once "/_com/comunes-app.php";
+require_once "../_com/comunes-app.php";
 
 cerrarSesion($_SESSION["email"]);
 
