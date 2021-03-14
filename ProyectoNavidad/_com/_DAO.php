@@ -1,6 +1,6 @@
 <?php 
-require_once "_com/_Varios.php";
-require_once "_com/_Clases.php";
+require_once "../_com/_Utilidades.php";
+require_once "../_com/_Clases.php";
 
 class DAO 
 {
@@ -55,7 +55,7 @@ class DAO
         return new Usuario($rs[0]["id"], $rs[0]["usuario"], $rs[0]["contrasenna"], $rs[0]["codigoCookie"], $rs[0]["email"]);
     }
 
-    public static function usuarioObtenerPorId(int $id): ?Cliente
+    public static function usuarioObtenerPorId(int $id): ?Usuario
     {
         $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE id=?", [$id]);
         if ($rs) return self::crearUsuarioDesdeRs($rs);
@@ -119,7 +119,7 @@ public static function usuarioGuardarCodigoCookie(string $email, string $codigoC
 public static function jugadorObtenerPorId(int $id)
 {
     $rs = self::ejecutarConsulta("SELECT * FROM jugador WHERE id=?", [$id]);
-    $oferta = new Jugador($rs[0]["id"], $rs[0]["nombre"], $rs[0]["verssion"], $rs[0]["posicion"]);
+    $jugador = new Jugador($rs[0]["id"], $rs[0]["nombre"], $rs[0]["verssion"], $rs[0]["posicion"], $rs[0]["goles"], $rs[0]["asistencias"] );
         return $jugador;
 }
 
@@ -129,7 +129,7 @@ public static function jugadorObtenerTodos(): array
     $rs = self::ejecutarConsulta("SELECT * FROM jugador ORDER BY nombre", []);
 
     foreach ($rs as $fila) {
-        $oferta = new Jugador($rs[0]["id"], $rs[0]["nombre"], $rs[0]["verssion"], $rs[0]["posicion"]);
+        $jugador = new Jugador($fila["id"], $fila["nombre"], $fila["verssion"], $fila["posicion"], $fila["goles"], $fila["asistencias"]);
         array_push($datos, $jugador);
     }
 
@@ -137,8 +137,8 @@ public static function jugadorObtenerTodos(): array
 }
 
 public static function agregarJugador($nombre, $verssion, $posicion){
-    self::ejecutarActualizacion("INSERT INTO jugador (id, nombre, verssion, posicion) VALUES (NULL, ?, ?, ?);",
-        [$nombre, $verssion, $posicion]);
+    self::ejecutarActualizacion("INSERT INTO jugador (id, nombre, verssion, posicion, goles, asistencias) VALUES (NULL, ?, ?, ?, ?, ?);",
+        [$nombre, $verssion, $posicion, $goles, $asistencias]);
 }
 
 public static function jugadoresEquipoObtener(): array
@@ -154,14 +154,14 @@ public static function jugadoresEquipoObtener(): array
     return $datos;
 }
 
-public static function jugadorActualizar(int $id, string $nuevoNombre, string $nuevaVerssion, int $nuevaPosicion)
+public static function jugadorActualizar(int $id, string $nuevoNombre, string $nuevaVerssion, string $nuevaPosicion, int $nuevosGoles, int $nuevasAsistencias)
 {
-    self::ejecutarActualizacion("UPDATE jugador SET nombre = ?, verssion = ?, posicion =? WHERE id=?",
-        [$nuevoNombre, $nuevaVerssion, $nuevaPosicion, $id]);
+    self::ejecutarActualizacion("UPDATE jugador SET nombre = ?, verssion = ?, posicion =?, goles=?, asistencias=? WHERE id=?",
+        [$nuevoNombre, $nuevaVerssion, $nuevaPosicion, $nuevosGoles, $nuevasAsistencias, $id]);
 }
 
 
-/* CARRITO */
+/* EQUIPO */
 
 public static function crearListadoJugadoresUsuario(int $usuarioId): JugadoresGuardados
 {
@@ -180,7 +180,7 @@ public static function obtenerListadoJugadoresGuardadosId(int $usuarioId): int
     return $equipoID;
 }
 
-public static function obtenerListadoJugadoresGuardadosParaCliente(int $usuarioId)
+public static function obtenerListadoJugadoresGuardadosParaUsuario(int $usuarioId)
 {
     $arrayFichajesParaEquipo = array();
 

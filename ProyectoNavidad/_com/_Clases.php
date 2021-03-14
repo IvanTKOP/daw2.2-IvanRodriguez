@@ -57,18 +57,22 @@ class Jugador extends Dato
     private  $nombre;
     private  $verssion;
     private  $posicion;
+    private  $goles;
+    private  $asistencias;
 
-    public function __construct( int $id=null, string $nombre, string $verssion, string $posicion)
+    public function __construct( int $id=null, string $nombre, string $verssion, string $posicion, int $goles, int $asistencias)
     {
         if ($id != null && $nombre == null) { 
 
         } else if ($id == null && $nombre != null) {
-            DAO::agregarJugador($nombre, $verssion, $posicion);
+            DAO::agregarJugador($nombre, $verssion, $posicion, $goles, $asistencias);
         } else {
             $this->id = $id;
             $this->nombre = $nombre;
             $this->verssion = $verssion;
             $this->posicion= $posicion;
+            $this->goles= $goles;
+            $this->asistencias= $asistencias;
     }
 }
 
@@ -76,11 +80,15 @@ class Jugador extends Dato
     public function getNombre(): string{return $this->nombre;}
     public function getVerssion(): string{return $this->verssion;}
     public function getPosicion(): string{return $this->posicion;}
+    public function getGoles(): string{return $this->goles;}
+    public function getAsistencias(): string{return $this->asistencias;}
     
     /* SETTERS JUGADOR */
     public function setNombre(string $nombre): void { $this->nombre = $nombre;}
     public function setVerssion(string $verssion): void { $this->verssion = $verssion;}
     public function setPosicion(string $posicion): void { $this->posicion = $posicion;}
+    public function setGoles(string $goles): void { $this->goles = $goles;}
+    public function setAsistencias(string $asistencias): void { $this->asistencias = $asistencias;}
 }
 
 abstract class ProtoEquipo extends Dato
@@ -154,14 +162,12 @@ class Equipo extends ProtoEquipo {
 abstract class ProtoFichaje
 {
     protected $jugador_id;
-    protected $goles;
-    protected $asistencias;
+    protected $unidades;
 
-    public function __construct(int $jugador_id, int $goles, int $asistencias)
+    public function __construct(int $jugador_id, int $unidades)
     {
         $this->jugador_id = $jugador_id;
-        $this->goles = $goles;
-        $this->asistencias = $asistencias;
+        $this->unidades = $unidades;
     }
 
     public function getJugadorId()
@@ -174,24 +180,14 @@ abstract class ProtoFichaje
         $this->jugador_id = $jugador_id;
     }
 
-    public function getGoles()
+    public function getUnidades()
     {
-        return $this->goles;
+        return $this->unidades;
     }
 
-    public function setGoles($goles)
+    public function setUnidades($unidades)
     {
-        $this->goles = $goles;
-    }
-
-    public function getAsistencias()
-    {
-        return $this->asistencias;
-    }
-
-    public function setAsistencias($asistencias)
-    {
-        $this->goles = $asistencias;
+        $this->unidades = $unidades;
     }
 }
 
