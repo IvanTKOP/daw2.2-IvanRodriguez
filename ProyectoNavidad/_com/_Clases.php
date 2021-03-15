@@ -5,7 +5,7 @@ abstract class Dato
 
 trait Identificable
 {
-    protected int $id;
+    protected $id;
 
     public function getId(): int
     {
@@ -23,15 +23,15 @@ trait Identificable
 class Usuario extends Dato
 {
     use Identificable;
-    private  $usuario;
+    private  $nombre;
     private  $contrasenna;
     private  $codigoCookie;
     private  $email;
 
-    public function __construct($id, $usuario, $contrasenna, $email)
+    public function __construct($id, $nombre, $contrasenna, $email)
     {
         $this->id = ($id);
-        $this->setUsuario($usuario);
+        $this->setNombre($nombre);
         $this->setContrasenna($contrasenna);
         $this->setEmail($email);
     }
@@ -39,15 +39,15 @@ class Usuario extends Dato
   
 
  /* GETTERS USUARIO */
-    public function getUsuario() {return $this->usuario;}
+    public function getNombre() {return $this->nombre;}
     public function getContrasenna() {return $this->contrasenna;}
     public function getEmail() {return $this->email;}
 
     
     /* SETTERS USUARIO */
-    public function setUsuario($usuario){$this->usuario = $usuario;}
+    public function setNombre($nombre){$this->nombre = $nombre;}
     public function setContrasenna($contrasenna){$this->contrasenna = $contrasenna;}
-    public function setEmail($email) {$this->usuario = $email;}
+    public function setEmail($email) {$this->email = $email;}
 }
 
         /* CLASE JUGADOR */

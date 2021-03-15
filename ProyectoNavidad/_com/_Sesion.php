@@ -1,6 +1,6 @@
 <div style="overflow: hidden;">
 <p style="float: left;">
-	Hola, <?= $_SESSION["usuario"] ?>
+	Hola, <?= $_SESSION["nombre"] ?>
     <a href="../usu/sesion-cerrar.php">Cerrar Sesión</a>
 </p>
 <p style="float: right;">

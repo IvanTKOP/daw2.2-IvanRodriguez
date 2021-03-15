@@ -41,7 +41,7 @@ $usuario = DAO::usuarioObtenerPorId($id);
 </style>
 
 <body>
-<p>Nombre: <?=$usuario->getUsuario()?></p>
+<p>Nombre: <?=$usuario->getNombre()?></p>
 <p>Email: <?=$usuario->getEmail()?></p>
 
 <br>

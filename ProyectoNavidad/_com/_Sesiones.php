@@ -1,8 +1,8 @@
 <?php 
 
-require_once "../_com/_DAO.php";
-require_once "../_com/_Utilidades.php";
-require_once "../_com/_Clases.php";
+require_once "_DAO.php";
+require_once "_Utilidades.php";
+require_once "_Clases.php";
 
 /* SESIONES */
 
@@ -102,7 +102,7 @@ function establecerSesion($usuario)
     $_SESSION["sesionIniciada"] = "";
     $_SESSION["id"] = $usuario->getId();
     $_SESSION["email"] = $usuario->getEmail();
-    $_SESSION["usuario"] = $usuario->getUsuario();
+    $_SESSION["nombre"] = $usuario->getNombre();
 
 }
 

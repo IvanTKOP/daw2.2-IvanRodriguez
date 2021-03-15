@@ -8,8 +8,8 @@ if (isset($_REQUEST["email"]) && $_REQUEST["email"]!=""){
         redireccionar("usuario-registro-formulario.php?existe");
     }
     $contrasenna=$_REQUEST["contrasenna"];
-    $usuario=$_REQUEST["usuario"];
-    DAO::usuarioCrear($email, $contrasenna, $usuario);
+    $nombre=$_REQUEST["nombre"];
+    DAO::usuarioCrear($email, $contrasenna, $nombre);
     redireccionar("sesion-inicio.php?registrado");
 }
 else{

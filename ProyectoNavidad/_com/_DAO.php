@@ -1,6 +1,6 @@
 <?php 
-require_once "../_com/_Utilidades.php";
-require_once "../_com/_Clases.php";
+require_once "_Utilidades.php";
+require_once "_Clases.php";
 
 class DAO 
 {
@@ -52,7 +52,7 @@ class DAO
 
     private static function crearUsuarioDesdeRs(array $rs):Usuario
     {
-        return new Usuario($rs[0]["id"], $rs[0]["usuario"], $rs[0]["contrasenna"], $rs[0]["codigoCookie"], $rs[0]["email"]);
+        return new Usuario($rs[0]["id"], $rs[0]["nombre"], $rs[0]["contrasenna"], $rs[0]["codigoCookie"], $rs[0]["email"]);
     }
 
     public static function usuarioObtenerPorId(int $id): ?Usuario
@@ -72,7 +72,7 @@ class DAO
     public static function usuarioObtenerPorEmailYCodigoCookie($email, $codigoCookie): ?Usuario
 {
     $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE email=? AND codigoCookie=?", [$email, $codigoCookie]);
-    if ($rs) return self::usuarioCrearDesdeRs($rs);
+    if ($rs) return self::crearUsuarioDesdeRs($rs);
     else return null;
 }
 
@@ -87,16 +87,16 @@ public static function usuarioGuardarCodigoCookie(string $email, string $codigoC
 
     }
 
-    public static function usuarioCrear(string $email, string $contrasenna, string $usuario): void
+    public static function usuarioCrear(string $nombre, string $contrasenna, string $email): void
     {
-        self::ejecutarActualizacion("INSERT INTO usuario (email, contrasenna, codigoCookie, usuario) VALUES (?,?,NULL,?);",
-            [$email, $contrasenna, $usuario]);
+        self::ejecutarActualizacion("INSERT INTO usuario (nombre, contrasenna, codigoCookie, email) VALUES (?,?,NULL,?);",
+            [$nombre, $contrasenna, $email]);
     }
 
     public static function usuarioActualizar():void
     {
         self::ejecutarActualizacion(
-            "UPDATE usuario SET email=\"\*\*\*\*\*\", contrasenna=\"\*\*\*\*\*\", codigoCookie=NULL, usuario=\"\*\*\*\*\*\" WHERE id=?",
+            "UPDATE usuario SET nombre=\"\*\*\*\*\*\", contrasenna=\"\*\*\*\*\*\", codigoCookie=NULL, email=\"\*\*\*\*\*\" WHERE id=?",
             [ $_SESSION["id"]]
         );
         self::equipoActualizarDireccion($_SESSION["id"]);
@@ -139,19 +139,6 @@ public static function jugadorObtenerTodos(): array
 public static function agregarJugador($nombre, $verssion, $posicion){
     self::ejecutarActualizacion("INSERT INTO jugador (id, nombre, verssion, posicion, goles, asistencias) VALUES (NULL, ?, ?, ?, ?, ?);",
         [$nombre, $verssion, $posicion, $goles, $asistencias]);
-}
-
-public static function jugadoresEquipoObtener(): array
-{
-    $datos = [];
-    $rs = self::ejecutarConsulta("SELECT * FROM jugador WHERE fichado=1 ORDER BY id", []);
-
-    foreach ($rs as $fila) {
-        $jugador = self::jugadorCrearDesdeRs($fila);
-        array_push($datos, $jugador);
-    }
-
-    return $datos;
 }
 
 public static function jugadorActualizar(int $id, string $nuevoNombre, string $nuevaVerssion, string $nuevaPosicion, int $nuevosGoles, int $nuevasAsistencias)

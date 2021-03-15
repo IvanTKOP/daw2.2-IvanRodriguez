@@ -27,7 +27,7 @@ USE fut;
 DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuario (
   id int(11) NOT NULL,
-  usuario varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  nombre varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   contrasenna varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   codigoCookie varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   email varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL
@@ -42,7 +42,7 @@ TRUNCATE TABLE usuario;
 -- Volcado de datos para la tabla usuario
 --
 
-INSERT INTO usuario (id, usuario, contrasenna, codigoCookie, email) VALUES
+INSERT INTO usuario (id, nombre, contrasenna, codigoCookie, email) VALUES
 (1, 'ivan', '1234', NULL, 'i@gmail.com'),
 (2, 'cuillo', '1234', NULL, 'c@gmail.com');
 

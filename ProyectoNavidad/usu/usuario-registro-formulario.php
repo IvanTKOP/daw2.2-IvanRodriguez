@@ -17,7 +17,7 @@ if (isset($_REQUEST["existe"])){
 <form action="usuario-registro-guardar.php">
     <input type="email" name="email">Email<br>
     <input type="password" name="contrasenna">Contraseña<br>
-    <input type="text" name="usuario">Nombre<br>
+    <input type="text" name="nombre">Nombre<br>
     <input type="submit" name="submit">
 </form>
 
