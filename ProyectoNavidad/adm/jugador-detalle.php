@@ -37,6 +37,7 @@ $jugador = DAO::jugadorObtenerPorId($id);
             <input type="submit">
         </form>
     <br>
+    <a href="jugador-borrar.php?id=<?=$jugador->getId()?>&borrar=true">Borrar Jugador</a>
     <a href="jugador-listado.php">Volver al listado de jugadores</a>
 </body>
 </html>

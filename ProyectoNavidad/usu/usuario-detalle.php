@@ -46,7 +46,7 @@ $usuario = DAO::usuarioObtenerPorId($id);
 
 <br>
 
-<a href="usuario-baja-confirmar.php" class="boton">Eliminar Cuenta</a>
+<a href="jugador-borrar.php" class="boton" name= "borrar">Eliminar Cuenta</a>
 <a href="jugador-listado.php" class="boton">Volver al listado de jugadores</a>
 </body>
 

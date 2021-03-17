@@ -30,10 +30,14 @@ $jugadores = DAO::jugadorObtenerTodos();
         <th>Añadir</th>
     </tr>
 
-    <?php foreach ($jugadores as $jugador) {?>
+<?php foreach ($jugadores as $jugador) {
+
+    $fichado = $jugador->getFichado();
+    if ($fichado == 0) {?>
+
         <tr>
             <td style="text-align: center;">
-            <a href= "../adm/jugador-detalle.php?id=<?=$jugador->getId()?>"> <?=$jugador->getNombre();?></a></td>
+            <a href= "../usu/jugador-detalle.php?id=<?=$jugador->getId()?>"> <?=$jugador->getNombre();?></a></td>
 
             <td style="text-align: center;">
             <?=$jugador->getVerssion()?></td>
@@ -49,7 +53,10 @@ $jugadores = DAO::jugadorObtenerTodos();
 
             <td style="text-align: center;"><a href="gestionar-jugadores-guardados.php?jugadorId=<?=$jugador->getId()?>&agregar=true">(+)</a></td>
         </tr>
-    <?php }?>
+        <?php
+}
+}
+?>
 
 </table>
 

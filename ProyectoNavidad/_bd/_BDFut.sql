@@ -58,7 +58,8 @@ CREATE TABLE jugador (
   verssion varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   posicion varchar (45) NOT NULL,
   goles int(11) NOT NULL,
-  asistencias  int(11) NOT NULL
+  asistencias  int(11) NOT NULL,
+  fichado int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 
@@ -71,15 +72,15 @@ TRUNCATE TABLE jugador;
 -- Volcado de datos para la tabla jugador
 --
 
-INSERT INTO jugador (id, nombre, verssion, posicion, goles, asistencias) VALUES
-(1, 'Nick Pope', 'Oro' , 'Portero', 0, 0),
-(2, 'Thibaut Courtois', 'IF', 'Portero', 0, 0),
-(3, 'Nemanja Vidiç', 'Icono', 'Defensa', 5, 0),
-(4, 'Raphael Varane', 'Oro', 'Defensa', 3, 0),
-(5, 'Paul Pogba', 'IF Reward', 'Medio', 7, 8),
-(6, 'Ngolo Kanté', 'Oro', 'Medio', 0, 3),
-(7, 'Cristiano Ronaldo', 'Flashback', 'Atacante', 30, 6),
-(8, 'Joao Félix', 'POTM LaLiga', 'Atacante', 15, 20);
+INSERT INTO jugador (id, nombre, verssion, posicion, goles, asistencias, fichado) VALUES
+(1, 'Nick Pope', 'Oro' , 'Portero', 0, 0, 0),
+(2, 'Thibaut Courtois', 'IF', 'Portero', 0, 0, 0),
+(3, 'Nemanja Vidiç', 'Icono', 'Defensa', 5, 0, 0),
+(4, 'Raphael Varane', 'Oro', 'Defensa', 3, 0, 0),
+(5, 'Paul Pogba', 'IF Reward', 'Medio', 7, 8, 0),
+(6, 'Ngolo Kanté', 'Oro', 'Medio', 0, 3, 0),
+(7, 'Cristiano Ronaldo', 'Flashback', 'Atacante', 30, 6, 0),
+(8, 'Joao Félix', 'POTM LaLiga', 'Atacante', 15, 20, 0);
 
 
 -- --------------------------------------------------------
@@ -115,8 +116,7 @@ TRUNCATE TABLE equipo;
 DROP TABLE IF EXISTS fichaje;
 CREATE TABLE fichaje (
   equipo_id int(11) NOT NULL,
-  jugador_id int(11) NOT NULL,
-  unidades int(11) NOT NULL
+  jugador_id int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -165,7 +165,7 @@ ALTER TABLE fichaje
 -- AUTO_INCREMENT de la tabla usuario
 --
 ALTER TABLE usuario
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT de la tabla jugador

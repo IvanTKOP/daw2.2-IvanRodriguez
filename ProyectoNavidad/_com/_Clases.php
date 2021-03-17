@@ -66,13 +66,14 @@ class Jugador extends Dato
     private $posicion;
     private $goles;
     private $asistencias;
+    private $fichado;
 
-    public function __construct(int $id = null, string $nombre, string $verssion, string $posicion, int $goles, int $asistencias)
+    public function __construct(int $id = null, string $nombre, string $verssion, string $posicion, int $goles, int $asistencias, int $fichado)
     {
         if ($id != null && $nombre == null) {
 
         } else if ($id == null && $nombre != null) {
-            DAO::agregarJugador($nombre, $verssion, $posicion, $goles, $asistencias);
+            DAO::agregarJugador($nombre, $verssion, $posicion, $goles, $asistencias, 0);
         } else {
             $this->id = $id;
             $this->nombre = $nombre;
@@ -80,6 +81,7 @@ class Jugador extends Dato
             $this->posicion = $posicion;
             $this->goles = $goles;
             $this->asistencias = $asistencias;
+            $this->fichado = $fichado;
         }
     }
 
@@ -90,10 +92,12 @@ class Jugador extends Dato
     {return $this->verssion;}
     public function getPosicion(): string
     {return $this->posicion;}
-    public function getGoles(): string
+    public function getGoles(): int
     {return $this->goles;}
-    public function getAsistencias(): string
+    public function getAsistencias(): int
     {return $this->asistencias;}
+    public function getFichado(): int
+    {return $this->fichado;}
 
     /* SETTERS JUGADOR */
     public function setNombre(string $nombre): void
@@ -106,6 +110,8 @@ class Jugador extends Dato
     {$this->goles = $goles;}
     public function setAsistencias(string $asistencias): void
     {$this->asistencias = $asistencias;}
+    public function setFichado(string $fichado): void
+    {$this->fichado = $fichado;}
 }
 
 abstract class ProtoEquipo extends Dato
@@ -148,15 +154,15 @@ class JugadoresGuardados extends ProtoEquipo
     {
         parent::__construct($usuario_id, $fichajes);
     }
-    public function variarJugador($jugadorId, $variacionUnidades)
-    {
-        $nuevaCantidadUnidades = DAO::jugadoresGuardadosVariarUnidades($jugadorId, $variacionUnidades);
+    /*public function variarJugador($jugadorId, $variacionUnidades)
+{
+$nuevaCantidadUnidades = DAO::jugadoresGuardadosVariarUnidades($jugadorId, $variacionUnidades);
 
-        $s = $this->getFichajes();
-        $fichajeNuevo = new Fichaje($jugadorId, $nuevaCantidadUnidades);
-        array_push($fichajes, $fichajeNuevo);
-        $this->setFichajes($fichajes);
-    }
+$s = $this->getFichajes();
+$fichajeNuevo = new Fichaje($jugadorId, $nuevaCantidadUnidades);
+array_push($fichajes, $fichajeNuevo);
+$this->setFichajes($fichajes);
+}*/
 }
 
 class Equipo extends ProtoEquipo
@@ -188,12 +194,10 @@ class Equipo extends ProtoEquipo
 abstract class ProtoFichaje
 {
     protected $jugador_id;
-    protected $unidades;
 
-    public function __construct(int $jugador_id, int $unidades)
+    public function __construct(int $jugador_id)
     {
         $this->jugador_id = $jugador_id;
-        $this->unidades = $unidades;
     }
 
     public function getJugadorId()
@@ -206,21 +210,12 @@ abstract class ProtoFichaje
         $this->jugador_id = $jugador_id;
     }
 
-    public function getUnidades()
-    {
-        return $this->unidades;
-    }
-
-    public function setUnidades($unidades)
-    {
-        $this->unidades = $unidades;
-    }
 }
 
 class Fichaje extends ProtoFichaje
 {
-    public function __construct(int $jugador_id, int $unidades)
+    public function __construct(int $jugador_id)
     {
-        parent::__construct($jugador_id, $unidades);
+        parent::__construct($jugador_id);
     }
 }
