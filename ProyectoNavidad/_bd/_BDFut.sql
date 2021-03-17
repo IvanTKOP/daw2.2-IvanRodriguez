@@ -43,8 +43,8 @@ TRUNCATE TABLE usuario;
 --
 
 INSERT INTO usuario (id, nombre, contrasenna, codigoCookie, email) VALUES
-(1, 'ivan', '1234', NULL, 'i@gmail.com'),
-(2, 'cuillo', '1234', NULL, 'c@gmail.com');
+(1, 'Iván', '1234', NULL, 'i@gmail.com'),
+(2, 'Cuillo', '1234', NULL, 'c@gmail.com');
 
 -- --------------------------------------------------------
 --

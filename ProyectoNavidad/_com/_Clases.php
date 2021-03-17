@@ -18,51 +18,58 @@ trait Identificable
     }
 }
 
-
-        /* CLASE USUARIO */
+/* CLASE USUARIO */
 class Usuario extends Dato
 {
     use Identificable;
-    private  $nombre;
-    private  $contrasenna;
-    private  $codigoCookie;
-    private  $email;
+    private $nombre;
+    private $contrasenna;
+    private $codigoCookie;
+    private $email;
 
-    public function __construct($id, $nombre, $contrasenna, $email)
+    public function __construct($id, $nombre, $contrasenna, $codigoCookie, $email)
     {
         $this->id = ($id);
         $this->setNombre($nombre);
         $this->setContrasenna($contrasenna);
+        $this->setCodigoCookie($codigoCookie);
         $this->setEmail($email);
     }
 
-  
+    /* GETTERS USUARIO */
+    public function getNombre()
+    {return $this->nombre;}
+    public function getContrasenna()
+    {return $this->contrasenna;}
+    public function getCodigoCookie()
+    {return $this->codigoCookie;}
+    public function getEmail()
+    {return $this->email;}
 
- /* GETTERS USUARIO */
-    public function getNombre() {return $this->nombre;}
-    public function getContrasenna() {return $this->contrasenna;}
-    public function getEmail() {return $this->email;}
-
-    
     /* SETTERS USUARIO */
-    public function setNombre($nombre){$this->nombre = $nombre;}
-    public function setContrasenna($contrasenna){$this->contrasenna = $contrasenna;}
-    public function setEmail($email) {$this->email = $email;}
+    public function setNombre($nombre)
+    {$this->nombre = $nombre;}
+    public function setContrasenna($contrasenna)
+    {$this->contrasenna = $contrasenna;}
+    public function setCodigoCookie($codigoCookie)
+    {$this->codigoCookie = $codigoCookie;}
+    public function setEmail($email)
+    {$this->email = $email;}
 }
 
-        /* CLASE JUGADOR */
+/* CLASE JUGADOR */
 class Jugador extends Dato
 {
     use Identificable;
-    private  $nombre;
-    private  $verssion;
-    private  $posicion;
-    private  $goles;
-    private  $asistencias;
+    private $nombre;
+    private $verssion;
+    private $posicion;
+    private $goles;
+    private $asistencias;
 
-    public function __construct( int $id=null, string $nombre, string $verssion, string $posicion, int $goles, int $asistencias)
+    public function __construct(int $id = null, string $nombre, string $verssion, string $posicion, int $goles, int $asistencias)
     {
-        if ($id != null && $nombre == null) { 
+        if ($id != null && $nombre == null) {
 
         } else if ($id == null && $nombre != null) {
             DAO::agregarJugador($nombre, $verssion, $posicion, $goles, $asistencias);
@@ -70,25 +77,35 @@ class Jugador extends Dato
             $this->id = $id;
             $this->nombre = $nombre;
             $this->verssion = $verssion;
-            $this->posicion= $posicion;
-            $this->goles= $goles;
-            $this->asistencias= $asistencias;
+            $this->posicion = $posicion;
+            $this->goles = $goles;
+            $this->asistencias = $asistencias;
+        }
     }
-}
 
     /* GETTERS JUGADOR */
-    public function getNombre(): string{return $this->nombre;}
-    public function getVerssion(): string{return $this->verssion;}
-    public function getPosicion(): string{return $this->posicion;}
-    public function getGoles(): string{return $this->goles;}
-    public function getAsistencias(): string{return $this->asistencias;}
-    
+    public function getNombre(): string
+    {return $this->nombre;}
+    public function getVerssion(): string
+    {return $this->verssion;}
+    public function getPosicion(): string
+    {return $this->posicion;}
+    public function getGoles(): string
+    {return $this->goles;}
+    public function getAsistencias(): string
+    {return $this->asistencias;}
+
     /* SETTERS JUGADOR */
-    public function setNombre(string $nombre): void { $this->nombre = $nombre;}
-    public function setVerssion(string $verssion): void { $this->verssion = $verssion;}
-    public function setPosicion(string $posicion): void { $this->posicion = $posicion;}
-    public function setGoles(string $goles): void { $this->goles = $goles;}
-    public function setAsistencias(string $asistencias): void { $this->asistencias = $asistencias;}
+    public function setNombre(string $nombre): void
+    {$this->nombre = $nombre;}
+    public function setVerssion(string $verssion): void
+    {$this->verssion = $verssion;}
+    public function setPosicion(string $posicion): void
+    {$this->posicion = $posicion;}
+    public function setGoles(string $goles): void
+    {$this->goles = $goles;}
+    public function setAsistencias(string $asistencias): void
+    {$this->asistencias = $asistencias;}
 }
 
 abstract class ProtoEquipo extends Dato
@@ -124,25 +141,27 @@ abstract class ProtoEquipo extends Dato
     }
 }
 
-class JugadoresGuardados extends ProtoEquipo {
+class JugadoresGuardados extends ProtoEquipo
+{
 
     public function __construct(int $usuario_id, $fichajes)
     {
         parent::__construct($usuario_id, $fichajes);
     }
-    public function variarJugador($jugadorId, $variacionUnidades) {
+    public function variarJugador($jugadorId, $variacionUnidades)
+    {
         $nuevaCantidadUnidades = DAO::jugadoresGuardadosVariarUnidades($jugadorId, $variacionUnidades);
 
         $s = $this->getFichajes();
-        $fichajeNuevo= new Fichaje($jugadorId, $nuevaCantidadUnidades);
+        $fichajeNuevo = new Fichaje($jugadorId, $nuevaCantidadUnidades);
         array_push($fichajes, $fichajeNuevo);
         $this->setFichajes($fichajes);
     }
 }
 
-    
-class Equipo extends ProtoEquipo {
-    
+class Equipo extends ProtoEquipo
+{
+
     use Identificable;
     private $nombre;
 
@@ -164,7 +183,6 @@ class Equipo extends ProtoEquipo {
         $this->nombre = $nombre;
     }
 
-   
 }
 
 abstract class ProtoFichaje
