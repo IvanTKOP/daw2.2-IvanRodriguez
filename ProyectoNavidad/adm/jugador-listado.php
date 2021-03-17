@@ -3,9 +3,11 @@
 require_once "../_com/comunes-app.php";
 require "../_com/_Sesion.php";
 
-$jugadores = DAO::jugadorObtenerTodos();
+if ($_SESSION["administrador"] == 1) {
 
-?>
+    $jugadores = DAO::jugadorObtenerTodos();
+
+    ?>
 
 
 
@@ -29,26 +31,26 @@ $jugadores = DAO::jugadorObtenerTodos();
         <th>Asistencias</th>
     </tr>
 
-    <?php foreach ($jugadores as $jugador) { ?>
+    <?php foreach ($jugadores as $jugador) {?>
         <tr>
             <td style="text-align: center;">
-            <a href= "jugador-detalle.php?id=<?=$jugador->getId();?>"> <?= $jugador->getnombre();?></a></td>
+            <a href= "jugador-detalle.php?id=<?=$jugador->getId();?>"> <?=$jugador->getnombre();?></a></td>
 
             <td style="text-align: center;">
-            <?=$jugador ->getVerssion();?></td>
+            <?=$jugador->getVerssion();?></td>
 
             <td style="text-align: center;">
-            <?= $jugador->getPosicion();?></td>
+            <?=$jugador->getPosicion();?></td>
 
             <td style="text-align: center;">
-            <?= $jugador->getGoles();?></td>
+            <?=$jugador->getGoles();?></td>
 
             <td style="text-align: center;">
-            <?= $jugador->getAsistencias();?></td>
+            <?=$jugador->getAsistencias();?></td>
 
             <td style="text-align: center;"><a href="jugador-detalle.php?id=<?=$jugador->getId()?>">Editar</a></td>
         </tr>
-    <?php } ?>
+    <?php }?>
 
 </table>
 
@@ -57,3 +59,9 @@ $jugadores = DAO::jugadorObtenerTodos();
 </body>
 
 </html>
+
+<?php
+} else {
+    echo "No posees cuenta de administrador";
+}
+?>

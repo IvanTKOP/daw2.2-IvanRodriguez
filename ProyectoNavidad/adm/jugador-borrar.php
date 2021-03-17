@@ -1,11 +1,14 @@
 <?php
+
 require_once "../_com/comunes-app.php";
 
-if (isset($_REQUEST['borrar'])) {
-    DAO::jugadorEliminar($_REQUEST["id"]);
-}
+if ($_SESSION["administrador"] == 1) {
 
-?>
+    if (isset($_REQUEST['borrar'])) {
+        DAO::jugadorEliminar($_REQUEST["id"]);
+    }
+
+    ?>
 
 
 <html>
@@ -20,3 +23,8 @@ if (isset($_REQUEST['borrar'])) {
 <a href='jugador-listado.php'>Volver a la lista de jugadores</a>
 </body>
 </html>
+<?php
+} else {
+    echo "No posees cuenta de administrador";
+}
+?>

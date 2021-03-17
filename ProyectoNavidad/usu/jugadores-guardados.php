@@ -3,9 +3,11 @@
 require_once "../_com/comunes-app.php";
 require "../_com/_Sesion.php";
 
-$jugadoresGuardados = DAO::obtenerListadoJugadoresGuardadosParaUsuario($_SESSION["id"]);
+if ($_SESSION["administrador"] == 0) {
 
-?>
+    $jugadoresGuardados = DAO::obtenerListadoJugadoresGuardadosParaUsuario($_SESSION["id"]);
+
+    ?>
 
 
 <html>
@@ -56,10 +58,10 @@ $jugadoresGuardados = DAO::obtenerListadoJugadoresGuardadosParaUsuario($_SESSION
 
   <?php
 
-if ($jugadoresGuardados) {
-    foreach ($jugadoresGuardados->getFichajes() as $fichaje) {
-        $fichaje = DAO::jugadorObtenerPorId($fichaje->getJugadorId());
-        ?>
+    if ($jugadoresGuardados) {
+        foreach ($jugadoresGuardados->getFichajes() as $fichaje) {
+            $fichaje = DAO::jugadorObtenerPorId($fichaje->getJugadorId());
+            ?>
         <tr>
         <td style="padding: 5px; text-align: center; background: #EFEEF1"><a href= "jugador-detalle.php?id=<?=$fichaje->getId()?>"><?=$fichaje->getNombre();?></a></td>
           <td class="text-center" style="padding: 5px; background: #EFEEF1"><?=$fichaje->getVerssion()?></td>
@@ -71,8 +73,8 @@ if ($jugadoresGuardados) {
         </tr>
           <?php
 }
-}
-?>
+    }
+    ?>
   </tbody>
 </table>
 <br>
@@ -82,3 +84,9 @@ if ($jugadoresGuardados) {
 </body>
 
 </html>
+
+<?php
+} else {
+    echo "No eres cuenta usuario";
+}
+?>

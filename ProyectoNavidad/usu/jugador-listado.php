@@ -3,9 +3,11 @@
 require_once "../_com/comunes-app.php";
 require "../_com/_Sesion.php";
 
-$jugadores = DAO::jugadorObtenerTodos();
+if ($_SESSION["administrador"] == 0) {
 
-?>
+    $jugadores = DAO::jugadorObtenerTodos();
+
+    ?>
 
 
 
@@ -32,8 +34,8 @@ $jugadores = DAO::jugadorObtenerTodos();
 
 <?php foreach ($jugadores as $jugador) {
 
-    $fichado = $jugador->getFichado();
-    if ($fichado == 0) {?>
+        $fichado = $jugador->getFichado();
+        if ($fichado == 0) {?>
 
         <tr>
             <td style="text-align: center;">
@@ -55,11 +57,17 @@ $jugadores = DAO::jugadorObtenerTodos();
         </tr>
         <?php
 }
-}
-?>
+    }
+    ?>
 
 </table>
 
 </body>
 
 </html>
+
+<?php
+} else {
+    echo "No eres cuenta usuario";
+}
+?>

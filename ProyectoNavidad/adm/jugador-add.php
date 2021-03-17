@@ -4,7 +4,9 @@ require_once "../_com/comunes-app.php";
 
 require "../_com/_Sesion.php";
 
-?>
+if ($_SESSION["administrador"] == 1) {
+
+    ?>
 
 
 <!DOCTYPE html>
@@ -33,3 +35,8 @@ require "../_com/_Sesion.php";
 
 </body>
 </html>
+<?php
+} else {
+    echo "No posees cuenta de administrador";
+}
+?>
