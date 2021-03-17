@@ -61,7 +61,7 @@ if ($jugadoresGuardados) {
         $fichaje = DAO::jugadorObtenerPorId($fichaje->getJugadorId());
         ?>
         <tr>
-        <td style="padding: 5px; text-align: center; background: #EFEEF1"><a href= "../adm/jugador-detalle.php?id=<?=$fichaje->getId()?>"><?=$fichaje->getNombre();?></a></td>
+        <td style="padding: 5px; text-align: center; background: #EFEEF1"><a href= "jugador-detalle.php?id=<?=$fichaje->getId()?>"><?=$fichaje->getNombre();?></a></td>
           <td class="text-center" style="padding: 5px; background: #EFEEF1"><?=$fichaje->getVerssion()?></td>
           <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getPosicion()?></td>
           <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getGoles()?></td>

@@ -2,7 +2,7 @@
 require_once "../_com/comunes-app.php";
 
 if (isset($_REQUEST['borrar'])) {
-    DAO::jugadorEliminar();
+    DAO::jugadorEliminar($_REQUEST["id"]);
 }
 
 ?>
