@@ -59,7 +59,7 @@ CREATE TABLE jugador (
   verssion varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   posicion varchar (45) NOT NULL,
   goles int(11) NOT NULL,
-  asistencias  int(11) NOT NULL,
+  asistencias int(11) NOT NULL,
   fichado int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 

@@ -18,24 +18,69 @@ if ($_SESSION["administrador"] == 0) {
 </head>
 
 <style>
-    .boton {
-        padding: 4px 25px;
-        background: #DCDCDC;
-        border: 1px solid #000000;
-        color: #000000;
-        border-radius: 4px;
-        text-decoration:none;
-        font-weight: bold;
-    }
 
-    .boton:hover {
-        padding: 4px 25px;
-        background: #D3D3D3;
-        border: 1px solid #000000;
+      #body{
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      table.general {
+        font-family: Arial, Helvetica, sans-serif;
+        border: 3px solid #000000;
+        background-color: #E7E7E7;
+        width: 600px;
+        text-align: center;
+        border-collapse: collapse;
+        margin: 0 auto;
+      }
+      table.general td, table.general th {
+        border: 1px solid #555555;
+      }
+      table.general tbody td {
+        font-size: 13px;
+        font-weight: bold;
         color: #000000;
-        border-radius: 4px;
-        text-decoration:none;
-    }
+      }
+      table.general thead {
+        background: #1771E0;
+        background: -moz-linear-gradient(top, #5194e8 0%, #2e7fe3 66%, #1771E0 100%);
+        background: -webkit-linear-gradient(top, #5194e8 0%, #2e7fe3 66%, #1771E0 100%);
+        background: linear-gradient(to bottom, #5194e8 0%, #2e7fe3 66%, #1771E0 100%);
+      }
+      table.general thead th {
+        font-size: 15px;
+        font-weight: bold;
+        color: #FFFFFF;
+        text-align: center;
+        border-left: 1px solid #000102;
+      }
+      table.general thead th:first-child {
+        border-left: none;
+      }
+
+      .nombre {
+        padding: 10px;
+      }
+
+      .boton {
+          font-family: Arial, Helvetica, sans-serif;
+          box-shadow:inset 0px -3px 7px 0px #05b4ff;
+          background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+          background-color:#0688fa;
+          border-radius:3px;
+          border:1px solid #0b0e07;
+          display:inline-block;
+          cursor:pointer;
+          color:#ffffff;
+          font-family:Arial;
+          font-size:15px;
+          padding:9px 23px;
+          text-decoration:none;
+          text-shadow:0px 1px 0px #263666;
+      }
+      .boton:hover {
+        background:linear-gradient(to bottom, #0088cc 5%, #0062b8 100%);
+        background-color:#0088cc;
+      }
 
 </style>
 
@@ -43,15 +88,15 @@ if ($_SESSION["administrador"] == 0) {
 
 <h1 style="text-align: center">Mi Equipo</h1>
 
-<table border="1" style="margin: 0 auto; border-collapse: collapse">
+<table class="general">
   <thead>
   <tr>
-    <th style="width: 148px; padding: 2px; background: #B1A9FF">Nombre</th>
-    <th style="width: 77px; padding: 2px; background: #B1A9FF">Versión</th>
-    <th style="width: 77px; padding: 2px; background: #B1A9FF">Posición</th>
-    <th style="width: 77px; padding: 2px; background: #B1A9FF">Goles</th>
-    <th style="width: 77px; padding: 2px; background: #B1A9FF">Asistencias</th>
-    <th style="padding: 2px; background: #B1A9FF">Eliminar</th>
+    <th class="nombre">Nombre</th>
+    <th>Versión</th>
+    <th>Posición</th>
+    <th>Goles</th>
+    <th>Asistencias</th>
+    <th>Eliminar</th>
   </tr>
   </thead>
   <tbody>
@@ -63,12 +108,12 @@ if ($_SESSION["administrador"] == 0) {
             $fichaje = DAO::jugadorObtenerPorId($fichaje->getJugadorId());
             ?>
         <tr>
-        <td style="padding: 5px; text-align: center; background: #EFEEF1"><a href= "jugador-detalle.php?id=<?=$fichaje->getId()?>"><?=$fichaje->getNombre();?></a></td>
-          <td class="text-center" style="padding: 5px; background: #EFEEF1"><?=$fichaje->getVerssion()?></td>
-          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getPosicion()?></td>
-          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getGoles()?></td>
-          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getAsistencias()?></td>
-          <td class="text-center" style="text-align: center; background: #EFEEF1"><a href="gestionar-jugadores-guardados.php?jugadorId=<?=$fichaje->getId()?>&eliminar=true">X</a>
+        <td><a href= "jugador-detalle.php?id=<?=$fichaje->getId()?>"><?=$fichaje->getNombre();?></a></td>
+          <td><?=$fichaje->getVerssion()?></td>
+          <td><?=$fichaje->getPosicion()?></td>
+          <td><?=$fichaje->getGoles()?></td>
+          <td><?=$fichaje->getAsistencias()?></td>
+          <td><a href="gestionar-jugadores-guardados.php?jugadorId=<?=$fichaje->getId()?>&eliminar=true"><img src="../_img/eliminar.png" height="30" width="30" title='Eliminar Jugador'></a>
           </td>
         </tr>
           <?php
