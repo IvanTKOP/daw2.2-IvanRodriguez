@@ -9,7 +9,8 @@ if (isset($_REQUEST["email"]) && $_REQUEST["email"] != "") {
     }
     $contrasenna = $_REQUEST["contrasenna"];
     $nombre = $_REQUEST["nombre"];
-    DAO::usuarioCrear($nombre, $contrasenna, $email);
+    $administrador = $_REQUEST["administrador"];
+    DAO::usuarioCrear($nombre, $contrasenna, $email, $administrador);
     redireccionar("sesion-inicio.php?registrado");
 } else {
     redireccionar("usuario-registro-formulario.php?error");

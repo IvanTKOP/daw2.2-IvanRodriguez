@@ -55,7 +55,7 @@ class DAO
 
     private static function crearUsuarioDesdeRs(array $rs): Usuario
     {
-        return new Usuario($rs[0]["id"], $rs[0]["nombre"], $rs[0]["contrasenna"], $rs[0]["codigoCookie"], $rs[0]["email"]);
+        return new Usuario($rs[0]["id"], $rs[0]["nombre"], $rs[0]["contrasenna"], $rs[0]["codigoCookie"], $rs[0]["email"], $rs[0]["administrador"]);
     }
 
     public static function usuarioObtenerPorId(int $id): ?Usuario
@@ -101,10 +101,10 @@ class DAO
 
     }
 
-    public static function usuarioCrear(string $nombre, string $contrasenna, string $email): void
+    public static function usuarioCrear(string $nombre, string $contrasenna, string $email, int $administrador): void
     {
-        self::ejecutarActualizacion("INSERT INTO usuario (nombre, contrasenna, codigoCookie, email) VALUES (?,?,NULL,?);",
-            [$nombre, $contrasenna, $email]);
+        self::ejecutarActualizacion("INSERT INTO usuario (nombre, contrasenna, codigoCookie, email, administrador) VALUES (?,?,NULL,?,?);",
+            [$nombre, $contrasenna, $email, $administrador]);
     }
 
     public static function usuarioActualizar(): void

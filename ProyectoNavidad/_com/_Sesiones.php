@@ -98,6 +98,7 @@ function establecerSesion($usuario)
     $_SESSION["id"] = $usuario->getId();
     $_SESSION["email"] = $usuario->getEmail();
     $_SESSION["nombre"] = $usuario->getNombre();
+    $_SESSION["administrador"] = $usuario->getAdministrador();
 }
 
 function cerrarSesion($email)

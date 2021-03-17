@@ -43,11 +43,26 @@ $usuario = DAO::usuarioObtenerPorId($id);
 <body>
 <p>Nombre: <?=$usuario->getNombre()?></p>
 <p>Email: <?=$usuario->getEmail()?></p>
+<p>Administrador: <?php if ($usuario->getAdministrador() == 1) {
+    ?>
+    Si</p>
+<?php } else {?>
+    No</p>
+<?php
+}
+?>
 
 <br>
 
-<a href="jugador-borrar.php" class="boton" name= "borrar">Eliminar Cuenta</a>
-<a href="jugador-listado.php" class="boton">Volver al listado de jugadores</a>
+<a href="usuario-baja-confirmar.php" class="boton">Eliminar Cuenta</a>
+
+<?php if ($usuario->getAdministrador() == 1) {?>
+<a href="../adm/jugador-listado.php" class="boton">Volver al listado de jugadores</a>
+<?php } else {?>
+    <a href="../usu/jugador-listado.php" class="boton">Volver al listado de jugadores</a>
+<?php
+}
+?>
 </body>
 
 </html>

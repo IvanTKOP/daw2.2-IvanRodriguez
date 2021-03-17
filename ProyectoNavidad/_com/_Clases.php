@@ -26,14 +26,16 @@ class Usuario extends Dato
     private $contrasenna;
     private $codigoCookie;
     private $email;
+    private $administrador;
 
-    public function __construct($id, $nombre, $contrasenna, $codigoCookie, $email)
+    public function __construct($id, $nombre, $contrasenna, $codigoCookie, $email, $administrador)
     {
         $this->id = ($id);
         $this->setNombre($nombre);
         $this->setContrasenna($contrasenna);
         $this->setCodigoCookie($codigoCookie);
         $this->setEmail($email);
+        $this->setAdministrador($administrador);
     }
 
     /* GETTERS USUARIO */
@@ -45,6 +47,8 @@ class Usuario extends Dato
     {return $this->codigoCookie;}
     public function getEmail()
     {return $this->email;}
+    public function getAdministrador()
+    {return $this->administrador;}
 
     /* SETTERS USUARIO */
     public function setNombre($nombre)
@@ -55,6 +59,8 @@ class Usuario extends Dato
     {$this->codigoCookie = $codigoCookie;}
     public function setEmail($email)
     {$this->email = $email;}
+    public function setAdministrador($administrador)
+    {$this->administrador = $administrador;}
 }
 
 /* CLASE JUGADOR */

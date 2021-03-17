@@ -30,7 +30,8 @@ CREATE TABLE usuario (
   nombre varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   contrasenna varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   codigoCookie varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  email varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL
+  email varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  administrador int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -42,9 +43,9 @@ TRUNCATE TABLE usuario;
 -- Volcado de datos para la tabla usuario
 --
 
-INSERT INTO usuario (id, nombre, contrasenna, codigoCookie, email) VALUES
-(1, 'Iván', '1234', NULL, 'i@gmail.com'),
-(2, 'Cuillo', '1234', NULL, 'c@gmail.com');
+INSERT INTO usuario (id, nombre, contrasenna, codigoCookie, email, administrador) VALUES
+(1, 'Iván', '1234', NULL, 'i@gmail.com', 1),
+(2, 'Cuillo', '1234', NULL, 'c@gmail.com', 0);
 
 -- --------------------------------------------------------
 --
@@ -165,7 +166,7 @@ ALTER TABLE fichaje
 -- AUTO_INCREMENT de la tabla usuario
 --
 ALTER TABLE usuario
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla jugador
@@ -177,7 +178,7 @@ ALTER TABLE jugador
 -- AUTO_INCREMENT de la tabla equipo
 --
 ALTER TABLE equipo
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Restricciones para tablas volcadas

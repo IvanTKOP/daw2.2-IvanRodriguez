@@ -30,7 +30,7 @@ if (isset($_REQUEST["sesionCerrada"])) {
 
 <h1>Iniciar sesión</h1>
 
-<form action="jugador-listado.php" method="POST">
+<form action="compruebaAdmin.php" method="POST">
     <label><b>Email: </b></label><input type="email" name="email" placeholder="Email"><br />
     <label><b>Contraseña: </b></label><input type="password" name="contrasenna" placeholder="Contraseña"/><br />
     <label><b>Recuérdame</b></label><input type="checkbox" name="recuerdame" /><br />
