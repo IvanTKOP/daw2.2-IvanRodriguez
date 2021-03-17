@@ -226,54 +226,6 @@ class DAO
         self::cambiarFichado($jugadorId, 1);
     }
 
-    /*private static function obtenerNumeroJugadoresGuardados($equipoId, $jugadorId): int
-    {
-    $rs = self::ejecutarConsulta("SELECT unidades FROM fichaje WHERE equipo_id=? AND jugador_id=? ",
-    [$equipoId, $jugadorId]);
-    if (!$rs) {
-    return 0;
-    } else {
-    return $rs[0]['unidades'];
-    }
-    }
-
-    public static function listadoUnidades($jugadorId, $nuevaCantidad, $equipoId): void
-    {
-    $udsIniciales = self::obtenerNumeroJugadoresGuardados($equipoId, $jugadorId);
-    if ($udsIniciales <= 0) {
-    self::ejecutarActualizacion(
-    "INSERT INTO fichaje (equipo_id, jugador_id, unidades) VALUES (?,?,?)",
-    [$equipoId, $jugadorId, $nuevaCantidad]
-    );
-    } else if ($nuevaCantidad <= 0) {
-    self::fichajeEliminar($equipoId, $jugadorId);
-    } else {
-    self::ejecutarActualizacion(
-    "UPDATE fichaje SET unidades=? WHERE equipo_id=? AND jugador_id=?",
-    [$nuevaCantidad, $equipoId, $jugadorId]
-    );
-    }
-    }
-
-    public static function jugadoresGuardadosVariarUnidades($usuarioId, $jugadorId, $variacionUnidades): int
-    {
-    $rsEquipo = self::ejecutarConsulta("SELECT id FROM equipo WHERE usuario_id=?", [$usuarioId]);
-    $equipoId = $rsEquipo[0]['id'];
-    $unidades = self::obtenerNumeroJugadoresGuardados($equipoId, $jugadorId);
-    if ($unidades == 0) {
-    $nuevaCantidadUnidades = $variacionUnidades;
-    } else {
-    $nuevaCantidadUnidades = $variacionUnidades + $unidades;
-    }
-    if ($variacionUnidades == 0) {
-    self::listadoUnidades($jugadorId, $variacionUnidades, $equipoId);
-    return $variacionUnidades;
-    } else {
-    self::listadoUnidades($jugadorId, $nuevaCantidadUnidades, $equipoId);
-    return $nuevaCantidadUnidades;
-    }
-    }*/
-
     /* FICHAJE */
 
     public static function fichajeEliminar($equipoId, $jugadorId)

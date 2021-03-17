@@ -78,10 +78,10 @@ INSERT INTO jugador (id, nombre, verssion, posicion, goles, asistencias, fichado
 (2, 'Thibaut Courtois', 'IF', 'Portero', 0, 0, 0),
 (3, 'Nemanja Vidiç', 'Icono', 'Defensa', 5, 0, 0),
 (4, 'Raphael Varane', 'Oro', 'Defensa', 3, 0, 0),
-(5, 'Paul Pogba', 'IF Reward', 'Medio', 7, 8, 0),
+(5, 'Paul Pogba', 'IF', 'Medio', 7, 8, 0),
 (6, 'Ngolo Kanté', 'Oro', 'Medio', 0, 3, 0),
-(7, 'Cristiano Ronaldo', 'Flashback', 'Atacante', 30, 6, 0),
-(8, 'Joao Félix', 'POTM LaLiga', 'Atacante', 15, 20, 0);
+(7, 'Cristiano Ronaldo', 'Icono', 'Atacante', 30, 6, 0),
+(8, 'Joao Félix', 'Plata', 'Atacante', 15, 20, 0);
 
 
 -- --------------------------------------------------------

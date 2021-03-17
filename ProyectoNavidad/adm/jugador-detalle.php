@@ -32,10 +32,20 @@ if ($_SESSION["administrador"] == 1) {
             <input type="hidden" name="jugadorId" value="<?=$id?>" size="1">
             <input type="text" name="jugadorNombre" value="<?=$jugador->getNombre()?>" readonly><br><br>
             Nuevo nombre:<br> <input type="text" name="nombre"><br><br>
-            Nueva versión:<br> <input  type="text" name="verssion"><br><br>
-            Nuevo posición:<br> <input type="text" name="posicion"><br><br>
-            Nuevo número de goles:<br> <input type="number" name="goles"><br><br>
-            Nuevo número de asistencias:<br> <input type="number" name="asistencias"><br><br>
+            Nueva versión:<br> <select style="text-align: center" name="verssion" required>
+                <option value="Oro">Oro</option>
+                <option value="Plata">Plata</option>
+                <option value="IF">IF</option>
+                <option value="Icono">Icono</option>
+            </select><br><br>
+            Nuevo posición:<br> <select style="text-align: center" name="posicion" required>
+                <option value="Portero">Portero</option>
+                <option value="Defensa">Defensa</option>
+                <option value="Medio">Medio</option>
+                <option value="Delantero">Delantero</option>
+            </select><br><br>
+            Nuevo número de goles:<br> <input type="number" name="goles" min="0"><br><br>
+            Nuevo número de asistencias:<br> <input type="number" name="asistencias" min="0"><br><br>
             <input type="submit">
         </form>
     <br>
