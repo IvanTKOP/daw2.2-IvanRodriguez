@@ -45,7 +45,7 @@ $jugadoresGuardados = DAO::obtenerListadoJugadoresGuardadosParaUsuario($_SESSION
   <thead>
   <tr>
     <th style="width: 148px; padding: 2px; background: #B1A9FF">Nombre</th>
-    <th style="width: 775px; padding: 2px; background: #B1A9FF">Versión</th>
+    <th style="width: 77px; padding: 2px; background: #B1A9FF">Versión</th>
     <th style="width: 77px; padding: 2px; background: #B1A9FF">Posición</th>
     <th style="width: 77px; padding: 2px; background: #B1A9FF">Goles</th>
     <th style="width: 77px; padding: 2px; background: #B1A9FF">Asistencias</th>
@@ -56,23 +56,23 @@ $jugadoresGuardados = DAO::obtenerListadoJugadoresGuardadosParaUsuario($_SESSION
 
   <?php
 
-  if ($jugadoresGuardados) {
-      foreach ($jugadoresGuardados->getFichajes() as $fichaje) {
-          $fichaje = DAO::jugadorObtenerPorId($fichaje->getJugadorId());
-          ?>
+if ($jugadoresGuardados) {
+    foreach ($jugadoresGuardados->getFichajes() as $fichaje) {
+        $fichaje = DAO::jugadorObtenerPorId($fichaje->getJugadorId());
+        ?>
         <tr>
-        <td style="padding: 5px; text-align: center; background: #EFEEF1"><a href= "../adm/jugador-detalle.php?id=<?=$fichaje->getId()?>"><?= $fichaje->getNombre();?></a></td>
-          <td class="text-center" style="padding: 5px; background: #EFEEF1"><?= $fichaje->getVerssion() ?></td>
-          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?= $fichaje->getPosicion() ?></td>
-          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?= $fichaje->getGoles() ?></td>
-          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?= $fichaje->getAsistencias() ?></td>
-          <td class="text-center" style="text-align: center; background: #EFEEF1"><a href="gestionar-jugadores-guardados.php?jugadorId=<?= $fichaje->getId() ?>&eliminar=true">X</a>
+        <td style="padding: 5px; text-align: center; background: #EFEEF1"><a href= "../adm/jugador-detalle.php?id=<?=$fichaje->getId()?>"><?=$fichaje->getNombre();?></a></td>
+          <td class="text-center" style="padding: 5px; background: #EFEEF1"><?=$fichaje->getVerssion()?></td>
+          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getPosicion()?></td>
+          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getGoles()?></td>
+          <td class="text-center" style="padding: 5px; text-align: center; background: #EFEEF1"><?=$fichaje->getAsistencias()?></td>
+          <td class="text-center" style="text-align: center; background: #EFEEF1"><a href="gestionar-jugadores-guardados.php?jugadorId=<?=$fichaje->getId()?>&eliminar=true">X</a>
           </td>
         </tr>
           <?php
-      }
-  }
-  ?>
+}
+}
+?>
   </tbody>
 </table>
 <br>

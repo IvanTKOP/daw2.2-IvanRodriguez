@@ -47,7 +47,7 @@ $jugadores = DAO::jugadorObtenerTodos();
             <td style="text-align: center;">
             <?=$jugador->getAsistencias()?></td>
 
-            <td style="text-align: center;"><a href="gestionar-jugadores-guardados.php?jugadorId=<?$jugador->getId()?>&agregar=true">(+)</a></td>
+            <td style="text-align: center;"><a href="gestionar-jugadores-guardados.php?jugadorId=<?=$jugador->getId()?>&agregar=true">(+)</a></td>
         </tr>
     <?php }?>
 
