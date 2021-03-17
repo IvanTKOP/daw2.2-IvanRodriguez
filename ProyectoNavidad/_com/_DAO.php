@@ -149,7 +149,7 @@ class DAO
         return $datos;
     }
 
-    public static function agregarJugador($nombre, $verssion, $posicion)
+    public static function agregarJugador($nombre, $verssion, $posicion, $goles, $asistencias)
     {
         self::ejecutarActualizacion("INSERT INTO jugador (id, nombre, verssion, posicion, goles, asistencias) VALUES (NULL, ?, ?, ?, ?, ?);",
             [$nombre, $verssion, $posicion, $goles, $asistencias]);
