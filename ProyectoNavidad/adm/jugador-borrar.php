@@ -17,6 +17,12 @@ if ($_SESSION["administrador"] == 1) {
     <meta charset="UTF-8">
 </head>
 <style>
+     .div1{
+        left: 400px;
+        position:relative;
+        text-align:center;
+        width: 40%;
+    }
             .boton {
                 font-family: Arial, Helvetica, sans-serif;
                 box-shadow:inset 0px -3px 7px 0px #05b4ff;
@@ -40,8 +46,10 @@ if ($_SESSION["administrador"] == 1) {
 </style>
 <body>
 
-<p>Jugador Borrado con éxito</p><br>
-<a href='jugador-listado.php' class="boton">Volver a la lista de jugadores</a>
+<h3 style="text-align: center">Jugador borrado con éxito</h3>
+<div class="div1">
+    <a href='jugador-listado.php' class="boton">Volver a la lista de jugadores</a>
+</div>
 </body>
 </html>
 <?php
