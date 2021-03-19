@@ -160,15 +160,7 @@ class JugadoresGuardados extends ProtoEquipo
     {
         parent::__construct($usuario_id, $fichajes);
     }
-    /*public function variarJugador($jugadorId, $variacionUnidades)
-{
-$nuevaCantidadUnidades = DAO::jugadoresGuardadosVariarUnidades($jugadorId, $variacionUnidades);
 
-$s = $this->getFichajes();
-$fichajeNuevo = new Fichaje($jugadorId, $nuevaCantidadUnidades);
-array_push($fichajes, $fichajeNuevo);
-$this->setFichajes($fichajes);
-}*/
 }
 
 class Equipo extends ProtoEquipo
