@@ -107,10 +107,10 @@ class DAO
             [$nombre, $contrasenna, $email, $administrador]);
     }
 
-    public static function usuarioActualizar(): void
+    public static function usuarioBorrar(): void
     {
         self::ejecutarActualizacion(
-            "UPDATE usuario SET nombre=\"\*\*\*\*\*\", contrasenna=\"\*\*\*\*\*\", codigoCookie=NULL, email=\"\*\*\*\*\*\" WHERE id=?",
+            "DELETE FROM usuario WHERE id=?",
             [$_SESSION["id"]]
         );
 
