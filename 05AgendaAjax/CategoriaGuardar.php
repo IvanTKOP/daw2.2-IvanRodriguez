@@ -50,7 +50,8 @@ if ($nuevaEntrada) {
 <?php } else {?>
 	<h1>Error en la modificación.</h1>
 	<p>No se han podido guardar los datos de la categoría.</p>
-<?php }?>
+<?php }
+}?>
 
 <a href='CategoriaObtenerTodas.php'>Volver al listado de categorías.</a>
 

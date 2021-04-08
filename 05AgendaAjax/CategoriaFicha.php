@@ -9,11 +9,11 @@ if ($nuevaEntrada) {
     $categoriaNombre = "<introduzca nombre>";
 } else {
     $sql = "SELECT nombre FROM Categoria WHERE id=?";
-    $rs = dao::ejecutarConsulta($sql, $id);
+    $rs = DAO::ejecutarConsulta($sql, $id);
     $categoriaNombre = $rs[0]["nombre"];
 }
 $sql = "SELECT * FROM Persona WHERE categoriaId=? ORDER BY nombre";
-$rsPersonasDeLaCategoria = dao::ejecutarConsulta($sql, $id);
+$rsPersonasDeLaCategoria = DAO::ejecutarConsulta($sql, $id);
 ?>
 
 
