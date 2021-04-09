@@ -1,5 +1,5 @@
 <?php
-$ciudad = $_REQUEST['ciudad']; //duda comillas aqui
+$ciudad = $_REQUEST["ciudad"]; //siempre comillas dobles
 ?>
 
 

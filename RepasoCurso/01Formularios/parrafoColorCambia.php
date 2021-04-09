@@ -1,6 +1,6 @@
 <?php
 
-$color = $_REQUEST['color'];
+$color = $_REQUEST["color"];
 
 ?>
 
@@ -10,23 +10,8 @@ $color = $_REQUEST['color'];
     <meta charset="UTF-8">
 </head>
 <body>
-<?php
-if ($color == "azul") {
-    ?>
- <p style="color:blue;">Azul</p>
-<?php
-}
-if ($color == "rojo") {
-    ?>
- <p style="color:red;">Rojo</p>
-<?php
-}
-if ($color == "verde") {
-    ?>
- <p style="color:green;">Verde</p>
-<?php
-}
-?>
+
+<p style='color:<?=$color?>;'>Párrafo coloreado</p>
 
 </body>
 </html>
