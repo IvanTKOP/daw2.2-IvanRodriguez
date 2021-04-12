@@ -37,7 +37,7 @@ $intentosRestantes = 10 - $intentos;
 if ($numeroIntento != null) {
     if ($numeroIntento == $numeroOculto) {?>
             <h2>¡Correcto, has ganado!</h2>
-            <p>Has realizado <?php echo "$intentos" ?> intentos</p>
+            <p>Has realizado <?=$intentos?> intentos</p>
             <?php $terminado = true;
     }
     if ($numeroIntento > $numeroOculto) {?>
@@ -62,8 +62,8 @@ if ($numeroIntento != null) {
     }
 }
 if (!$terminado) {?>
-    <p>Jugador 2, prueba a adivinar el número, tienes <?php echo "$intentosRestantes" ?> intentos</p>
-    <form method="get" action="adivinaNumeroPrincipal.php">
+    <p>Jugador 2, prueba a adivinar el número, tienes <?=$intentosRestantes?> intentos</p>
+    <form method="get"> <!-- Action será el mismo php -->
         <input type="hidden" value="<?=$numeroOculto?>" name="numeroOculto">
         <input type="hidden" value="<?=$intentos?>" name="intentos">
         <input type="number" name="numeroIntento">
