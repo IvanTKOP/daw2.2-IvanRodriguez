@@ -1,4 +1,5 @@
 <?php
+// misma DUDA que en incrementar, al actualizar suma intentos
 
 $numeroIntento = null;
 $intentos = 0;
@@ -7,13 +8,15 @@ $maxIntentos = false;
 $noNumeroIntento = false;
 $noNumeroOculto = false;
 
-if (isset($_REQUEST["numeroOculto"])) {
+if (isset($_COOKIE["numeroOculto"])) {
+    $numeroOculto = $_COOKIE["numeroOculto"];
+} else {
     $numeroOculto = $_REQUEST["numeroOculto"];
 }
 
 if (isset($_REQUEST["numeroIntento"])) {
     $numeroIntento = $_REQUEST["numeroIntento"];
-    $intentos = $_REQUEST["intentos"] + 1;
+    $intentos = $_COOKIE["intentos"] + 1;
     if ($intentos == 10 && $numeroIntento != $numeroOculto) { // &&: CASO RARO de acertar en el último intento
         $terminado = true;
         $maxIntentos = true;
@@ -36,6 +39,9 @@ if ($numeroOculto == null) { // Si el jugador1 no envia numero oculto
 }
 
 $intentosRestantes = 10 - $intentos;
+
+setcookie("numeroOculto", $numeroOculto, time() + 60 * 60);
+setcookie("intentos", $intentos, time() + 60 * 60);
 ?>
 
 
@@ -43,14 +49,14 @@ $intentosRestantes = 10 - $intentos;
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adivina Número</title>
+    <title>Adivina Número Cookies</title>
 </head>
 <body>
 <?php
 // Lo pongo arriba del todo para que en caso de ejecutarlo solo muestre el h1 y acabe.
 if ($maxIntentos) {?>
     <h1>Has perdido, se acabaron los intentos.</h1>
-<?php exit; // DUDA: se puede? implementar cuando ganas?
+<?php exit; // DUDA: se puede? implementar cuando ganas en vez de $terminado=true?
 }
 
 if ($numeroIntento != null) {
@@ -81,19 +87,17 @@ if ($numeroIntento != null) {
     }
 }
 
+if ($noNumeroIntento) {?>
+    <h2>No has introducido ningún número, inténtalo de nuevo. (Esto no te cuenta como intento)</h2>
+<?php }
+
 if (!$terminado) {?>
     <p>Jugador 2, prueba a adivinar el número, tienes <?=$intentosRestantes?> intentos</p>
     <form method="get"> <!-- Action será el mismo php -->
-        <input type="hidden" value="<?=$numeroOculto?>" name="numeroOculto">
-        <input type="hidden" value="<?=$intentos?>" name="intentos">
         <input type="number" name="numeroIntento">
         <input type="submit" value="Adivinar">
     </form>
     <?php }
-
-if ($noNumeroIntento) {?>
-    <h2>No has introducido ningún número, inténtalo de nuevo. (Esto no te cuenta como intento)</h2>
-<?php }
 ?>
 </body>
 </html>

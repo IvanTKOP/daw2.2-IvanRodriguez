@@ -19,7 +19,6 @@ setcookie("acumulado", $acumulado, time() + 60 * 60);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Incrementar 1 cookies</title>
 </head>
 <body>
     <p><?=$acumulado?></p>

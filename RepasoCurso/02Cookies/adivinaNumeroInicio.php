@@ -10,7 +10,7 @@ if (isset($_REQUEST["noNumeroOculto"])) { // CASO RARO: el jugador no envia nume
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adivina Número</title>
+    <title>Adivina Número Cookies</title>
 </head>
 <body>
     <h1>Juego Adivina Número</h1>
