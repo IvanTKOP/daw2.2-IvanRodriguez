@@ -1,47 +1,47 @@
 <?php
-// misma DUDA que en incrementar, al actualizar suma intentos
+// VARIABLES GLOBALES
 
-$numeroIntento = null;
-$intentos = 0;
 $terminado = false;
 $maxIntentos = false;
-$noNumeroIntento = false;
-$noNumeroOculto = false;
+$vieneIntento = true;
 
-if (isset($_COOKIE["numeroOculto"])) {
-    $numeroOculto = $_COOKIE["numeroOculto"];
-} else {
-    $numeroOculto = $_REQUEST["numeroOculto"];
+if (isset($_REQUEST["oculto"])) { // Primera vez con el formulario
+    $oculto = (int) $_REQUEST["oculto"];
+    $intento = null;
+    $numIntentos = 0;
+} else if (!isset($_COOKIE["oculto"])) { // Querian continuar, pero no hay cookie; no se puede
+    header("Location: adivinaNumeroInicio.php?noOculto");
+    exit;
+} else if (isset($_REQUEST{"intento"})) { // Segunda y siguientes veces con "$intento"
+    $oculto = (int) $_COOKIE["oculto"];
+    $intento = (int) $_REQUEST["intento"];
+    $numIntentos = (int) $_COOKIE["numIntentos"] + 1;
+} else { // Querian continuar y es posible porque hay cookie
+    $oculto = (int) $_COOKIE["oculto"];
+    $intento = null;
+    $numIntentos = (int) $_COOKIE["numIntentos"];
 }
 
-if (isset($_REQUEST["numeroIntento"])) {
-    $numeroIntento = $_REQUEST["numeroIntento"];
-    $intentos = $_COOKIE["intentos"] + 1;
-    if ($intentos == 10 && $numeroIntento != $numeroOculto) { // &&: CASO RARO de acertar en el último intento
-        $terminado = true;
-        $maxIntentos = true;
-    } else {
-        $terminado = false;
-        $maxIntentos = false;
+if ($intento == null) { // Si es la primera vez y...
+    if (isset($_REQUEST["intento"])) { // ... si el jugador2 no envia numero de intento
+        $vieneIntento = false;
+        $numIntentos = $numIntentos - 1; // restamos el intento fallido
     }
 }
 
-if ($numeroIntento == null) { // Si es la primera vez y...
-    if (isset($_REQUEST["numeroIntento"])) { // ... si el jugador2 no envia numero de intento
-        $noNumeroIntento = true;
-        $intentos = $intentos - 1; // restamos el intento fallido
-    }
-}
-
-if ($numeroOculto == null) { // Si el jugador1 no envia numero oculto
-    header("Location: adivinaNumeroInicio.php?noNumeroOculto");
+if ($oculto == null) { // no viene oculto
+    header("Location: adivinaNumeroInicio.php?noOculto");
     exit;
 }
 
-$intentosRestantes = 10 - $intentos;
+if ($numIntentos >= 10 && $oculto != $intento) { // CASO RARO: Acertar en el último intento
+    $maxIntentos = true;
+}
 
-setcookie("numeroOculto", $numeroOculto, time() + 60 * 60);
-setcookie("intentos", $intentos, time() + 60 * 60);
+$intentosRestantes = 10 - $numIntentos;
+
+setcookie("oculto", $oculto, time() + 60 * 60);
+setcookie("numIntentos", $numIntentos, time() + 60 * 60);
 ?>
 
 
@@ -53,51 +53,49 @@ setcookie("intentos", $intentos, time() + 60 * 60);
 </head>
 <body>
 <?php
-// Lo pongo arriba del todo para que en caso de ejecutarlo solo muestre el h1 y acabe.
+
 if ($maxIntentos) {?>
     <h1>Has perdido, se acabaron los intentos.</h1>
-<?php exit; // DUDA: se puede? implementar cuando ganas en vez de $terminado=true?
+<?php $terminado = true;
+    $intento = null; // para que no informe nada
 }
 
-if ($numeroIntento != null) {
-    if ($numeroIntento == $numeroOculto) {?>
-            <h2>¡Correcto, has ganado!</h2>
-            <p>Has realizado <?=$intentos?> intentos</p>
-            <?php $terminado = true;
-    }
-    if ($numeroIntento > $numeroOculto) {?>
-                <h2>Casi, prueba un número más bajo</h2>
-            <?php if (($numeroIntento - $numeroOculto) <= 5) {?>
+if ($intento == null) {
+    // No informamos de nada, el juego acaba de empezar.
+} else if ($intento < $oculto) {?>
+            <h2>Casi, prueba un número más alto</h2>
+                <?php if (($oculto - $intento) <= 5) {?>
                 <h2>Distancia: *</h2>
-                <?php } else if (($numeroIntento - $numeroOculto) <= 10) {?>
+                <?php } else if (($oculto - $intento) <= 10) {?>
                     <h2>Distancia: **</h2>
-                    <?php } else if (($numeroIntento - $numeroOculto) > 10) {?>
+                    <?php } else if (($oculto - $intento) > 10) {?>
                     <h2>Distancia: ***</h2>
                     <?php }
-    }
-    if ($numeroIntento < $numeroOculto) {?>
-                <h2>Casi, prueba un número más alto</h2>
-                <?php if (($numeroOculto - $numeroIntento) <= 5) {?>
+} else if ($intento > $oculto) {?>
+             <h2>Casi, prueba un número más bajo</h2>
+            <?php if (($intento - $oculto) <= 5) {?>
                 <h2>Distancia: *</h2>
-                <?php } else if (($numeroOculto - $numeroIntento) <= 10) {?>
+                <?php } else if (($intento - $oculto) <= 10) {?>
                     <h2>Distancia: **</h2>
-                    <?php } else if (($numeroOculto - $numeroIntento) > 10) {?>
+                    <?php } else if (($intento - $oculto) > 10) {?>
                     <h2>Distancia: ***</h2>
                     <?php }
-    }
+} else {?>
+    <h2>¡Correcto, has ganado! El número era <?=$oculto?>.</h2>
+    <p>Has realizado <?=$numIntentos?> intentos</p>
+    <?php $terminado = true;
 }
 
-if ($noNumeroIntento) {?>
+if (!$vieneIntento) {?>
     <h2>No has introducido ningún número, inténtalo de nuevo. (Esto no te cuenta como intento)</h2>
 <?php }
 
 if (!$terminado) {?>
     <p>Jugador 2, prueba a adivinar el número, tienes <?=$intentosRestantes?> intentos</p>
     <form method="get"> <!-- Action será el mismo php -->
-        <input type="number" name="numeroIntento">
+        <input type="number" name="intento">
         <input type="submit" value="Adivinar">
     </form>
-    <?php }
-?>
+<?php }?>
 </body>
 </html>
