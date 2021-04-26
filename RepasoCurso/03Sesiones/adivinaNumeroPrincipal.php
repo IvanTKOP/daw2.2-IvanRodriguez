@@ -13,13 +13,13 @@ if (isset($_REQUEST["oculto"])) { // Primera vez con el formulario
     $intento = null;
     $numIntentos = 0;
 } else if (!isset($_SESSION["oculto"])) { // Querian continuar, pero no hay cookie; no se puede
-    header("Location: adivinaNumeroInicio.php?noOculto");
+    header("Location: adivinaNumeroInicio.php");
     exit;
 } else if (isset($_REQUEST{"intento"})) { // Segunda y siguientes veces con "$intento"
     $oculto = (int) $_SESSION["oculto"];
     $intento = (int) $_REQUEST["intento"];
     $numIntentos = (int) $_SESSION["numIntentos"] + 1;
-} else { // Querian continuar y es posible porque hay cookie
+} else { // Querian continuar y es posible porque hay cookie. Han apagado el ordenador y han vuelto.. etc
     $oculto = (int) $_SESSION["oculto"];
     $intento = null;
     $numIntentos = (int) $_SESSION["numIntentos"];
