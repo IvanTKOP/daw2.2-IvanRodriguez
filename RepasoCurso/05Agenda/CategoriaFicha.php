@@ -48,6 +48,18 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que NO se cargan d
         </li>
     </ul>
 
+<?php if ($nuevaEntrada) {?>
+    <input type='submit' name='crear' value='Crear Categoría'>
+<?php } else {?>
+    <input type='submit' name='guardar' value='Guardar Cambios'>
+<?php }
+
+if (!$nuevaEntrada) {?>
+<a href="CategoriaEliminar.php">Eliminar Categoría</a>
+<?php }?>
+
+<a href="CategoriaListado.php">Volver al listado de categorías</a>
+
 </form>
  </body>
  </html>

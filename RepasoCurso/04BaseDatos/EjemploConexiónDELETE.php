@@ -24,9 +24,4 @@ $select = $conexion->prepare($sql); //la preparamos (convertimos string a objeto
 
 $select->execute([2]); // ejecutamos, podemos pasarle parametros si tuvieramos huecos en la sentencia
 
-$rs = $select->fetchAll(); //recogemos los datos, en este caso todos
-
-foreach ($rs as $fila) { // recorremos el array
-    $nombre = $fila["nombre"]; // guardamos los datos en variables
-    echo ($id . " " . $nombre . " "); // mostramos
-}
+// no recogemos datos ya que no los mostramos
