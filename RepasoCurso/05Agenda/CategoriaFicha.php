@@ -2,7 +2,7 @@
 
 require_once "_Varios.php";
 
-$conexion = obtenerPdoConexionBD();
+$conexion = obtenerPdoConexionBD(); // retorna objeto conexion para utilizarlo
 
 // recogemos "id" de la request.
 $id = (int) $_REQUEST["id"];
@@ -20,7 +20,7 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que NO se cargan d
     $select->execute([$id]); //Se añade parametro a la consulta (El valor "?")
     $rs = $select->fetchAll();
 
-    $categoriaNombre = $rs[0]["nombre"];
+    $categoriaNombre = $rs[0]["nombre"]; // recogemos el primer array asociativo del array escalar (en este caso el único que viene), del que nos quedamos con el "nombre"
 }
 ?>
 

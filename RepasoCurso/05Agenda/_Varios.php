@@ -21,5 +21,5 @@ function obtenerPdoConexionBD(): PDO
         exit('Error al conectar');
     }
 
-    return $conexion;
+    return $conexion; // devuelve objeto para usarlo
 }

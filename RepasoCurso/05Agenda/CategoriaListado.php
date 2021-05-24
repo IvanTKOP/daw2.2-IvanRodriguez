@@ -1,18 +1,15 @@
 <?php
-	require_once "_Varios.php";
+require_once "_Varios.php";
 
-	$conexionBD = obtenerPdoConexionBD();
+$conexionBD = obtenerPdoConexionBD();
 
-	// Los campos que incluyo en el SELECT son los que luego podré leer
-    // con $fila["campo"].
-	$sql = "SELECT id, nombre FROM Categoria ORDER BY nombre";
+// Los campos que incluyo en el SELECT son los que luego podré leer con $fila["campo"].
+$sql = "SELECT id, nombre FROM Categoria ORDER BY nombre";
 
-    $select = $conexionBD->prepare($sql);
-    $select->execute([]); // Array vacío porque la consulta preparada no requiere parámetros.
-    $rs = $select->fetchAll();
+$select = $conexionBD->prepare($sql);
+$select->execute([]); // Array vacío porque la consulta preparada no requiere parámetros.
+$rs = $select->fetchAll();
 
-    // INTERFAZ:
-    // $rs
 ?>
 
 
@@ -35,12 +32,12 @@
 		<th>Nombre</th>
 	</tr>
 
-	<?php foreach ($rs as $fila) { ?>
+	<?php foreach ($rs as $fila) {?>
         <tr>
-            <td><a href=   'CategoriaFicha.php?id=<?=$fila["id"]?>'> <?=$fila["nombre"] ?> </a></td>
+            <td><a href=   'CategoriaFicha.php?id=<?=$fila["id"]?>'> <?=$fila["nombre"]?> </a></td>
             <td><a href='CategoriaEliminar.php?id=<?=$fila["id"]?>'> (X)                   </a></td>
         </tr>
-	<?php } ?>
+	<?php }?>
 
 </table>
 
