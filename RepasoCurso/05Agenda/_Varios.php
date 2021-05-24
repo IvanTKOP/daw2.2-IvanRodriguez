@@ -20,4 +20,6 @@ function obtenerPdoConexionBD(): PDO
         error_log("Error al conectar: " . $e->getMessage());
         exit('Error al conectar');
     }
+
+    return $conexion;
 }
