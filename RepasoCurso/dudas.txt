@@ -1,1 +1,7 @@
-SEGUIR CON PERSONAS 
+No acabo de entender el termino de array escalar, en que caso vienen más de un array asociativo.
+
+PeersonaFicha: 
+- id hidden
+- select categorias
+
+CORREGIR FALLOS PERSONA GUARDAR
