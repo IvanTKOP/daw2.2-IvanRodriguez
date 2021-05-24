@@ -1,0 +1,3 @@
+Return conexion;
+
+Fallos categorias.
