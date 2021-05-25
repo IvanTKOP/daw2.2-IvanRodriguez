@@ -8,7 +8,7 @@ $id = (int) $_REQUEST["id"];
 $nombre = $_REQUEST["nombre"];
 $apellidos = $_REQUEST["apellidos"];
 $telefono = $_REQUEST["telefono"];
-$categoriaId = (int) $_REQUEST["categoriaId"];
+$categoriaId = (int) $_REQUEST["categoria"];
 
 $nuevaEntrada = ($id == -1);
 

@@ -9,10 +9,11 @@ $id = (int) $_REQUEST["id"];
 $nuevaEntrada = ($id == -1);
 
 if ($nuevaEntrada) {
-    $personaNombre = "<introduce el nombre>";
-    $personaApellidos = "<introduce los apellidos";
-    $personaTelefono = "<introduce el teléfono>";
+    $personaNombre = "<introduce nombre>";
+    $personaApellidos = "<introduce apellidos>";
+    $personaTelefono = "<introduce teléfono>";
     $personaCategoriaId = 0;
+
 } else {
 
     $sql = "SELECT nombre, apellidos, telefono, categoriaId FROM Persona WHERE id=?";
@@ -47,11 +48,24 @@ if ($nuevaEntrada) {
 
     <form method="get" action="PersonaGuardar.php">
 
+    <input type='hidden' name='id' value='<?=$id?>'>
+
         <ul>
-            <li> Nombre: <input type="text" name="nombre" value=" <?=$personaNombre?> "> </li>
-            <li> Apellidos: <input type="text" name="apellidos" value=" <?=$personaApellidos?> "> </li>
-            <li> Teléfono: <input type="text" name="telefono" value=" <?=$personaTelefono?> "> </li>
-            <li> Categoría: <input type="text" name="categoria" value=" <?=$personaCategoriaId?> "> </li>
+        <?php if ($nuevaEntrada) {?>
+
+            <li> Nombre: <input type="text" name="nombre"  placeholder="<introduce el nombre>"> </li>
+            <li> Apellidos: <input type="text" name="apellidos" placeholder="<introduce los apellidos>"> </li>
+            <li> Teléfono: <input type="text" name="telefono" placeholder="<introduce el telefono>"> </li>
+            <li> Categoría: <input type="text" name="categoria" placeholder="<introduce la categoría>"> </li>
+
+            <?php } else {?>
+
+            <li> Nombre: <input type="text" name="nombre"  value='<?=$personaNombre?>'> </li>
+            <li> Apellidos: <input type="text" name="apellidos" value='<?=$personaApellidos?>'> </li>
+            <li> Teléfono: <input type="text" name="telefono" value='<?=$personaTelefono?>'> </li>
+            <li> Categoría: <input type="text" name="categoria" value='<?=$personaCategoriaId?>'></li>
+
+            <?php }?>
         </ul>
 
     <?php if ($nuevaEntrada) {?>
@@ -60,13 +74,13 @@ if ($nuevaEntrada) {
         <input type="submit" name="guardar" value="Guardar Cambios">
         <br>
         <br>
-        <a href="PersonaEliminar.php?id= <?=$id?> "> Eliminar persona </a>
+        <a href='PersonaEliminar.php?id=<?=$id?>'> Eliminar persona </a>
     <?php }?>
 
     </form>
 
     <br>
 
-    <a href="PersonaListado.php"> Volver a listado de personas </a>
+    <a href='PersonaListado.php'> Volver a listado de personas </a>
 </body>
 </html>

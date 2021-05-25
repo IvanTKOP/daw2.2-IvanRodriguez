@@ -4,7 +4,19 @@ require_once "_Varios.php";
 
 $conexion = obtenerPdoConexionBD();
 
-$sql = "SELECT id, nombre, apellidos, telefono, categoriaId FROM Persona ORDER BY id";
+/*$sql = "SELECT id, nombre, apellidos, telefono, categoriaId FROM Persona ORDER BY id";*/
+
+$sql = "
+        SELECT
+            p.id        AS pId,
+            p.nombre    AS pNombre,
+            c.id        AS cId,
+            c.nombre    AS cNombre
+        FROM
+        Persona AS p INNER JOIN Categoria AS c
+        ON p.categoriaId = c.id
+        ORDER BY p.nombre
+";
 
 $select = $conexion->prepare($sql);
 $select->execute();
@@ -25,20 +37,19 @@ $rs = $select->fetchAll();
     <table border="1">
         <tr>
             <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Teléfono</th>
+            <th>Categoría</th>
         </tr>
         <?php foreach ($rs as $fila) {?>
             <tr>
-                <td><a href='PersonaFicha.php?id=<?=$fila["id"]?>'> <?=$fila["nombre"]?> </td>
-                <td> <a href='PersonaFicha.php?id=<?=$fila["id"]?>'> <?=$fila["apellidos"]?> </td>
-                <td> <?=$fila["telefono"]?> </td>
-                <td><a href='PersonaEliminar.php?id=<?=$fila["id"]?>'>(X)</td>
+                <td><a href='PersonaFicha.php?id=<?=$fila["pId"]?>'> <?=$fila["pNombre"]?> </td>
+                <td> <a href='CategoriaFicha.php?id=<?=$fila["cId"]?>'> <?=$fila["cNombre"]?> </td>
+                <td><a href='PersonaEliminar.php?id=<?=$fila["pId"]?>'>(X)</td>
             </tr>
         <?php }?>
     </table>
     <br>
-    <a href='PersonaGuardar.php?id=-1'> Crear Entrada </a>
+    <a href='PersonaFicha.php?id=-1'> Crear Entrada </a> <!-- Se redirige a Ficha ya que luego lo manda a Guardar, no a Guardar directamente -->
+    <br>
     <br>
     <a href='CategoriaListado.php'> Gestionar Categorías </a>
 </body>

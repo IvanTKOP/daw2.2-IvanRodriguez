@@ -40,24 +40,38 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que NO se cargan d
 <?php }?>
 
 <form method='get' action='CategoriaGuardar.php'>
+
     <input type="hidden" name='id' value='<?=$id?>'>
+
     <ul>
+
+    <?php if ($nuevaEntrada) {?>
+        <li>
+            <strong>Nombre: </strong>
+            <input type="text" name='nombre' placeholder="<introduce el nombre>">
+        </li>
+    <?php } else {?>
         <li>
             <strong>Nombre: </strong>
             <input type="text" name='nombre' value='<?=$categoriaNombre?>'>
         </li>
+    <?php }?>
+
     </ul>
 
 <?php if ($nuevaEntrada) {?>
     <input type='submit' name='crear' value='Crear Categoría'>
 <?php } else {?>
     <input type='submit' name='guardar' value='Guardar Cambios'>
+    <br>
+    <br>
 <?php }
 
 if (!$nuevaEntrada) {?>
-<a href="CategoriaEliminar.php">Eliminar Categoría</a>
+<a href='CategoriaEliminar.php?id=<?=$id?>'>Eliminar Categoría</a>
 <?php }?>
-
+<br>
+<br>
 <a href="CategoriaListado.php">Volver al listado de categorías</a>
 
 </form>

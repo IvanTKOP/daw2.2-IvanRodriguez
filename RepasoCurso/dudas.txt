@@ -1,7 +1,8 @@
 No acabo de entender el termino de array escalar, en que caso vienen más de un array asociativo.
 
-PeersonaFicha: 
+PersonaFicha: 
 - id hidden
 - select categorias
 
-CORREGIR FALLOS PERSONA GUARDAR
+PersonaListado:
+- inner join
