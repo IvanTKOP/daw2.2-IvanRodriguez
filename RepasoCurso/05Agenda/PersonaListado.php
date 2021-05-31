@@ -16,7 +16,7 @@ $sql = "
         Persona AS p INNER JOIN Categoria AS c
         ON p.categoriaId = c.id
         ORDER BY p.nombre
-";
+"; // RELACIONAMOS LAS DOS TABLAS PARA PODER USARLAS JUNTAS EN LAS CONSULTAS
 
 $select = $conexion->prepare($sql);
 $select->execute();

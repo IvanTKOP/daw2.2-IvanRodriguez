@@ -20,7 +20,7 @@ if ($nuevaEntrada) { // Quieren CREAR una nueva entrada, así que NO se cargan d
     $select->execute([$id]); //Se añade parametro a la consulta (El valor "?")
     $rs = $select->fetchAll();
 
-    $categoriaNombre = $rs[0]["nombre"]; // recogemos el primer array asociativo del array escalar (en este caso el único que viene), del que nos quedamos con el "nombre"
+    $categoriaNombre = $rs[0]["nombre"]; // recogemos el primer array asociativo del array escalar (en este caso el único que viene, por el WHERE de la consulta), del que nos quedamos con el "nombre"
 }
 ?>
 

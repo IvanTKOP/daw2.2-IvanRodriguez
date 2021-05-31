@@ -1,10 +1,8 @@
-No acabo de entender el termino de array escalar, en que caso vienen más de un array asociativo. // segun where en la consulta
 
 PersonaFicha: 
-- id hidden // solo para llevar el dato al guardar 
 - select categorias // para relacionar los id de categorias con los nombres
 
-PersonaListado:
-- inner join // para relacionar las dos tablas 
+IMPLEMENTAR SELECT DE CATEGORIAS 
 
-HACER SESION COMPROBAR DEL FB SESIONES
+
+IMPLEMENTAR COOKIES EN MINIFB

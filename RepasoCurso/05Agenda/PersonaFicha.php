@@ -48,7 +48,7 @@ if ($nuevaEntrada) {
 
     <form method="get" action="PersonaGuardar.php">
 
-    <input type='hidden' name='id' value='<?=$id?>'>
+    <input type='hidden' name='id' value='<?=$id?>'> <!-- solo para llevar el dato a Guardar -->
 
         <ul>
         <?php if ($nuevaEntrada) {?>

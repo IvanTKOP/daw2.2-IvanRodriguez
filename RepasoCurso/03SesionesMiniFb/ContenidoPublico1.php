@@ -7,7 +7,10 @@ require_once "_Varios.php";
 <html>
 
 <head>
-    <meta charset='UTF-8'>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contenido Público 1</title>
 </head>
 
 
@@ -23,7 +26,7 @@ require_once "_Varios.php";
 <p>Sed dapibus arcu finibus, maximus justo eget, vestibulum turpis. Ut ut nibh egestas metus pretium pretium. Nulla efficitur vel mi quis rutrum. Nunc a condimentum nisl. Etiam venenatis efficitur dictum. Quisque a velit in mauris congue scelerisque a aliquet massa. Integer ultrices molestie nulla non dictum.</p>
 
 <a href='ContenidoPrivado1.php'>Ir al Contenido Privado 1</a>
-
+<br><br>
 <a href='ContenidoPrivado2.php'>Ir al Contenido Privado 2</a>
 
 </body>

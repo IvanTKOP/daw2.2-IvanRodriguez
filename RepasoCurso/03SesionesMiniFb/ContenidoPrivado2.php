@@ -18,10 +18,10 @@ if (!haySesionRamIniciada()) {
 </head>
 <body>
 <?php pintarInfoSesion();?>
-    <h1>Contenido 2</h1>
+    <h1>Contenido Privado 2</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent facilisis interdum congue. Nulla imperdiet augue eget arcu facilisis, non mattis sem feugiat. Sed ullamcorper felis non nulla pretium, quis aliquet arcu efficitur. Integer at dolor risus. Vivamus consectetur convallis ligula a laoreet. Nam eleifend risus nec mauris facilisis porttitor. Etiam varius, metus sed hendrerit porta, nibh lectus egestas ex, ut pharetra nisi tortor non elit. Cras felis metus, tincidunt ac risus a, finibus suscipit elit. Cras elementum ipsum sed mi finibus, sed condimentum sapien tempus.</p>
 
-    <a href="contenidoPrivado1.php">Ir a Contenido Privado 1</a>
+    <a href="contenidoPrivado1.php">Ir a Contenido Privado 1</a><br><br>
     <a href="contenidoPublico1.php">Ir a Contenido Publico 1</a>
 </body>
 </html>
