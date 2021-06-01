@@ -4,5 +4,7 @@ PersonaFicha:
 
 IMPLEMENTAR SELECT DE CATEGORIAS 
 
+- ? en la function actualizarCodigoCookieEnBD
+
 
 IMPLEMENTAR COOKIES EN MINIFB

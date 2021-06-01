@@ -1,7 +1,6 @@
 <?php
 
-declare (strict_types = 1);
-session_start();
+session_start(); // Para que esté en todas los scripts al hacer require_once
 
 function obtenerPdoConexionBD(): PDO
 {
@@ -10,16 +9,16 @@ function obtenerPdoConexionBD(): PDO
     $identificador = "root";
     $contrasenna = "";
     $opciones = [
-        PDO::ATTR_EMULATE_PREPARES => false, // turn off emulation mode for "real" prepared statements
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
+        PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ];
 
     try {
         $conexion = new PDO("mysql:host=$servidor;dbname=$bd;charset=utf8", $identificador, $contrasenna, $opciones);
     } catch (Exception $e) {
-        error_log("Error al conectar: " . $e->getMessage()); // El error se vuelca a php_error.log
-        exit('Error al conectar'); //something a user can understand
+        error_log("Error al conectar: " . $e->getMessage());
+        exit('Error al conectar');
     }
 
     return $conexion;
@@ -27,9 +26,11 @@ function obtenerPdoConexionBD(): PDO
 
 function obtenerUsuarioPorContrasenna(string $identificador, string $contrasenna): ?array
 {
+
     $conexion = obtenerPdoConexionBD();
 
     $sql = "SELECT * FROM Usuario WHERE identificador=? AND BINARY contrasenna=?";
+
     $select = $conexion->prepare($sql);
     $select->execute([$identificador, $contrasenna]);
     $rs = $select->fetchAll();
@@ -39,7 +40,7 @@ function obtenerUsuarioPorContrasenna(string $identificador, string $contrasenna
 
 function establecerSesionRam(array $arrayUsuario)
 {
-    // Anotar como mínimo el id.
+
     $_SESSION["id"] = $arrayUsuario["id"];
 
     $_SESSION["identificador"] = $arrayUsuario["identificador"];
@@ -50,25 +51,88 @@ function establecerSesionRam(array $arrayUsuario)
 
 function haySesionRamIniciada(): bool
 {
-    return isset($_SESSION["id"]); // si existe está iniciada
+    return isset($_SESSION["id"]);
 }
 
 function destruirSesionRamYCookie()
 {
     session_destroy();
-    //actualizarCodigoCookieEnBD(null);
-    //borrarCookies();
-    unset($_SESSION); // Por si acaso
+    actualizarCodigoCookieEnBD(null);
+    borrarCookies();
+    unset($_SESSION);
 }
 
 function pintarInfoSesion()
 {
     if (haySesionRamIniciada()) {
-        echo "<span>Sesión iniciada por <a href='UsuarioPerfilVer.php'>$_SESSION[identificador]</a> ($_SESSION[nombre] $_SESSION[apellidos]) <a href='SesionCerrar.php'>Cerrar sesión</a></span>";
+        echo "<span>Hola, <a href=''></a>$_SESSION[nombre] $_SESSION[apellidos] <a href='SesionCerrar.php'>Cerrar Sesión</a></span>";
     } else {
-        echo "<a href='SesionInicioFormulario.php'>Iniciar sesión</a>";
+        echo "<a href='SesionInicioFormulario.php'>Iniciar Sesión</a>";
     }
 }
+
+// COOKIES
+
+function obtenerUsuarioPorCodigoCookie(string $identificador, string $codigoCookie): ?array
+{
+    $conexion = obtenerPdoConexionBD();
+
+    $sql = "SELECT * FROM Usuario WHERE identificador=? AND BINARY codigoCookie=?";
+
+    $select = $conexion->prepare($sql);
+    $select->execute([$identificador, $codigoCookie]);
+    $rs = $select->fetchAll();
+
+    return $select->rowCount() == 1 ? $rs[0] : null;
+}
+
+function actualizarCodigoCookieEnBD(?string $codigoCookie)
+{
+    $conexion = obtenerPdoConexionBD();
+
+    $sql = "UPDATE Usuario SET codigoCookie=? WHERE id=?";
+
+    $select = $conexion->prepare($sql);
+    $select->execute([$codigoCookie, $_SESSION["id"]]);
+}
+
+function borrarCookies()
+{
+    setcookie("identificador", "", time() - 3600);
+    setcookie("codigoCookie", "", time() - 3600);
+}
+
+function establecerSesionCookie(array $arrayUsuario)
+{
+    $codigoCookie = generarCadenaAleatoria(32); // creamos un codigo cookie complejo
+
+    actualizarCodigoCookieEnBD($codigoCookie);
+
+    // Creamos cookies
+    setcookie("identificador", $arrayUsuario["identificador"], time() + 3600);
+    setcookie("codigoCookie", $codigoCookie, time() + 3600);
+}
+
+function intentarCanjearSesionCookie(): bool
+{
+    if (isset($_COOKIE["identificador"]) && isset($_COOKIE["codigoCookie"])) {
+        $arrayUsuario = obtenerUsuarioPorCodigoCookie($_COOKIE["identificador"], $_COOKIE["codigoCookie"]); // si existen las cookies obtenemos el usuario
+
+        if ($arrayUsuario) { // si no hay errores establecemos sesiones
+            establecerSesionRam($arrayUsuario);
+            establecerSesionCookie($arrayUsuario);
+            return true;
+        } else { // sino borramos
+            borrarCookies();
+            return false;
+        }
+    } else { // sino borramos
+        borrarCookies();
+        return false;
+    }
+}
+
+// GENERAL
 
 function generarCadenaAleatoria(int $longitud): string
 {
@@ -76,8 +140,6 @@ function generarCadenaAleatoria(int $longitud): string
     return $s;
 }
 
-// (Esta función no se utiliza en este proyecto pero se deja por si se optimizase el flujo de navegación.)
-// Esta función redirige a otra página y deja de ejecutar el PHP que la llamó:
 function redireccionar(string $url)
 {
     header("Location: $url");

@@ -7,7 +7,11 @@ $arrayUsuario = obtenerUsuarioPorContrasenna($_REQUEST["identificador"], $_REQUE
 if ($arrayUsuario) { // Si identificador existe y contraseña es correcta.
     establecerSesionRam($arrayUsuario);
 
-    redireccionar("ContenidoPrivado1.php");
+    if (isset($_REQUEST["recordar"])) {
+        establecerSesionCookie($arrayUsuario);
+    }
+
+    redireccionar('ContenidoPrivado1.php');
 } else {
-    redireccionar("SesionInicioFormulario.php?datosErroneos"); // devolvemoa caso especial datos erroneos
+    redireccionar('SesionInicioFormulario.php'); // devolvemoa caso especial datos erroneos
 }
