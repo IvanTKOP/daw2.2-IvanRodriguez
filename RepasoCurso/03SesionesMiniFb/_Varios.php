@@ -59,7 +59,7 @@ function destruirSesionRamYCookie()
     session_destroy();
     actualizarCodigoCookieEnBD(null);
     borrarCookies();
-    unset($_SESSION);
+    unset($_SESSION); // para dejarla como si nunca hubiese existido
 }
 
 function pintarInfoSesion()
@@ -86,7 +86,8 @@ function obtenerUsuarioPorCodigoCookie(string $identificador, string $codigoCook
     return $select->rowCount() == 1 ? $rs[0] : null;
 }
 
-function actualizarCodigoCookieEnBD(?string $codigoCookie)
+function actualizarCodigoCookieEnBD(?string $codigoCookie) // ? se pone para permitir que $codigoCookie sea null o en este caso string
+
 {
     $conexion = obtenerPdoConexionBD();
 

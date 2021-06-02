@@ -4,7 +4,12 @@ PersonaFicha:
 
 IMPLEMENTAR SELECT DE CATEGORIAS 
 
-- ? en la function actualizarCodigoCookieEnBD
+
+SesionInicioFormulario:
+- poner css a datos erroneos
 
 
-IMPLEMENTAR COOKIES EN MINIFB
+
+CREAR PROTOTIPO PARA VIERNES
+- un html con un boton y un (text area,p...) con un script js que utilize el XML para devolver 
+el contenido de la pagina al html

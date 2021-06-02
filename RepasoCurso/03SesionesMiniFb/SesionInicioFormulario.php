@@ -21,7 +21,7 @@ $datosErroneos = isset($_REQUEST["datosErroneos"]); // llega datos erroneos
 <body>
     <h1 style="text-align:center;">Iniciar Sesión</h1>
     <?php if ($datosErroneos) {?>
-        <p style='color: red;'>No se ha podido iniciar sesión con los datos proporcionados. Inténtelo de nuevo.</p>
+        <p style='color: red; text-align:center;'>No se ha podido iniciar sesión con los datos proporcionados. Inténtelo de nuevo.</p>
    <?php }?>
 
    <form method='get' action='SesionInicioComprobar.php' style="text-align:center;">
