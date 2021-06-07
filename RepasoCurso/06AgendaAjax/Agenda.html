@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda Ajax</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="css/Estilos.css" />
+  </head>
+  <body>
+    <h1>Agenda Ajax</h1>
+
+    <br /><br />
+
+    <h2>Categorías</h2>
+
+    <div id="categoriasTabla">
+      <div id="categoriasCabecera">
+        <div>
+          <div>Nombre</div>
+          <div>Eliminar</div>
+        </div>
+        <div id="categoriasDatos"></div>
+      </div>
+    </div>
+
+    <br />
+
+    <input type="text" id="categoriaNombre" placeholder="Categoria" value="" />
+    <button id="btnCategoriaCrear">Crear Categoría</button>
+
+    <br /><br />
+
+    <h2>Personas</h2>
+
+    <div id="personasTabla">
+      <div id="personasCabecera">
+        <div>
+          <div>Nombre</div>
+          <div>Eliminar</div>
+        </div>
+        <div id="personasDatos"></div>
+      </div>
+    </div>
+
+    <br />
+
+    <input type="text" id="personaNombre" placeholder="Nombre" value="" />
+    <input type="text" id="personaApellidos" placeholder="Apellidos" value="" />
+    <input type="text" id="personaTelefono" placeholder="Telefono" value="" />
+    <input
+      type="text"
+      id="personaCategoriaId"
+      placeholder="Categoría Id"
+      value=""
+    />
+    <button id="btnPersonaCrear">Crear Persona</button>
+  </body>
+</html>
