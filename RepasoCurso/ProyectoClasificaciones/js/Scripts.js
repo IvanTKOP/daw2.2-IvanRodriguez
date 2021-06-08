@@ -220,6 +220,8 @@ function domCrearDivImg(urlSrc, codigoOnclick) {
     let div = document.createElement("div");
         let img = document.createElement("img");
                 img.setAttribute("src", urlSrc);
+                img.setAttribute("width", "20");
+                img.setAttribute("height", "20");
                 img.setAttribute("onclick", codigoOnclick + " return false;");
     div.appendChild(img);
 
@@ -233,7 +235,7 @@ function domEquipoObjetoADiv(equipo) {
             div.setAttribute("id", "equipo-" + equipo.id);
     div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivInputText(equipo.ligaId, "blurEquipoModificar(this);"));
+    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");"));
 
     return div;
 }
@@ -263,26 +265,8 @@ function domEquipoEjecutarInsercion(pos, equipo) {
     divEquiposDatos.insertBefore(divNuevo, divReferencia);
 }
 
-function domEquipoInsertar(equipoNueva, enOrden=false) {
-    // Si piden insertar en orden, se buscará su lugar. Si no, irá al final.
-    if (enOrden) {
-        for (let pos=0; pos < divEquiposDatos.children.length; pos++) {
-            let equipoActual = domEquipoObtenerObjeto(pos);
-
-            // Se generan cadenas compuestas por los campos clave para ordenar.
-            let cadenaActual = equipoActual.nombre + equipoActual.puntos + equipoActual.id;
-            let cadenaNueva = equipoNueva.nombre + equipoNueva.puntos + equipoNueva.id;
-
-            if (cadenaNueva.localeCompare(cadenaActual) == -1) {
-                // Si la equipo nueva va ANTES que la actual, este es el punto en el que insertarla.
-                domEquipoEjecutarInsercion(pos, equipoNueva);
-                return;
-            }
-        }
-    }
-
-    // Si llegamos hasta aquí, insertamos al final.
-    domEquipoEjecutarInsercion(divEquiposDatos.children.length, equipoNueva);
+function domEquipoInsertar(equipoNuevo) {
+    domEquipoEjecutarInsercion(divEquiposDatos.children.length, equipoNuevo);
 }
 
 function domEquipoLocalizarPosicion(idBuscado) {
@@ -307,8 +291,6 @@ function domEquipoEliminar(id) {
 function domEquipoModificar(equipo) {
     domEquipoEliminar(equipo.id);
     asignarBtnLigaId(equipo.ligaId);
-    // Se fuerza la ordenación, ya que este elemento podría no quedar ordenado si se pone al final.
-    //domEquipoInsertar(equipo, true);
 }
 
 function asignarBtnLigaId(ligaId) {
@@ -322,5 +304,19 @@ function asignarBtnLigaId(ligaId) {
         btnAl();
     } else if (ligaId == 5) {
         btnFr();
+    }
+}
+
+function asignarImgLigaId(ligaId) {
+    if (ligaId == 1){
+       return "img/esp.png";
+    } else if (ligaId == 2) {
+        return "img/ru.png";
+    } else if (ligaId == 3) {
+        return "img/it.png";
+    } else if (ligaId == 4) {
+        return "img/al.png";
+    } else if (ligaId == 5) {
+        return "img/fr.png";
     }
 }
