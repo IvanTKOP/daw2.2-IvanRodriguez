@@ -1,0 +1,45 @@
+#equiposTabla > div {
+  display: table;
+  width: 90%;
+}
+
+#equiposTabla > div > div {
+  display: table-row;
+  width: 100%;
+}
+
+#equiposTabla > div > div > div {
+  display: table-cell;
+  text-align: center;
+  border: 1px solid silver;
+  width: 16.67%;
+  padding: 1px;
+}
+
+#equiposTabla > div > div > div > input {
+  width: 100%;
+  border: none;
+}
+
+#ligasTabla > div {
+  display: table;
+  width: 40%;
+}
+
+#ligasTabla > div > div {
+  display: table-row;
+  width: 100%;
+}
+
+#ligasTabla > div > div > div {
+  display: table-cell;
+  text-align: center;
+  border: 1px solid silver;
+  width: 50%;
+  padding: 1px;
+}
+
+#ligasTabla > div > div > div > input {
+  width: 100%;
+  border: none;
+}
