@@ -84,90 +84,6 @@ class DAO
 
     }
 
-    /* liga */
-
-    private static function ligaCrearDesdeRs(array $fila): liga
-    {
-        return new Liga($fila["id"], $fila["nombre"]);
-    }
-
-    public static function ligaObtenerPorId(int $id): ?liga
-    {
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM liga WHERE id=?",
-            [$id]
-        );
-
-        if ($rs) {
-            return self::ligaCrearDesdeRs($rs[0]);
-        } else {
-            return null;
-        }
-
-    }
-
-    public static function ligaObtenerTodas(): array
-    {
-        $datos = [];
-
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM liga ORDER BY nombre",
-            []
-        );
-
-        foreach ($rs as $fila) {
-            $liga = self::ligaCrearDesdeRs($fila);
-            array_push($datos, $liga);
-        }
-
-        return $datos;
-    }
-
-    public static function ligaCrear(string $nombre): ?liga
-    {
-        $idAutogenerado = self::ejecutarInsert(
-            "INSERT INTO liga (nombre) VALUES (?)",
-            [$nombre]
-        );
-
-        if ($idAutogenerado == null) {
-            return null;
-        } else {
-            return self::ligaObtenerPorId($idAutogenerado);
-        }
-
-    }
-
-    public static function ligaActualizar(liga $liga): ?liga
-    {
-        $filasAfectadas = self::ejecutarUpdel(
-            "UPDATE liga SET nombre=? WHERE id=?",
-            [$liga->getNombre(), $liga->getId()]
-        );
-
-        if ($filasAfectadas = null) {
-            return null;
-        } else {
-            return $liga;
-        }
-
-    }
-
-    public static function ligaEliminarPorId(int $id): bool
-    {
-        $filasAfectadas = self::ejecutarUpdel(
-            "DELETE FROM liga WHERE id=?",
-            [$id]
-        );
-
-        return ($filasAfectadas == 1);
-    }
-
-    public static function ligaEliminar(liga $liga): bool
-    {
-        return self::ligaEliminarPorId($liga->id);
-    }
-
     /* equipo */
 
     public static function equipoObtenerPorLigaId($ligaId): array
@@ -207,12 +123,12 @@ class DAO
 
     }
 
-    public static function equipoObtenerTodas(): array
+    public static function equipoObtenerTodos(): array
     {
         $datos = [];
 
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM equipo ORDER BY nombre, puntos",
+            "SELECT * FROM equipo ORDER BY puntos DESC, nombre ASC",
             []
         );
 
@@ -222,21 +138,6 @@ class DAO
         }
 
         return $datos;
-    }
-
-    public static function equipoCrear(string $nombre, string $apellidos, string $telefono, bool $estrella, int $ligaId): ?equipo
-    {
-        $idAutogenerado = self::ejecutarInsert(
-            "INSERT INTO equipo (nombre, apellidos, telefono, estrella, ligaId) VALUES (?, ?, ?, ?, ?)",
-            [$nombre, $apellidos, $telefono, $estrella ? 1 : 0, $ligaId]
-        );
-
-        if ($idAutogenerado == null) {
-            return null;
-        } else {
-            return self::equipoObtenerPorId($idAutogenerado);
-        }
-
     }
 
     public static function equipoActualizar(equipo $equipo): ?equipo
@@ -252,20 +153,5 @@ class DAO
             return $equipo;
         }
 
-    }
-
-    public static function equipoEliminarPorId(int $id): bool
-    {
-        $filasAfectadas = self::ejecutarUpdel(
-            "DELETE FROM equipo WHERE id=?",
-            [$id]
-        );
-
-        return ($filasAfectadas == 1);
-    }
-
-    public static function equipoEliminar(equipo $equipo): bool
-    {
-        return self::equipoEliminarPorId($equipo->id);
     }
 }

@@ -76,44 +76,12 @@ function inicializar() {
     document.getElementById("it").addEventListener('click', btnIt);
     document.getElementById("al").addEventListener('click', btnAl);
     document.getElementById("fr").addEventListener('click', btnFr);
+    document.getElementById("eu").addEventListener('click', btnEu);
 
-    var equipoDatos = document.getElementById("equipoDatos");
-
-
-    // En los "Insertar" de a continuación no se fuerza la ordenación, ya que PHP
-    // nos habrá dado los elementos en orden correcto y sería una pérdida de tiempo.
-/*
-    llamadaAjax("ligaObtenerTodas.php", "",
-        function(texto) {
-            var ligas = JSON.parse(texto);
-
-            for (var i=0; i<ligas.length; i++) {
-                domLigaInsertar(ligas[i]);
-            }
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al cargar ligas al inicializar: " + texto);
-        }
-    );
-
-    llamadaAjax("equipoObtenerTodas.php", "",
-        function(texto) {
-            var equipos = JSON.parse(texto);
-
-            for (var i=0; i<equipos.length; i++) {
-                domEquipoInsertar(equipos[i]);
-            }
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
-        }
-    );
-*/
 }
 
 function btnEsp() {
-    equipoDatos = [];
-    document.getElementById("equipoDatos").innerHTML = "";
+    document.getElementById("equiposDatos").innerHTML = "";
 
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 1,
     function(texto) {
@@ -130,6 +98,8 @@ function btnEsp() {
 }
 
 function btnRu() {
+    document.getElementById("equiposDatos").innerHTML = "";
+
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 2,
     function(texto) {
         var equipos = JSON.parse(texto);
@@ -145,6 +115,8 @@ function btnRu() {
 }
 
 function btnIt() {
+    document.getElementById("equiposDatos").innerHTML = "";
+
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 3,
     function(texto) {
         var equipos = JSON.parse(texto);
@@ -160,6 +132,8 @@ function btnIt() {
 }
 
 function btnAl() {
+    document.getElementById("equiposDatos").innerHTML = "";
+
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 4,
     function(texto) {
         var equipos = JSON.parse(texto);
@@ -175,6 +149,8 @@ function btnAl() {
 }
 
 function btnFr() {
+    document.getElementById("equiposDatos").innerHTML = "";
+
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 5,
     function(texto) {
         var equipos = JSON.parse(texto);
@@ -188,6 +164,23 @@ function btnFr() {
     }
 );
 }
+function btnEu() {
+    document.getElementById("equiposDatos").innerHTML = "";
+
+    llamadaAjax("EquipoObtenerTodos.php", "",
+    function(texto) {
+        var equipos = JSON.parse(texto);
+
+        for (var i=0; i<equipos.length; i++) {
+            domEquipoInsertar(equipos[i]);
+        }
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+);
+}
+
 
 function blurEquipoModificar(input) {
     let divEquipo = input.parentElement.parentElement;
@@ -208,39 +201,6 @@ function blurEquipoModificar(input) {
         }
     );
 }
-/*
-function clickLigaEliminar(id) {
-    llamadaAjax("ligaEliminar.php", "id="+id,
-        function(texto) {
-            var operacionOK = JSON.parse(texto);
-            if (operacionOK) {
-                domLigaEliminar(id);
-            } else {
-                notificarUsuario("Error Ajax al eliminar: " + texto);
-            }
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al eliminar: " + texto);
-        }
-    );
-}
-
-function clickEquipoEliminar(id) {
-    llamadaAjax("equipoEliminar.php", "id="+id,
-        function(texto) {
-            var operacionOK = JSON.parse(texto);
-            if (operacionOK) {
-                domEquipoEliminar(id);
-            } else {
-                notificarUsuario("Error Ajax al eliminar: " + texto);
-            }
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al eliminar: " + texto);
-        }
-    );
-}
-*/
 
 
 // ---------- GESTIÓN DEL DOM ----------
@@ -266,7 +226,7 @@ function domCrearDivImg(urlSrc, codigoOnclick) {
     return div;
 }
 
-// ---------EQUIPO------------------
+// ---------DOM-EQUIPO------------------
 
 function domEquipoObjetoADiv(equipo) {
     let div = document.createElement("div");
@@ -274,7 +234,6 @@ function domEquipoObjetoADiv(equipo) {
     div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.ligaId, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivImg("img/Eliminar.png", "clickEquipoEliminar(" + equipo.id + ");"));
 
     return div;
 }
@@ -349,5 +308,5 @@ function domEquipoModificar(equipo) {
     domEquipoEliminar(equipo.id);
 
     // Se fuerza la ordenación, ya que este elemento podría no quedar ordenado si se pone al final.
-    domEquipoInsertar(equipo, false);
+    domEquipoInsertar(equipo, true);
 }
