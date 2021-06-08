@@ -38,7 +38,7 @@ INSERT INTO `Liga` (`id`, `nombre`) VALUES
 (2, 'Inglaterra'),
 (3, 'Italia'),
 (4, 'Alemania'),
-(8, 'Francia');
+(5, 'Francia');
 
 -- --------------------------------------------------------
 

@@ -170,6 +170,23 @@ class DAO
 
     /* equipo */
 
+    public static function equipoObtenerPorLigaId($ligaId): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM equipo WHERE ligaId=? ORDER BY puntos DESC",
+            [$ligaId]
+        );
+
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($datos, $equipo);
+        }
+
+        return $datos;
+    }
+
     private static function equipoCrearDesdeRs(array $fila): equipo
     {
         return new equipo($fila["id"], $fila["nombre"], $fila["puntos"], $fila["ligaId"]);
@@ -225,8 +242,8 @@ class DAO
     public static function equipoActualizar(equipo $equipo): ?equipo
     {
         $filasAfectadas = self::ejecutarUpdel(
-            "UPDATE equipo SET nombre=?, apellidos=?, telefono=?, estrella=?, ligaId=? WHERE id=?",
-            [$equipo->getNombre(), $equipo->getApellidos(), $equipo->getTelefono(), $equipo->isEstrella() ? 1 : 0, $equipo->getligaId(), $equipo->getId()]
+            "UPDATE equipo SET nombre=?, puntos=?, ligaId=? WHERE id=?",
+            [$equipo->getNombre(), $equipo->getPuntos(), $equipo->getligaId(), $equipo->getId()]
         );
 
         if ($filasAfectadas = null) {

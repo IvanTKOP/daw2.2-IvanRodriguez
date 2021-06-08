@@ -55,10 +55,6 @@ function objetoAParametrosParaRequest(objeto) {
     return new URLSearchParams(objeto).toString();
 }
 
-function debug() {
-    // Esto es útil durante el desarrollo para programar el disparado de acciones concretas mediante un simple botón.
-}
-
 
 
 // ---------- MANEJADORES DE EVENTOS / COMUNICACIÓN CON PHP ----------
@@ -75,16 +71,18 @@ function inicializar() {
     inputEquipoPuntos = document.getElementById("equipoPuntos");
     inputEquipoligaId = document.getElementsByName("equipoLigaId");
 
+    document.getElementById("esp").addEventListener('click', btnEsp);
+    document.getElementById("ru").addEventListener('click', btnRu);
+    document.getElementById("it").addEventListener('click', btnIt);
+    document.getElementById("al").addEventListener('click', btnAl);
+    document.getElementById("fr").addEventListener('click', btnFr);
 
-/*
-    document.getElementById('btnLigaCrear').addEventListener('click', clickLigaCrear);
-    document.getElementById('btnEquipoCrear').addEventListener('click', clickEquipoCrear);
-*/
+    var equipoDatos = document.getElementById("equipoDatos");
 
 
     // En los "Insertar" de a continuación no se fuerza la ordenación, ya que PHP
     // nos habrá dado los elementos en orden correcto y sería una pérdida de tiempo.
-
+/*
     llamadaAjax("ligaObtenerTodas.php", "",
         function(texto) {
             var ligas = JSON.parse(texto);
@@ -110,91 +108,92 @@ function inicializar() {
             notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
         }
     );
+*/
 }
-/*
-function clickLigaCrear() {
-    inputLigaNombre.disabled = true;
 
-    llamadaAjax("ligaCrear.php", "nombre=" + inputLigaNombre.value,
-        function(texto) {
-            // Se re-crean los datos por si han modificado/normalizado algún valor en el servidor.
-            var liga = JSON.parse(texto);
+function btnEsp() {
+    equipoDatos = [];
+    document.getElementById("equipoDatos").innerHTML = "";
 
-            // Se fuerza la ordenación, ya que este elemento podría no quedar ordenado si se pone al final.
-            domligaInsertar(liga, true);
+    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 1,
+    function(texto) {
+        var equipos = JSON.parse(texto);
 
-            inputLigaNombre.value = "";
-            inputLigaNombre.disabled = false;
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al crear: " + texto);
-            inputLigaNombre.disabled = false;
+        for (var i=0; i<equipos.length; i++) {
+            domEquipoInsertar(equipos[i]);
         }
-    );
-}
-
-function clickEquipoCrear() {
-    inputEquipoNombre.disabled = true;
-    inputEquipoPuntos.disabled = true;
-    inputEquipoligaId.disabled = true;
-
-    let equipo = {
-        "id" : -1,
-        "nombre" : inputEquipoNombre.value,
-        "puntos" : inputEquipoPuntos.value,
-        "ligaId" : inputEquipoligaId.value,
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
     }
-
-    llamadaAjax("equipoCrear.php", objetoAParametrosParaRequest(equipo),
-        function(texto) {
-            // Se re-crean los datos por si han modificado/normalizado algún valor en el servidor.
-            var equipo = JSON.parse(texto);
-
-            // Se fuerza la ordenación, ya que este elemento podría no quedar ordenado si se pone al final.
-            domEquipoInsertar(equipo, true);
-
-            inputEquipoNombre.value = "";
-            inputEquipoNombre.disabled = false;
-            inputEquipoPuntos.value = "";
-            inputEquipoPuntos.disabled = false;
-            inputEquipoLigaId.value = "";
-            inputEquipoLigaId.disabled = false;
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al crear: " + texto);
-            inputEquipoNombre.disabled = false;
-            inputEquipoPuntos.disabled = false;
-            inputEquipoligaId.disabled = false;
-        }
-    );
+);
 }
 
-function blurLigaModificar(input) {
-    let divLiga = input.parentElement.parentElement;
-    let liga = domLigaDivAObjeto(divLiga);
+function btnRu() {
+    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 2,
+    function(texto) {
+        var equipos = JSON.parse(texto);
 
-    llamadaAjax("ligaActualizar.php", objetoAParametrosParaRequest(liga),
-        function(texto) {
-            if (texto != "null") {
-                // Se re-crean los datos por si han modificado/normalizado algún valor en el servidor.
-                liga = JSON.parse(texto);
-                domLigaModificar(liga);
-            } else {
-                notificarUsuario("Error Ajax al modificar: " + texto);
-            }
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al modificar: " + texto);
+        for (var i=0; i<equipos.length; i++) {
+            domEquipoInsertar(equipos[i]);
         }
-    );
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+);
 }
 
-// TODO Si escribo false en el input para "quitar" la estrella, no se quita (se queda en true). Pasa algo. Depurar.
+function btnIt() {
+    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 3,
+    function(texto) {
+        var equipos = JSON.parse(texto);
+
+        for (var i=0; i<equipos.length; i++) {
+            domEquipoInsertar(equipos[i]);
+        }
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+);
+}
+
+function btnAl() {
+    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 4,
+    function(texto) {
+        var equipos = JSON.parse(texto);
+
+        for (var i=0; i<equipos.length; i++) {
+            domEquipoInsertar(equipos[i]);
+        }
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+);
+}
+
+function btnFr() {
+    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 5,
+    function(texto) {
+        var equipos = JSON.parse(texto);
+
+        for (var i=0; i<equipos.length; i++) {
+            domEquipoInsertar(equipos[i]);
+        }
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+);
+}
+
 function blurEquipoModificar(input) {
     let divEquipo = input.parentElement.parentElement;
     let equipo = domEquipoDivAObjeto(divEquipo);
 
-    llamadaAjax("equipoActualizar.php", objetoAParametrosParaRequest(equipo),
+    llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
         function(texto) {
             if (texto != "null") {
                 // Se re-crean los datos por si han modificado/normalizado algún valor en el servidor.
@@ -209,7 +208,7 @@ function blurEquipoModificar(input) {
         }
     );
 }
-
+/*
 function clickLigaEliminar(id) {
     llamadaAjax("ligaEliminar.php", "id="+id,
         function(texto) {
@@ -267,85 +266,7 @@ function domCrearDivImg(urlSrc, codigoOnclick) {
     return div;
 }
 
-
-
-function domLigaObjetoADiv(liga) {
-    let div = document.createElement("div");
-            div.setAttribute("id", "liga-" + liga.id);
-    div.appendChild(domCrearDivInputText(liga.nombre, "blurLigaModificar(this);"));
-    div.appendChild(domCrearDivImg("img/Eliminar.png", "clickligaEliminar(" + liga.id + ");"));
-
-    return div;
-}
-
-function domLigaObtenerDiv(pos) {
-    return divLigasDatos.children[pos];
-}
-
-function domLigaDivAObjeto(div) {
-    return { // Devolvemos un objeto recién creado con los datos que hemos obtenido.
-        "id": extraerId(div.id),
-        "nombre": div.children[0].children[0].value,
-    };
-}
-
-function domLigaObtenerObjeto(pos) {
-    let divliga = domLigaObtenerDiv(pos);
-    return domLigaDivAObjeto(divliga);
-}
-
-function domLigaEjecutarInsercion(pos, liga) {
-    let divReferencia = domLigaObtenerDiv(pos);
-    let divNuevo = domLigaObjetoADiv(liga);
-
-    divLigasDatos.insertBefore(divNuevo, divReferencia);
-}
-
-function domLigaInsertar(ligaNueva, enOrden=false) {
-    // Si piden insertar en orden, se buscará su lugar. Si no, irá al final.
-    if (enOrden) {
-        for (let pos=0; pos < divLigasDatos.children.length; pos++) {
-            let ligaActual = domligaObtenerObjeto(pos);
-
-            if (ligaNueva.nombre.localeCompare(ligaActual.nombre) == -1) {
-                // Si la liga nueva va ANTES que la actual, este es el punto en el que insertarla.
-                domLigaEjecutarInsercion(pos, ligaNueva);
-                return;
-            }
-        }
-    }
-
-    // Si llegamos hasta aquí, insertamos al final.
-    domLigaEjecutarInsercion(divLigasDatos.children.length, ligaNueva);
-}
-
-function domLigaLocalizarPosicion(idBuscado) {
-    var divsLigas = divLigasDatos.children;
-
-    for (var pos=0; pos < divsLigas.length; pos++) {
-        let divLiga = divsLigas[pos];
-        let ligaActualId = extraerId(divLiga.id);
-
-        if (ligaActualId == idBuscado) return (pos);
-    }
-
-    return -1;
-}
-
-function domligaEliminar(id) {
-    let pos = domLigaLocalizarPosicion(id);
-    let div = domLigaObtenerDiv(pos);
-    div.remove();
-}
-
-function domLigaModificar(liga) {
-    domLigaEliminar(liga.id);
-
-    // Se fuerza la ordenación, ya que este elemento podría no quedar ordenado si se pone al final.
-    domLigaInsertar(liga, true);
-}
-
-
+// ---------EQUIPO------------------
 
 function domEquipoObjetoADiv(equipo) {
     let div = document.createElement("div");
@@ -367,13 +288,13 @@ function domEquipoDivAObjeto(div) {
         "id": extraerId(div.id),
         "nombre": div.children[1].children[0].value,
         "puntos": div.children[2].children[0].value,
-        "ligaId": div.children[4].children[0].value,
+        "ligaId": div.children[3].children[0].value,
     }
 }
 
 function domEquipoObtenerObjeto(pos) {
     let divEquipo = domEquipoObtenerDiv(pos);
-    return domEquipoDivAObjeto(divequipo);
+    return domEquipoDivAObjeto(divEquipo);
 }
 
 function domEquipoEjecutarInsercion(pos, equipo) {
@@ -428,5 +349,5 @@ function domEquipoModificar(equipo) {
     domEquipoEliminar(equipo.id);
 
     // Se fuerza la ordenación, ya que este elemento podría no quedar ordenado si se pone al final.
-    domEquipoInsertar(equipo, true);
+    domEquipoInsertar(equipo, false);
 }
