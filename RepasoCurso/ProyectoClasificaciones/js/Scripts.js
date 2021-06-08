@@ -286,9 +286,9 @@ function domEquipoObtenerDiv(pos) {
 function domEquipoDivAObjeto(div) {
     return { // Devolvemos un objeto recién creado con los datos que hemos obtenido.
         "id": extraerId(div.id),
-        "nombre": div.children[1].children[0].value,
-        "puntos": div.children[2].children[0].value,
-        "ligaId": div.children[3].children[0].value,
+        "nombre": div.children[0].children[0].value,
+        "puntos": div.children[1].children[0].value,
+        "ligaId": div.children[2].children[0].value,
     }
 }
 
