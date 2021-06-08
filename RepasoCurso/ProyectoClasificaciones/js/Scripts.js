@@ -306,7 +306,21 @@ function domEquipoEliminar(id) {
 
 function domEquipoModificar(equipo) {
     domEquipoEliminar(equipo.id);
-
+    asignarBtnLigaId(equipo.ligaId);
     // Se fuerza la ordenación, ya que este elemento podría no quedar ordenado si se pone al final.
-    domEquipoInsertar(equipo, true);
+    //domEquipoInsertar(equipo, true);
+}
+
+function asignarBtnLigaId(ligaId) {
+    if (ligaId == 1){
+        btnEsp();
+    } else if (ligaId == 2) {
+        btnRu();
+    } else if (ligaId == 3) {
+        btnIt();
+    } else if (ligaId == 4) {
+        btnAl();
+    } else if (ligaId == 5) {
+        btnFr();
+    }
 }
