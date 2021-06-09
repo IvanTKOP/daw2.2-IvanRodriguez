@@ -185,7 +185,7 @@ function btnEu() {
 function blurEquipoModificar(input) {
     let divEquipo = input.parentElement.parentElement;
     let equipo = domEquipoDivAObjeto(divEquipo);
-    alert(equipo.id+equipo.nombre+equipo.puntos+equipo.dg+equipo.ligaId)
+   
     if (comprobarRequest(equipo.nombre) && comprobarRequest(equipo.puntos) && comprobarRequest(equipo.dg) != null) {
 
         llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
@@ -223,15 +223,13 @@ function domCrearDivInputText(textoValue, codigoOnblur) {
     return div;
 }
 
-function domCrearDivImg(urlSrc, codigoOnclick, textoValue, codigoOnblur) {
+function domCrearDivImg(urlSrc, codigoOnclick, textoId) {
     let div = document.createElement("div");
+        div.setAttribute("id", textoId);
         let img = document.createElement("img");
                 img.setAttribute("src", urlSrc);
-                img.setAttribute("id", "imgId");
                 img.setAttribute("width", "20");
                 img.setAttribute("height", "20");
-                img.setAttribute("value", textoValue);
-                img.setAttribute("onblur", codigoOnblur + " return false;");
                 img.setAttribute("onclick", codigoOnclick + " return false;");
     div.appendChild(img);
 
@@ -246,7 +244,7 @@ function domEquipoObjetoADiv(equipo) {
     div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.dg, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");", equipo.ligaId, "blurEquipoModificar(this);"));
+    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");", equipo.ligaId));
 
     return div;
 }
@@ -261,7 +259,7 @@ function domEquipoDivAObjeto(div) {
         "nombre": div.children[0].children[0].value,
         "puntos": div.children[1].children[0].value,
         "dg": div.children[2].children[0].value,
-        "ligaId": document.getElementById('imgId').getAttribute('value'), // en <img> no se puede recoger con  .value
+        "ligaId": div.children[3].id, // en <img> no se puede recoger asique lo llevamos a traves del id del div
     };
 }
 
