@@ -52,7 +52,7 @@ function extraerId(texto) {
 
 function objetoAParametrosParaRequest(objeto) {
     // Esto convierte un objeto JS en un listado de clave1=valor1&clave2=valor2&clave3=valor3
-    alert(new URLSearchParams(objeto).toString())
+    return new URLSearchParams(objeto).toString();
 }
 
 
@@ -185,21 +185,28 @@ function btnEu() {
 function blurEquipoModificar(input) {
     let divEquipo = input.parentElement.parentElement;
     let equipo = domEquipoDivAObjeto(divEquipo);
+    alert(equipo.id+equipo.nombre+equipo.puntos+equipo.dg+equipo.ligaId)
+    if (comprobarRequest(equipo.nombre) && comprobarRequest(equipo.puntos) && comprobarRequest(equipo.dg) != null) {
 
-    llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
-        function(texto) {
-            if (texto != "null") {
-                // Se re-crean los datos por si han modificado/normalizado algún valor en el servidor.
-                equipo = JSON.parse(texto);
-                domEquipoModificar(equipo);
-            } else {
+        llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
+            function(texto) {
+                if (texto != "null") {
+                    // Se re-crean los datos por si han modificado/normalizado algún valor en el servidor.
+                    equipo = JSON.parse(texto);
+                    domEquipoModificar(equipo);
+                } else {
+                    notificarUsuario("Error Ajax al modificar: " + texto);
+                }
+            },
+            function(texto) {
                 notificarUsuario("Error Ajax al modificar: " + texto);
             }
-        },
-        function(texto) {
-            notificarUsuario("Error Ajax al modificar: " + texto);
-        }
-    );
+        );
+
+    } else {
+        alert("No puedes dejar el campo vacío")
+        asignarBtnLigaId(equipo.ligaId);
+    }
 }
 
 
@@ -323,5 +330,13 @@ function asignarImgLigaId(ligaId) {
         return "img/al.png";
     } else if (ligaId == 5) {
         return "img/fr.png";
+    }
+}
+
+function comprobarRequest(value) {
+    if (value != "" || null) {
+        return value;
+    } else {
+        return null;
     }
 }

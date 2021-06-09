@@ -140,8 +140,8 @@ class DAO
     public static function equipoActualizar(equipo $equipo): ?equipo
     {
         $filasAfectadas = self::ejecutarUpdel(
-            "UPDATE equipo SET nombre=?, puntos=?, dg=? WHERE id=?",
-            [$equipo->getNombre(), $equipo->getPuntos(), $equipo->getDg(), $equipo->getId()]
+            "UPDATE equipo SET nombre=?, puntos=?, dg=?, ligaId=? WHERE id=?",
+            [$equipo->getNombre(), $equipo->getPuntos(), $equipo->getDg(), $equipo->getLigaId(), $equipo->getId()]
         );
 
         if ($filasAfectadas = null) {
