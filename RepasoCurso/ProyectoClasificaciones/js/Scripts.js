@@ -52,7 +52,7 @@ function extraerId(texto) {
 
 function objetoAParametrosParaRequest(objeto) {
     // Esto convierte un objeto JS en un listado de clave1=valor1&clave2=valor2&clave3=valor3
-    return new URLSearchParams(objeto).toString();
+    alert(new URLSearchParams(objeto).toString())
 }
 
 
@@ -216,7 +216,7 @@ function domCrearDivInputText(textoValue, codigoOnblur) {
     return div;
 }
 
-function domCrearDivImg(urlSrc, codigoOnclick, textoValue) {
+function domCrearDivImg(urlSrc, codigoOnclick, textoValue, codigoOnblur) {
     let div = document.createElement("div");
         let img = document.createElement("img");
                 img.setAttribute("src", urlSrc);
@@ -224,6 +224,7 @@ function domCrearDivImg(urlSrc, codigoOnclick, textoValue) {
                 img.setAttribute("width", "20");
                 img.setAttribute("height", "20");
                 img.setAttribute("value", textoValue);
+                img.setAttribute("onblur", codigoOnblur + " return false;");
                 img.setAttribute("onclick", codigoOnclick + " return false;");
     div.appendChild(img);
 
@@ -238,7 +239,7 @@ function domEquipoObjetoADiv(equipo) {
     div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.dg, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");", equipo.ligaId));
+    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");", equipo.ligaId, "blurEquipoModificar(this);"));
 
     return div;
 }
@@ -308,7 +309,7 @@ function asignarBtnLigaId(ligaId) {
         btnAl();
     } else if (ligaId == 5) {
         btnFr();
-    }
+    } 
 }
 
 function asignarImgLigaId(ligaId) {

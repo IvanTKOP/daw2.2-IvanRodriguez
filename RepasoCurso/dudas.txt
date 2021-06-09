@@ -10,6 +10,11 @@ SesionInicioFormulario:
 
 
 
-CREAR PROTOTIPO PARA VIERNES
-- un html con un boton y un (text area,p...) con un script js que utilize el XML para devolver 
-el contenido de la pagina al html
+PROYECTO:
+
+-corregir al modificar en europa siempre ligaId es 3 italia, al modificar en sus paises no pasa(fucniona bien)
+    - PROBAR quitar de actualizar ligaId ya que se supone que seimpre es la misma, pero teine que viajar para asignar el boton correspondiente   
+
+-casos raros en los que al modificar y no poner nada asume null
+-limpiar todo bien
+-diseño 
