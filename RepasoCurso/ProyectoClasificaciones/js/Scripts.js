@@ -216,12 +216,14 @@ function domCrearDivInputText(textoValue, codigoOnblur) {
     return div;
 }
 
-function domCrearDivImg(urlSrc, codigoOnclick) {
+function domCrearDivImg(urlSrc, codigoOnclick, textoValue) {
     let div = document.createElement("div");
         let img = document.createElement("img");
                 img.setAttribute("src", urlSrc);
+                img.setAttribute("id", "imgId");
                 img.setAttribute("width", "20");
                 img.setAttribute("height", "20");
+                img.setAttribute("value", textoValue);
                 img.setAttribute("onclick", codigoOnclick + " return false;");
     div.appendChild(img);
 
@@ -236,7 +238,7 @@ function domEquipoObjetoADiv(equipo) {
     div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.dg, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");"));
+    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");", equipo.ligaId));
 
     return div;
 }
@@ -251,8 +253,8 @@ function domEquipoDivAObjeto(div) {
         "nombre": div.children[0].children[0].value,
         "puntos": div.children[1].children[0].value,
         "dg": div.children[2].children[0].value,
-        "ligaId": div.children[3].children[0].value,
-    }
+        "ligaId": document.getElementById('imgId').getAttribute('value'), // en <img> no se puede recoger con  .value
+    };
 }
 
 function domEquipoObtenerObjeto(pos) {
