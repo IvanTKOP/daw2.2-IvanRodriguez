@@ -88,7 +88,7 @@ class DAO
         $datos = [];
 
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM equipo WHERE ligaId=? ORDER BY puntos DESC",
+            "SELECT * FROM equipo WHERE ligaId=? ORDER BY puntos DESC, dg DESC",
             [$ligaId]
         );
 

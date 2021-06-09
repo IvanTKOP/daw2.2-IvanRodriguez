@@ -13,7 +13,7 @@ SesionInicioFormulario:
 PROYECTO:
 
 FALLOS:
--corregir al modificar en europa siempre ligaId es 3 italia, al modificar en sus paises no pasa(fucniona bien)  
+
 
 
 TO-DO:

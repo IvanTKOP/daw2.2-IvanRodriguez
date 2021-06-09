@@ -186,7 +186,7 @@ function blurEquipoModificar(input) {
     let divEquipo = input.parentElement.parentElement;
     let equipo = domEquipoDivAObjeto(divEquipo);
    
-    if (comprobarRequest(equipo.nombre) && comprobarRequest(equipo.puntos) && comprobarRequest(equipo.dg) != null) {
+    if (comprobarRequest(equipo.nombre) && comprobarRequest(equipo.puntos) && comprobarRequest(equipo.dg) != null) { // Comprobamos que no sea campo vacío
 
         llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
             function(texto) {
@@ -225,7 +225,7 @@ function domCrearDivInputText(textoValue, codigoOnblur) {
 
 function domCrearDivImg(urlSrc, codigoOnclick, textoId) {
     let div = document.createElement("div");
-        div.setAttribute("id", textoId);
+        div.setAttribute("id", textoId); // llevamos ligaId aquí ya que en img no dejaba recogerlo
         let img = document.createElement("img");
                 img.setAttribute("src", urlSrc);
                 img.setAttribute("width", "20");
