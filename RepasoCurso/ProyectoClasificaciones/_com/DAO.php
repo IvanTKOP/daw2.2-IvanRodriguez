@@ -63,10 +63,7 @@ class DAO
 
     }
 
-    // Ejecuta un Update o un Delete.
-    // Devuelve:
-    //   - null: si ha habido un error
-    //   - 0, 1 u otro número positivo: OK (no errores) y estas son las filas afectadas.
+
     private static function ejecutarUpdel(string $sql, array $parametros): ?int
     {
         if (!isset(self::$pdo)) {
@@ -105,7 +102,7 @@ class DAO
 
     private static function equipoCrearDesdeRs(array $fila): equipo
     {
-        return new equipo($fila["id"], $fila["nombre"], $fila["puntos"], $fila["ligaId"]);
+        return new equipo($fila["id"], $fila["nombre"], $fila["puntos"], $fila["dg"], $fila["ligaId"]);
     }
 
     public static function equipoObtenerPorId(int $id): ?equipo
@@ -128,7 +125,7 @@ class DAO
         $datos = [];
 
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM equipo ORDER BY puntos DESC, nombre ASC",
+            "SELECT * FROM equipo ORDER BY puntos DESC, dg DESC",
             []
         );
 
@@ -143,8 +140,8 @@ class DAO
     public static function equipoActualizar(equipo $equipo): ?equipo
     {
         $filasAfectadas = self::ejecutarUpdel(
-            "UPDATE equipo SET nombre=?, puntos=?, ligaId=? WHERE id=?",
-            [$equipo->getNombre(), $equipo->getPuntos(), $equipo->getligaId(), $equipo->getId()]
+            "UPDATE equipo SET nombre=?, puntos=?, dg=?, ligaId=? WHERE id=?",
+            [$equipo->getNombre(), $equipo->getPuntos(), $equipo->getDg(), $equipo->getligaId(), $equipo->getId()]
         );
 
         if ($filasAfectadas = null) {

@@ -235,6 +235,7 @@ function domEquipoObjetoADiv(equipo) {
             div.setAttribute("id", "equipo-" + equipo.id);
     div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
+    div.appendChild(domCrearDivInputText(equipo.dg, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");"));
 
     return div;
@@ -249,7 +250,8 @@ function domEquipoDivAObjeto(div) {
         "id": extraerId(div.id),
         "nombre": div.children[0].children[0].value,
         "puntos": div.children[1].children[0].value,
-        "ligaId": div.children[2].children[0].value,
+        "dg": div.children[2].children[0].value,
+        "ligaId": div.children[3].children[0].value,
     }
 }
 

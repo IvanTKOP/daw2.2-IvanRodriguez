@@ -66,14 +66,16 @@ class Equipo extends Dato implements JsonSerializable
 
     private string $nombre;
     private int $puntos;
+    private int $dg;
     private int $ligaId;
     private ?Liga $liga;
 
-    public function __construct(int $id, string $nombre, int $puntos, int $ligaId)
+    public function __construct(int $id, string $nombre, int $puntos, int $dg, int $ligaId)
     {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->puntos = $puntos;
+        $this->dg = $dg;
         $this->ligaId = $ligaId;
     }
 
@@ -83,6 +85,7 @@ class Equipo extends Dato implements JsonSerializable
             "id" => $this->id,
             "nombre" => $this->nombre,
             "puntos" => $this->puntos,
+            "dg" => $this->dg,
             "ligaId" => $this->ligaId,
         ];
     }
@@ -105,6 +108,15 @@ class Equipo extends Dato implements JsonSerializable
     public function setPuntos(int $puntos): void
     {
         $this->puntos = $puntos;
+    }
+    public function getDg(): int
+    {
+        return $this->dg;
+    }
+
+    public function setDg(int $dg): void
+    {
+        $this->dg = $dg;
     }
 
 
