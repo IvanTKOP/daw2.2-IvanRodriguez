@@ -1,7 +1,4 @@
-
-// TODO Quedaría pendiente poner un timer para actualizar lo local si actualizan el servidor. Una solución óptima sería poner timestamp de modificación en la tabla y pedir ligaObtenerModificadasDesde(timestamp), donde timestamp es la última vez que he pedido algo.
-
-
+// ----------------------------------- PROYECTO LIGAS ------------------------------------------
 
 window.onload = inicializar;
 
@@ -9,25 +6,16 @@ window.onload = inicializar;
 
 // ---------- VARIABLES GLOBALES ----------
 
-var divLigasDatos;
 var divEquiposDatos;
-var inputLigaNombre;
-var inputEquipoNombre;
-var inputEquipoPuntos;
-var inputEquipoLigaId;
 
 
-
-// ---------- VARIOS DE BASE/UTILIDADES ----------
+// ---------- FUNCIONES GENERALES ----------
 
 function notificarUsuario(texto) {
-    // TODO En lugar del alert, habría que añadir una línea en una zona de notificaciones, arriba, con un temporizador para que se borre solo en ¿5? segundos.
     alert(texto);
 }
 
 function llamadaAjax(url, parametros, manejadorOK, manejadorError) {
-    //TODO PARA DEPURACIÓN: alert("Haciendo ajax a " + url + "\nCon parámetros " + parametros);
-
     var request = new XMLHttpRequest();
 
     request.open("POST", url);
@@ -57,19 +45,12 @@ function objetoAParametrosParaRequest(objeto) {
 
 
 
+
 // ---------- MANEJADORES DE EVENTOS / COMUNICACIÓN CON PHP ----------
 
-// TODO Estaría genial que estos métodos no metieran la mano para nada en el DOM, sino que lo hicieran todo a través de métodos domTalCosa:
-// Por ejemplo: disablearCamposequipoCrear(), enablearCamposequipoCrear(), obtenerObjetoequipoDeCamposequipoCrear()...
 
 function inicializar() {
-    divLigasDatos = document.getElementById("ligasDatos");
     divEquiposDatos = document.getElementById("equiposDatos");
-
-    inputLigaNombre = document.getElementById("ligaNombre");
-    inputEquipoNombre = document.getElementById("equipoNombre");
-    inputEquipoPuntos = document.getElementById("equipoPuntos");
-    inputEquipoligaId = document.getElementsByName("equipoLigaId");
 
     document.getElementById("esp").addEventListener('click', btnEsp);
     document.getElementById("ru").addEventListener('click', btnRu);
@@ -81,7 +62,8 @@ function inicializar() {
 }
 
 function btnEsp() {
-    document.getElementById("equiposDatos").innerHTML = "";
+    divEquiposDatos.innerHTML = ""; // boramos lo que había para pintar lo nuevo
+    crearCabecera();
 
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 1,
     function(texto) {
@@ -98,7 +80,8 @@ function btnEsp() {
 }
 
 function btnRu() {
-    document.getElementById("equiposDatos").innerHTML = "";
+     divEquiposDatos.innerHTML = "";
+     crearCabecera();
 
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 2,
     function(texto) {
@@ -115,7 +98,8 @@ function btnRu() {
 }
 
 function btnIt() {
-    document.getElementById("equiposDatos").innerHTML = "";
+    divEquiposDatos.innerHTML = "";
+    crearCabecera();
 
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 3,
     function(texto) {
@@ -132,7 +116,8 @@ function btnIt() {
 }
 
 function btnAl() {
-    document.getElementById("equiposDatos").innerHTML = "";
+    divEquiposDatos.innerHTML = "";
+    crearCabecera();
 
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 4,
     function(texto) {
@@ -149,7 +134,8 @@ function btnAl() {
 }
 
 function btnFr() {
-    document.getElementById("equiposDatos").innerHTML = "";
+    divEquiposDatos.innerHTML = "";
+    crearCabecera();
 
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 5,
     function(texto) {
@@ -164,8 +150,10 @@ function btnFr() {
     }
 );
 }
+
 function btnEu() {
-    document.getElementById("equiposDatos").innerHTML = "";
+    divEquiposDatos.innerHTML = "";
+    crearCabecera();
 
     llamadaAjax("EquipoObtenerTodos.php", "",
     function(texto) {
@@ -191,7 +179,6 @@ function blurEquipoModificar(input) {
         llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
             function(texto) {
                 if (texto != "null") {
-                    // Se re-crean los datos por si han modificado/normalizado algún valor en el servidor.
                     equipo = JSON.parse(texto);
                     domEquipoModificar(equipo);
                 } else {
@@ -210,7 +197,7 @@ function blurEquipoModificar(input) {
 }
 
 
-// ---------- GESTIÓN DEL DOM ----------
+// ---------- DOM GENERAL ----------
 
 function domCrearDivInputText(textoValue, codigoOnblur) {
     let div = document.createElement("div");
@@ -236,7 +223,9 @@ function domCrearDivImg(urlSrc, codigoOnclick, textoId) {
     return div;
 }
 
-// ---------DOM-EQUIPO------------------
+
+
+// -------------------DOM EQUIPO----------------------
 
 function domEquipoObjetoADiv(equipo) {
     let div = document.createElement("div");
@@ -303,6 +292,9 @@ function domEquipoModificar(equipo) {
     asignarBtnLigaId(equipo.ligaId);
 }
 
+
+// ---------------- FUNCIONES UTILIDADES ----------------------
+
 function asignarBtnLigaId(ligaId) {
     if (ligaId == 1){
         btnEsp();
@@ -337,4 +329,13 @@ function comprobarRequest(value) {
     } else {
         return null;
     }
+}
+
+function crearCabecera() {
+    var divCabecera = document.getElementById("divCabecera");   
+    divCabecera.innerHTML = '<h2 style="text-align: center;">Clasificación</h2>';
+
+    var divEquiposCabecera = document.getElementById("equiposCabecera");
+    divEquiposCabecera.innerHTML = "<div><div>Nombre</div><div>Puntos</div><div>Diferencia de Goles</div><div>País</div></div>";
+
 }
