@@ -205,6 +205,7 @@ function domCrearDivInputText(textoValue, codigoOnblur) {
                 input.setAttribute("type", "text");
                 input.setAttribute("value", textoValue);
                 input.setAttribute("onblur", codigoOnblur + " return false;");
+                input.setAttribute("style", "text-align: center;");
     div.appendChild(input);
 
     return div;
@@ -212,7 +213,7 @@ function domCrearDivInputText(textoValue, codigoOnblur) {
 
 function domCrearDivImg(urlSrc, codigoOnclick, textoId) {
     let div = document.createElement("div");
-        div.setAttribute("id", textoId); // llevamos ligaId aquí ya que en img no dejaba recogerlo
+        div.setAttribute("id", textoId); // llevamos ligaId aquí ya que en img no deja recogerlo
         let img = document.createElement("img");
                 img.setAttribute("src", urlSrc);
                 img.setAttribute("width", "20");

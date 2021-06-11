@@ -12,11 +12,11 @@ class DAO
         $servidor = "localhost";
         $identificador = "root";
         $contrasenna = "";
-        $bd = "Ligas"; // Schema
+        $bd = "Ligas"; 
         $opciones = [
-            PDO::ATTR_EMULATE_PREPARES => false, // Modo emulación desactivado para prepared statements "reales"
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Que los errores salgan como excepciones.
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // El modo de fetch que queremos por defecto.
+            PDO::ATTR_EMULATE_PREPARES => false, 
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, 
         ];
 
         try {
@@ -43,9 +43,6 @@ class DAO
         return $rs;
     }
 
-    // Devuelve:
-    //   - null: si ha habido un error
-    //   - int: el id autogenerado para el nuevo registro.
     private static function ejecutarInsert(string $sql, array $parametros): ?int
     {
         if (!isset(self::$pdo)) {
