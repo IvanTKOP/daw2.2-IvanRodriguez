@@ -6,7 +6,7 @@ abstract class Dato
 
 trait Identificable
 {
-    protected int $id;
+    protected $id;
 
     public function getId(): int
     {
@@ -23,8 +23,8 @@ class Liga extends Dato implements JsonSerializable
 {
     use Identificable;
 
-    private string $nombre;
-    private ?array $equiposPertenecientes;
+    private $nombre;
+    private $equiposPertenecientes;
 
     public function __construct(int $id, string $nombre)
     {
@@ -40,7 +40,7 @@ class Liga extends Dato implements JsonSerializable
         ];
     }
 
-    public function getNombre() : string
+    public function getNombre(): string
     {
         return $this->nombre;
     }
@@ -64,11 +64,11 @@ class Equipo extends Dato implements JsonSerializable
 {
     use Identificable;
 
-    private string $nombre;
-    private int $puntos;
-    private int $dg;
-    private int $ligaId;
-    private ?Liga $liga;
+    private $nombre;
+    private $puntos;
+    private $dg;
+    private $ligaId;
+    private $liga;
 
     public function __construct(int $id, string $nombre, int $puntos, int $dg, int $ligaId)
     {
@@ -90,7 +90,7 @@ class Equipo extends Dato implements JsonSerializable
         ];
     }
 
-    public function getNombre() : string
+    public function getNombre(): string
     {
         return $this->nombre;
     }
@@ -118,7 +118,6 @@ class Equipo extends Dato implements JsonSerializable
     {
         $this->dg = $dg;
     }
-
 
     public function getLigaId(): int
     {

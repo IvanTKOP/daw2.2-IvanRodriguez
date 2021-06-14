@@ -52,92 +52,20 @@ function objetoAParametrosParaRequest(objeto) {
 function inicializar() {
     divEquiposDatos = document.getElementById("equiposDatos");
 
-    document.getElementById("esp").addEventListener('click', btnEsp);
-    document.getElementById("ru").addEventListener('click', btnRu);
-    document.getElementById("it").addEventListener('click', btnIt);
-    document.getElementById("al").addEventListener('click', btnAl);
-    document.getElementById("fr").addEventListener('click', btnFr);
+    document.getElementById("esp").addEventListener('click', btnLiga);
+    document.getElementById("ru").addEventListener('click', btnLiga);
+    document.getElementById("it").addEventListener('click', btnLiga);
+    document.getElementById("al").addEventListener('click', btnLiga);
+    document.getElementById("fr").addEventListener('click', btnLiga);
     document.getElementById("eu").addEventListener('click', btnEu);
 
 }
 
-function btnEsp() {
+function btnLiga(ligaId) {
     divEquiposDatos.innerHTML = ""; // boramos lo que había para pintar lo nuevo
     crearCabecera();
 
-    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 1,
-    function(texto) {
-        var equipos = JSON.parse(texto);
-
-        for (var i=0; i<equipos.length; i++) {
-            domEquipoInsertar(equipos[i]);
-        }
-    },
-    function(texto) {
-        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
-    }
-);
-}
-
-function btnRu() {
-     divEquiposDatos.innerHTML = "";
-     crearCabecera();
-
-    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 2,
-    function(texto) {
-        var equipos = JSON.parse(texto);
-
-        for (var i=0; i<equipos.length; i++) {
-            domEquipoInsertar(equipos[i]);
-        }
-    },
-    function(texto) {
-        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
-    }
-);
-}
-
-function btnIt() {
-    divEquiposDatos.innerHTML = "";
-    crearCabecera();
-
-    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 3,
-    function(texto) {
-        var equipos = JSON.parse(texto);
-
-        for (var i=0; i<equipos.length; i++) {
-            domEquipoInsertar(equipos[i]);
-        }
-    },
-    function(texto) {
-        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
-    }
-);
-}
-
-function btnAl() {
-    divEquiposDatos.innerHTML = "";
-    crearCabecera();
-
-    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 4,
-    function(texto) {
-        var equipos = JSON.parse(texto);
-
-        for (var i=0; i<equipos.length; i++) {
-            domEquipoInsertar(equipos[i]);
-        }
-    },
-    function(texto) {
-        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
-    }
-);
-}
-
-function btnFr() {
-    divEquiposDatos.innerHTML = "";
-    crearCabecera();
-
-    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + 5,
+    llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + (this.value || ligaId),
     function(texto) {
         var equipos = JSON.parse(texto);
 
@@ -192,7 +120,7 @@ function blurEquipoModificar(input) {
 
     } else {
         alert("No puedes dejar el campo vacío")
-        asignarBtnLigaId(equipo.ligaId);
+        btnLiga(equipo.ligaId);
     }
 }
 
@@ -234,7 +162,7 @@ function domEquipoObjetoADiv(equipo) {
     div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
     div.appendChild(domCrearDivInputText(equipo.dg, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "asignarBtnLigaId(" + equipo.ligaId + ");", equipo.ligaId));
+    div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "btnLiga(" + equipo.ligaId + ");", equipo.ligaId));
 
     return div;
 }
@@ -290,7 +218,7 @@ function domEquipoEliminar(id) {
 
 function domEquipoModificar(equipo) {
     domEquipoEliminar(equipo.id);
-    asignarBtnLigaId(equipo.ligaId);
+    btnLiga(equipo.ligaId);
 }
 
 
@@ -298,15 +226,15 @@ function domEquipoModificar(equipo) {
 
 function asignarBtnLigaId(ligaId) {
     if (ligaId == 1){
-        btnEsp();
+        btnLiga(1);
     } else if (ligaId == 2) {
-        btnRu();
+        btnLiga(2);
     } else if (ligaId == 3) {
-        btnIt();
+        btnLiga(3);
     } else if (ligaId == 4) {
-        btnAl();
+        btnLiga(4);
     } else if (ligaId == 5) {
-        btnFr();
+        btnLiga(5);
     } 
 }
 

@@ -13,6 +13,9 @@ SesionInicioFormulario:
 PROYECTO:
 
 FALLOS:
+- aplicar bien btnLiga 
+- probar la importacion de datos por json xml
+- fetch
 
 
 
