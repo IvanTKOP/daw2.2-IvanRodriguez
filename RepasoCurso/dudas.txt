@@ -16,7 +16,7 @@ FALLOS:
 - aplicar bien btnLiga 
 - probar la importacion de datos por json xml
 - fetch
-
+- Quitar return false de los onclick
 
 
 TO-DO:
