@@ -10,16 +10,17 @@ SesionInicioFormulario:
 
 
 
-PROYECTO:
+-------------------PROYECTO----------------
 
 FALLOS:
-- aplicar bien btnLiga 
-- probar la importacion de datos por json xml
-- fetch
-- Quitar return false de los onclick
+
 
 
 TO-DO:
--Ver si se puede implementar modificar pais o añadir/borrar equipos...
+- probar la importacion de datos por json xml
+- fetch
+- liga de 20 con clasificaciones
+
+
 -limpiar todo bien
 -diseño 

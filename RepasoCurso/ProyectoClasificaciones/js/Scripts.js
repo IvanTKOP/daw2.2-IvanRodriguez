@@ -132,7 +132,7 @@ function domCrearDivInputText(textoValue, codigoOnblur) {
         let input = document.createElement("input");
                 input.setAttribute("type", "text");
                 input.setAttribute("value", textoValue);
-                input.setAttribute("onblur", codigoOnblur + " return false;");
+                input.setAttribute("onblur", codigoOnblur);
                 input.setAttribute("style", "text-align: center;");
     div.appendChild(input);
 
@@ -146,7 +146,7 @@ function domCrearDivImg(urlSrc, codigoOnclick, textoId) {
                 img.setAttribute("src", urlSrc);
                 img.setAttribute("width", "20");
                 img.setAttribute("height", "20");
-                img.setAttribute("onclick", codigoOnclick + " return false;");
+                img.setAttribute("onclick", codigoOnclick);
     div.appendChild(img);
 
     return div;
