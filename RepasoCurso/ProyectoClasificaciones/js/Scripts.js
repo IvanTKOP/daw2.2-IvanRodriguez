@@ -57,7 +57,7 @@ function inicializar() {
     document.getElementById("it").addEventListener('click', btnLiga);
     document.getElementById("al").addEventListener('click', btnLiga);
     document.getElementById("fr").addEventListener('click', btnLiga);
-    document.getElementById("eu").addEventListener('click', btnEu);
+    document.getElementById("eu").addEventListener('click', btnTodos);
 
 }
 
@@ -79,7 +79,7 @@ function btnLiga(ligaId) {
 );
 }
 
-function btnEu() {
+function btnTodos() {
     divEquiposDatos.innerHTML = "";
     crearCabecera();
 
@@ -94,7 +94,7 @@ function btnEu() {
     function(texto) {
         notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
     }
-);
+); 
 }
 
 

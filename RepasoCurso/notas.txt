@@ -17,9 +17,8 @@ FALLOS:
 
 
 TO-DO:
-- probar la importacion de datos por json xml
-- fetch
 - liga de 20 con clasificaciones
+- probar importacion control de usuarios
 
 
 -limpiar todo bien
