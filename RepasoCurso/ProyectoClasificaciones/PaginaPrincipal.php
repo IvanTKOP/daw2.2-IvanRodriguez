@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" href="css/Estilos.css" />
     <script src="js/Scripts.js"></script>
-    <title>Ligas</title>
+    <title>SUPERLIGA SIMULATOR</title>
   </head>
 
   <body>

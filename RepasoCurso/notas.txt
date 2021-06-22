@@ -17,9 +17,7 @@ FALLOS:
 
 
 TO-DO:
-- liga de 20 con clasificaciones
-- probar importacion control de usuarios
-
+- fallo al actualizar la megaconsilta no coge al equipo correspondiente
 
 -limpiar todo bien
 -diseño 

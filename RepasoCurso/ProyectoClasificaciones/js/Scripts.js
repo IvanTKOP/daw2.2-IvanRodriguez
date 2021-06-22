@@ -57,7 +57,7 @@ function inicializar() {
     document.getElementById("it").addEventListener('click', btnLiga);
     document.getElementById("al").addEventListener('click', btnLiga);
     document.getElementById("fr").addEventListener('click', btnLiga);
-    document.getElementById("eu").addEventListener('click', btnTodos);
+    document.getElementById("eu").addEventListener('click', btnSuperliga);
 
 }
 
@@ -79,11 +79,11 @@ function btnLiga(ligaId) {
 );
 }
 
-function btnTodos() {
+function btnSuperliga() {
     divEquiposDatos.innerHTML = "";
     crearCabecera();
 
-    llamadaAjax("EquipoObtenerTodos.php", "",
+    llamadaAjax("EquipoObtenerClasificados.php", "",
     function(texto) {
         var equipos = JSON.parse(texto);
 

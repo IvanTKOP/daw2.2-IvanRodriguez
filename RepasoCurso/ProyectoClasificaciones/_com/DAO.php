@@ -121,13 +121,18 @@ class DAO
         return $datos;
     }
 
-    public static function equipoObtener6Primeros($ligaId): array
+    public static function equipoObtenerClasificados(): array
     {
         $datos = [];
 
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM equipo WHERE ligaId=? ORDER BY puntos DESC, dg DESC LIMIT 6",
-            [$ligaId]
+            "(SELECT * FROM equipo WHERE ligaId=1 ORDER BY puntos DESC, dg DESC LIMIT 6) UNION
+            (SELECT * FROM equipo WHERE ligaId=2 ORDER BY puntos DESC, dg DESC LIMIT 6) UNION
+            (SELECT * FROM equipo WHERE ligaId=3 ORDER BY puntos DESC, dg DESC LIMIT 6) UNION
+            (SELECT * FROM equipo WHERE ligaId=4 ORDER BY puntos DESC, dg DESC LIMIT 6) UNION
+            (SELECT * FROM equipo WHERE ligaId=5 ORDER BY puntos DESC, dg DESC LIMIT 6)
+            ORDER BY puntos DESC, dg DESC",
+            []
         );
 
         foreach ($rs as $fila) {
@@ -138,18 +143,8 @@ class DAO
         return $datos;
     }
 
-    public static function equipoObtenerClasificados(): array
-    {
-        $datos = [];
-
-       for ($i=1; $i <= 5; $i++) { 
-            $datosLiga = self::equipoObtener6Primeros($i);
-            array_push($datos, $datosLiga);
-        }
-
-        return $datos;
-    }
-
+   
+//ANTIGUO METODO: MOSTRABA TODOS
     public static function equipoObtenerTodos(): array
     {
         $datos = [];
