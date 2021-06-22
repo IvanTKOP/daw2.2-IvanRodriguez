@@ -138,3 +138,41 @@ class Equipo extends Dato implements JsonSerializable
         return $liga;
     }
 }
+
+class Usuario extends Dato
+{
+    use Identificable;
+    private $nombre;
+    private $contrasenna;
+    private $usuario;
+    private $apellidos;
+
+    public function __construct($id, $usuario, $contrasenna, $nombre, $apellidos)
+    {
+        $this->id = ($id);
+        $this->setUsuario($usuario);
+        $this->setContrasenna($contrasenna);
+        $this->setNombre($nombre);
+        $this->setApellidos($apellidos);
+    }
+
+    /* GETTERS USUARIO */
+    public function getUsuario()
+    {return $this->usuario;}
+    public function getContrasenna()
+    {return $this->contrasenna;}
+    public function getNombre()
+    {return $this->nombre;}
+    public function getApellidos()
+    {return $this->apellidos;}
+
+    /* SETTERS USUARIO */
+    public function setUsuario($usuario)
+    {$this->usuario = $usuario;}
+    public function setContrasenna($contrasenna)
+    {$this->contrasenna = $contrasenna;}
+    public function setNombre($nombre)
+    {$this->nombre = $nombre;}
+    public function setApellidos($apellidos)
+    {$this->apellidos = $apellidos;}
+}

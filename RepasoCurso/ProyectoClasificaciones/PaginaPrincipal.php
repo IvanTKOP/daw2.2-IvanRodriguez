@@ -1,3 +1,15 @@
+<?php
+    require_once "_com/DAO.php";
+    require_once "_com/PintarSesion.php";
+
+    if (!DAO::haySesionRamIniciada()) {
+      redireccionar("sesion-inicio.php");
+    }
+
+?>
+
+
+
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +20,8 @@
   </head>
 
   <body>
-    <h1 style="text-align: center; margin-top: 3%">SUPERLIGA SIMULATOR</h1>
+
+    <h1 style="text-align: center; margin-top: 1%">SUPERLIGA SIMULATOR</h1>
 
     <details>
       <summary style="text-align: center">¿Como Funciona?</summary>
@@ -25,10 +38,9 @@
         >
       </p>
       <p style="text-align: center">
-        Este simulador es algo especial, tenemos 29 cupos repartidos entre las 5
+        Este simulador es algo especial, tenemos 30 cupos repartidos entre las 5
         grandes ligas de Europa (España, Reino Unido, Italia, Alemania y
-        Francia), 6 cupos en cada liga (en Francia solo van 5) para los equipos
-        clasificados a competición europea.
+        Francia), 6 cupos en cada liga para los equipos clasificados a competición europea.
       </p>
       <p style="text-align: center">
         Podrás modificar los nombres, puntos y diferencia de goles de cada

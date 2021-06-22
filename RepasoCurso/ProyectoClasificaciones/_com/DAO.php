@@ -3,6 +3,8 @@
 require_once "Clases.php";
 require_once "Varios.php";
 
+session_start();
+
 class DAO
 {
     private static $pdo = null;
@@ -78,24 +80,9 @@ class DAO
 
     }
 
-    /* equipo */
 
-    public static function equipoObtenerPorLigaId($ligaId): array
-    {
-        $datos = [];
 
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM equipo WHERE ligaId=? ORDER BY puntos DESC, dg DESC",
-            [$ligaId]
-        );
-
-        foreach ($rs as $fila) {
-            $equipo = self::equipoCrearDesdeRs($fila);
-            array_push($datos, $equipo);
-        }
-
-        return $datos;
-    }
+    /* EQUIPO */
 
     private static function equipoCrearDesdeRs(array $fila): equipo
     {
@@ -115,6 +102,52 @@ class DAO
             return null;
         }
 
+    }
+
+    public static function equipoObtenerPorLigaId($ligaId): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM equipo WHERE ligaId=? ORDER BY puntos DESC, dg DESC",
+            [$ligaId]
+        );
+
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($datos, $equipo);
+        }
+
+        return $datos;
+    }
+
+    public static function equipoObtener6Primeros($ligaId): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM equipo WHERE ligaId=? ORDER BY puntos DESC, dg DESC LIMIT 6",
+            [$ligaId]
+        );
+
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($datos, $equipo);
+        }
+
+        return $datos;
+    }
+
+    public static function equipoObtenerClasificados(): array
+    {
+        $datos = [];
+
+       for ($i=1; $i <= 5; $i++) { 
+            $datosLiga = self::equipoObtener6Primeros($i);
+            array_push($datos, $datosLiga);
+        }
+
+        return $datos;
     }
 
     public static function equipoObtenerTodos(): array
@@ -148,4 +181,101 @@ class DAO
         }
 
     }
+
+
+
+
+    /* USUARIO */
+
+public static function usuarioObtenerPorId(int $id): ?Usuario
+{
+    $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE id=?", [$id]);
+    if ($rs) {
+        return self::crearUsuarioDesdeRs($rs);
+    } else {
+        return null;
+    }
+
+}    
+
+private static function crearUsuarioDesdeRs(array $rs): Usuario
+{
+    return new Usuario($rs[0]["id"], $rs[0]["usuario"], $rs[0]["contrasenna"], $rs[0]["nombre"], $rs[0]["apellidos"]);
+}
+
+public static function obtenerUsuarioPorContrasenna(string $usuario, string $contrasenna): ?Usuario
+    {
+
+    $rs =  self::ejecutarConsulta(
+        "SELECT * FROM Usuario WHERE usuario=? AND BINARY contrasenna=?",
+        [$usuario, $contrasenna]
+    );
+
+    if ($rs) {
+        return self::crearUsuarioDesdeRs($rs);
+    } else {
+        return null;
+    }
+}
+
+public static function usuarioObtenerPorUsuario($usuario): bool
+    {
+        $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE usuario=? ",
+            [$usuario]);
+        if ($rs) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+public static function usuarioCrear(string $usuario, string $nombre, string $apellidos, string $contrasenna): void
+{
+    self::ejecutarUpdel("INSERT INTO usuario (usuario, nombre, apellidos, contrasenna) VALUES (?,?,?,?);",
+        [$usuario, $nombre, $apellidos, $contrasenna]);
+}
+
+public static function usuarioBorrar(): void
+{
+    self::ejecutarUpdel(
+        "DELETE FROM usuario WHERE id=?",
+        [$_SESSION["id"]]
+    );
+
+}
+
+
+
+
+/* SESIONES */
+
+public static function sessionStartSiNoLoEsta()
+{
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+}
+
+public static function establecerSesionRam($arrayUsuario)
+{
+
+    $_SESSION["id"] = $arrayUsuario->getId();
+
+    $_SESSION["usuario"] = $arrayUsuario->getUsuario();
+    $_SESSION["nombre"] = $arrayUsuario->getNombre();
+    $_SESSION["apellidos"] = $arrayUsuario->getApellidos();
+}
+
+public static function haySesionRamIniciada()
+{
+    self::sessionStartSiNoLoEsta();
+    return isset($_SESSION["id"]);
+}
+
+public static function destruirSesionRamYCookie()
+{
+    session_destroy();
+    unset($_SESSION); // para dejarla como si nunca hubiese existido
+}
+
 }

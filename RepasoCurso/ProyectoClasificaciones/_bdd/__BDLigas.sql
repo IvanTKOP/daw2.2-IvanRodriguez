@@ -89,6 +89,23 @@ INSERT INTO `Equipo` (`id`, `nombre`, `puntos`, `dg`, `ligaId`) VALUES
 (28, 'Lyon', 76, 38, 5),
 (29, 'Marsella', 60, 7, 5);
 
+-- --------------------------------------------------------
+
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(40) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `contrasenna` varchar(80) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `usuario`, `nombre`, `apellidos`, `contrasenna`) VALUES
+(1, 'jlopez', 'Jose', 'López', 'j'),
+(2, 'irod', 'Iván', 'Rodríguez', 'i');
 
 --
 -- Índices para tablas volcadas
@@ -106,6 +123,14 @@ ALTER TABLE `Liga`
 ALTER TABLE `Equipo`
     ADD PRIMARY KEY (`id`),
     ADD KEY `fk_ligaIdIdx` (`ligaId`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario` (`usuario`);
+COMMIT;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
