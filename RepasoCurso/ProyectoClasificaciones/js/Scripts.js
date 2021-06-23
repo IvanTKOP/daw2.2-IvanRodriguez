@@ -7,6 +7,8 @@ window.onload = inicializar;
 // ---------- VARIABLES GLOBALES ----------
 
 var divEquiposDatos;
+var clasificados = [];
+var descendidos = [];
 
 
 // ---------- FUNCIONES GENERALES ----------
@@ -61,10 +63,47 @@ function inicializar() {
 
 }
 
+function llamadaClasificados() {
+    clasificados = [];
+
+    llamadaAjax("EquipoObtenerClasificados.php", "",
+    function(texto) {
+        var equipos = JSON.parse(texto);
+
+        for (var i=0; i<equipos.length; i++) {
+            clasificados.push(equipos[i].id);
+        }
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+); 
+}
+
+function llamadaDescendidos() {
+    descendidos = [];
+
+    llamadaAjax("EquipoObtenerDescendidos.php", "",
+    function(texto) {
+        var equipos = JSON.parse(texto);
+
+        for (var i=0; i<equipos.length; i++) {
+            descendidos.push(equipos[i].id);
+        }
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+); 
+}
+
 function btnLiga(ligaId) {
     divEquiposDatos.innerHTML = ""; // boramos lo que había para pintar lo nuevo
     crearCabecera();
 
+    llamadaClasificados();
+    llamadaDescendidos();
+    
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + (this.value || ligaId),
     function(texto) {
         var equipos = JSON.parse(texto);
@@ -82,6 +121,9 @@ function btnLiga(ligaId) {
 function btnSuperliga() {
     divEquiposDatos.innerHTML = "";
     crearCabecera();
+
+    llamadaClasificados();
+    llamadaDescendidos();
 
     llamadaAjax("EquipoObtenerClasificados.php", "",
     function(texto) {
@@ -103,6 +145,9 @@ function blurEquipoModificar(input) {
     let equipo = domEquipoDivAObjeto(divEquipo);
    
     if (comprobarRequest(equipo.nombre) && comprobarRequest(equipo.puntos) && comprobarRequest(equipo.dg) != null) { // Comprobamos que no sea campo vacío
+
+        llamadaClasificados();
+        llamadaDescendidos();
 
         llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
             function(texto) {
@@ -127,9 +172,12 @@ function blurEquipoModificar(input) {
 
 // ---------- DOM GENERAL ----------
 
-function domCrearDivInputText(textoValue, codigoOnblur) {
+function domCrearDivInputText(textoValue, codigoOnblur, idEquipo) {
     let div = document.createElement("div");
         let input = document.createElement("input");
+                
+                colorearEquipos(idEquipo, input);
+
                 input.setAttribute("type", "text");
                 input.setAttribute("value", textoValue);
                 input.setAttribute("onblur", codigoOnblur);
@@ -159,9 +207,10 @@ function domCrearDivImg(urlSrc, codigoOnclick, textoId) {
 function domEquipoObjetoADiv(equipo) {
     let div = document.createElement("div");
             div.setAttribute("id", "equipo-" + equipo.id);
-    div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);"));
-    div.appendChild(domCrearDivInputText(equipo.dg, "blurEquipoModificar(this);"));
+            colorearEquipos(equipo.id, div);
+    div.appendChild(domCrearDivInputText(equipo.nombre, "blurEquipoModificar(this);", equipo.id));
+    div.appendChild(domCrearDivInputText(equipo.puntos, "blurEquipoModificar(this);", equipo.id));
+    div.appendChild(domCrearDivInputText(equipo.dg, "blurEquipoModificar(this);", equipo.id));
     div.appendChild(domCrearDivImg(asignarImgLigaId(equipo.ligaId), "btnLiga(" + equipo.ligaId + ");", equipo.ligaId));
 
     return div;
@@ -267,4 +316,22 @@ function crearCabecera() {
     var divEquiposCabecera = document.getElementById("equiposCabecera");
     divEquiposCabecera.innerHTML = "<div><div>Nombre</div><div>Puntos</div><div>Diferencia de Goles</div><div>País</div></div>";
 
+}
+
+function colorearEquipos(idEquipo, elemento) {
+    var clasificado = clasificados.indexOf(idEquipo) != -1;
+
+    if (clasificado) {
+        elemento.setAttribute("class", "clasificado");
+    } else {
+        elemento.removeAttribute("class", "clasificado");
+    }
+    
+    var descendido = descendidos.indexOf(idEquipo) != -1
+    
+    if (descendido) {
+        elemento.setAttribute("class", "descendido");
+    } else {
+        elemento.removeAttribute("class", "descendido");
+    }
 }

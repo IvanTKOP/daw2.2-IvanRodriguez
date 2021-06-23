@@ -17,7 +17,7 @@ FALLOS:
 
 
 TO-DO:
-- fallo al actualizar la megaconsilta no coge al equipo correspondiente
+- los divs de los clasificados se pueden colorear al llevar su id ¿?
 
 -limpiar todo bien
 -diseño 

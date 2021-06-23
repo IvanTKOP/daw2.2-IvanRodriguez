@@ -143,6 +143,28 @@ class DAO
         return $datos;
     }
 
+    public static function equipoObtenerDescendidos(): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "(SELECT * FROM equipo WHERE ligaId=1 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=2 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=3 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=4 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=5 ORDER BY puntos ASC, dg DESC LIMIT 3)",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($datos, $equipo);
+        }
+
+        return $datos;
+    }
+
+
    
 //ANTIGUO METODO: MOSTRABA TODOS
     public static function equipoObtenerTodos(): array

@@ -59,3 +59,11 @@
   border-bottom: 1px solid #333333;
   border-left: 1px solid #cccccc;
 }
+
+.clasificado {
+  background-color: #52ff7c;
+}
+
+.descendido {
+  background-color: #ff3f3f;
+}
