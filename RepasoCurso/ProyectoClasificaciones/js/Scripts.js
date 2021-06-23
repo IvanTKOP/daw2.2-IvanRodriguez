@@ -7,9 +7,9 @@ window.onload = inicializar;
 // ---------- VARIABLES GLOBALES ----------
 
 var divEquiposDatos;
-var clasificados = [];
-var descendidos = [];
-var campeones = [];
+var clasificados;
+var descendidos;
+var campeones;
 
 
 // ---------- FUNCIONES GENERALES ----------

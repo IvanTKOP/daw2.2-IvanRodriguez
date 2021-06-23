@@ -14,11 +14,11 @@ class DAO
         $servidor = "localhost";
         $identificador = "root";
         $contrasenna = "";
-        $bd = "Ligas"; 
+        $bd = "Ligas";
         $opciones = [
-            PDO::ATTR_EMULATE_PREPARES => false, 
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, 
+            PDO::ATTR_EMULATE_PREPARES => false,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
 
         try {
@@ -62,7 +62,6 @@ class DAO
 
     }
 
-
     private static function ejecutarUpdel(string $sql, array $parametros): ?int
     {
         if (!isset(self::$pdo)) {
@@ -79,8 +78,6 @@ class DAO
         }
 
     }
-
-
 
     /* EQUIPO */
 
@@ -169,11 +166,11 @@ class DAO
         $datos = [];
 
         $rs = self::ejecutarConsulta(
-            "(SELECT * FROM equipo WHERE ligaId=1 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
-            (SELECT * FROM equipo WHERE ligaId=2 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
-            (SELECT * FROM equipo WHERE ligaId=3 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
-            (SELECT * FROM equipo WHERE ligaId=4 ORDER BY puntos ASC, dg DESC LIMIT 3) UNION
-            (SELECT * FROM equipo WHERE ligaId=5 ORDER BY puntos ASC, dg DESC LIMIT 3)",
+            "(SELECT * FROM equipo WHERE ligaId=1 ORDER BY puntos ASC, dg ASC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=2 ORDER BY puntos ASC, dg ASC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=3 ORDER BY puntos ASC, dg ASC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=4 ORDER BY puntos ASC, dg ASC LIMIT 3) UNION
+            (SELECT * FROM equipo WHERE ligaId=5 ORDER BY puntos ASC, dg ASC LIMIT 3)",
             []
         );
 
@@ -185,8 +182,6 @@ class DAO
         return $datos;
     }
 
-
-   
 //ANTIGUO METODO: MOSTRAR TODOS
     public static function equipoObtenerTodos(): array
     {
@@ -212,7 +207,7 @@ class DAO
             [$equipo->getNombre(), $equipo->getPuntos(), $equipo->getDg(), $equipo->getLigaId(), $equipo->getId()]
         );
 
-        if ($filasAfectadas = null) {
+        if ($filasAfectadas = 0) {
             return null;
         } else {
             return $equipo;
@@ -220,43 +215,40 @@ class DAO
 
     }
 
-
-
-
     /* USUARIO */
 
-public static function usuarioObtenerPorId(int $id): ?Usuario
-{
-    $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE id=?", [$id]);
-    if ($rs) {
-        return self::crearUsuarioDesdeRs($rs);
-    } else {
-        return null;
+    public static function usuarioObtenerPorId(int $id): ?Usuario
+    {
+        $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE id=?", [$id]);
+        if ($rs) {
+            return self::crearUsuarioDesdeRs($rs);
+        } else {
+            return null;
+        }
+
     }
 
-}    
+    private static function crearUsuarioDesdeRs(array $rs): Usuario
+    {
+        return new Usuario($rs[0]["id"], $rs[0]["usuario"], $rs[0]["contrasenna"], $rs[0]["nombre"], $rs[0]["apellidos"]);
+    }
 
-private static function crearUsuarioDesdeRs(array $rs): Usuario
-{
-    return new Usuario($rs[0]["id"], $rs[0]["usuario"], $rs[0]["contrasenna"], $rs[0]["nombre"], $rs[0]["apellidos"]);
-}
-
-public static function obtenerUsuarioPorContrasenna(string $usuario, string $contrasenna): ?Usuario
+    public static function obtenerUsuarioPorContrasenna(string $usuario, string $contrasenna): ?Usuario
     {
 
-    $rs =  self::ejecutarConsulta(
-        "SELECT * FROM Usuario WHERE usuario=? AND BINARY contrasenna=?",
-        [$usuario, $contrasenna]
-    );
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Usuario WHERE usuario=? AND BINARY contrasenna=?",
+            [$usuario, $contrasenna]
+        );
 
-    if ($rs) {
-        return self::crearUsuarioDesdeRs($rs);
-    } else {
-        return null;
+        if ($rs) {
+            return self::crearUsuarioDesdeRs($rs);
+        } else {
+            return null;
+        }
     }
-}
 
-public static function usuarioObtenerPorUsuario($usuario): bool
+    public static function usuarioObtenerPorUsuario($usuario): bool
     {
         $rs = self::ejecutarConsulta("SELECT * FROM usuario WHERE usuario=? ",
             [$usuario]);
@@ -267,53 +259,50 @@ public static function usuarioObtenerPorUsuario($usuario): bool
         }
     }
 
-public static function usuarioCrear(string $usuario, string $nombre, string $apellidos, string $contrasenna): void
-{
-    self::ejecutarUpdel("INSERT INTO usuario (usuario, nombre, apellidos, contrasenna) VALUES (?,?,?,?);",
-        [$usuario, $nombre, $apellidos, $contrasenna]);
-}
+    public static function usuarioCrear(string $usuario, string $nombre, string $apellidos, string $contrasenna): void
+    {
+        self::ejecutarUpdel("INSERT INTO usuario (usuario, nombre, apellidos, contrasenna) VALUES (?,?,?,?);",
+            [$usuario, $nombre, $apellidos, $contrasenna]);
+    }
 
-public static function usuarioBorrar(): void
-{
-    self::ejecutarUpdel(
-        "DELETE FROM usuario WHERE id=?",
-        [$_SESSION["id"]]
-    );
+    public static function usuarioBorrar(): void
+    {
+        self::ejecutarUpdel(
+            "DELETE FROM usuario WHERE id=?",
+            [$_SESSION["id"]]
+        );
 
-}
-
-
-
+    }
 
 /* SESIONES */
 
-public static function sessionStartSiNoLoEsta()
-{
-    if (!isset($_SESSION)) {
-        session_start();
+    public static function sessionStartSiNoLoEsta()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
     }
-}
 
-public static function establecerSesionRam($arrayUsuario)
-{
+    public static function establecerSesionRam($arrayUsuario)
+    {
 
-    $_SESSION["id"] = $arrayUsuario->getId();
+        $_SESSION["id"] = $arrayUsuario->getId();
 
-    $_SESSION["usuario"] = $arrayUsuario->getUsuario();
-    $_SESSION["nombre"] = $arrayUsuario->getNombre();
-    $_SESSION["apellidos"] = $arrayUsuario->getApellidos();
-}
+        $_SESSION["usuario"] = $arrayUsuario->getUsuario();
+        $_SESSION["nombre"] = $arrayUsuario->getNombre();
+        $_SESSION["apellidos"] = $arrayUsuario->getApellidos();
+    }
 
-public static function haySesionRamIniciada()
-{
-    self::sessionStartSiNoLoEsta();
-    return isset($_SESSION["id"]);
-}
+    public static function haySesionRamIniciada()
+    {
+        self::sessionStartSiNoLoEsta();
+        return isset($_SESSION["id"]);
+    }
 
-public static function destruirSesionRamYCookie()
-{
-    session_destroy();
-    unset($_SESSION); // para dejarla como si nunca hubiese existido
-}
+    public static function destruirSesionRamYCookie()
+    {
+        session_destroy();
+        unset($_SESSION); // para dejarla como si nunca hubiese existido
+    }
 
 }
