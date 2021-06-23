@@ -9,6 +9,7 @@ window.onload = inicializar;
 var divEquiposDatos;
 var clasificados = [];
 var descendidos = [];
+var campeones = [];
 
 
 // ---------- FUNCIONES GENERALES ----------
@@ -63,6 +64,23 @@ function inicializar() {
 
 }
 
+function llamadaCampeones() {
+    campeones = [];
+
+    llamadaAjax("EquipoObtenerCampeones.php", "",
+    function(texto) {
+        var equipos = JSON.parse(texto);
+
+        for (var i=0; i<equipos.length; i++) {
+            campeones.push(equipos[i].id);
+        }
+    },
+    function(texto) {
+        notificarUsuario("Error Ajax al cargar equipos al inicializar: " + texto);
+    }
+); 
+}
+
 function llamadaClasificados() {
     clasificados = [];
 
@@ -103,6 +121,7 @@ function btnLiga(ligaId) {
 
     llamadaClasificados();
     llamadaDescendidos();
+    llamadaCampeones();
     
     llamadaAjax("EquipoObtenerPorLigaId.php", "ligaId=" + (this.value || ligaId),
     function(texto) {
@@ -124,6 +143,7 @@ function btnSuperliga() {
 
     llamadaClasificados();
     llamadaDescendidos();
+    llamadaCampeones();
 
     llamadaAjax("EquipoObtenerClasificados.php", "",
     function(texto) {
@@ -148,6 +168,7 @@ function blurEquipoModificar(input) {
 
         llamadaClasificados();
         llamadaDescendidos();
+        llamadaCampeones();
 
         llamadaAjax("EquipoActualizar.php", objetoAParametrosParaRequest(equipo),
             function(texto) {
@@ -181,7 +202,7 @@ function domCrearDivInputText(textoValue, codigoOnblur, idEquipo) {
                 input.setAttribute("type", "text");
                 input.setAttribute("value", textoValue);
                 input.setAttribute("onblur", codigoOnblur);
-                input.setAttribute("style", "text-align: center;");
+                //input.setAttribute("style", "text-align: center;");
     div.appendChild(input);
 
     return div;
@@ -320,18 +341,21 @@ function crearCabecera() {
 
 function colorearEquipos(idEquipo, elemento) {
     var clasificado = clasificados.indexOf(idEquipo) != -1;
+    var campeon = campeones.indexOf(idEquipo) != -1;
+    var descendido = descendidos.indexOf(idEquipo) != -1;
 
-    if (clasificado) {
-        elemento.setAttribute("class", "clasificado");
+    if (clasificado) { // Uso style porque con class se ¿solapa? 
+        elemento.setAttribute("style", "background-color: #52ff7c; text-align: center;");
     } else {
-        elemento.removeAttribute("class", "clasificado");
+        elemento.setAttribute("style", "text-align: center;");
     }
-    
-    var descendido = descendidos.indexOf(idEquipo) != -1
+
+    if(campeon) {
+        elemento.setAttribute("style", "background-color: gold; text-align: center;");
+    }
     
     if (descendido) {
-        elemento.setAttribute("class", "descendido");
-    } else {
-        elemento.removeAttribute("class", "descendido");
+        elemento.setAttribute("style", "background-color: #ff3f3f; text-align: center;");
     }
+
 }

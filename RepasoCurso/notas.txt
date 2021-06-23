@@ -17,7 +17,4 @@ FALLOS:
 
 
 TO-DO:
-- los divs de los clasificados se pueden colorear al llevar su id ¿?
 
--limpiar todo bien
--diseño 

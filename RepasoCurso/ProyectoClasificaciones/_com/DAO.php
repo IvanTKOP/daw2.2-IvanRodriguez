@@ -121,6 +121,27 @@ class DAO
         return $datos;
     }
 
+    public static function equipoObtenerCampeones(): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "(SELECT * FROM equipo WHERE ligaId=1 ORDER BY puntos DESC, dg DESC LIMIT 1) UNION
+            (SELECT * FROM equipo WHERE ligaId=2 ORDER BY puntos DESC, dg DESC LIMIT 1) UNION
+            (SELECT * FROM equipo WHERE ligaId=3 ORDER BY puntos DESC, dg DESC LIMIT 1) UNION
+            (SELECT * FROM equipo WHERE ligaId=4 ORDER BY puntos DESC, dg DESC LIMIT 1) UNION
+            (SELECT * FROM equipo WHERE ligaId=5 ORDER BY puntos DESC, dg DESC LIMIT 1)",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($datos, $equipo);
+        }
+
+        return $datos;
+    }
+
     public static function equipoObtenerClasificados(): array
     {
         $datos = [];
@@ -166,7 +187,7 @@ class DAO
 
 
    
-//ANTIGUO METODO: MOSTRABA TODOS
+//ANTIGUO METODO: MOSTRAR TODOS
     public static function equipoObtenerTodos(): array
     {
         $datos = [];
