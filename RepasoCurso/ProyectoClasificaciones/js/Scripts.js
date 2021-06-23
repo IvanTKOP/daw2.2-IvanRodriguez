@@ -164,7 +164,7 @@ function blurEquipoModificar(input) {
     let divEquipo = input.parentElement.parentElement;
     let equipo = domEquipoDivAObjeto(divEquipo);
    
-    if (comprobarRequest(equipo.nombre) && comprobarRequest(equipo.puntos) && comprobarRequest(equipo.dg) != null) { // Comprobamos que no sea campo vacío
+    if (comprobarRequest(equipo.nombre) && comprobarRequest(equipo.puntos) && comprobarRequest(equipo.dg)) { // Comprobamos que no sea campo vacío
 
         llamadaClasificados();
         llamadaDescendidos();
@@ -202,7 +202,6 @@ function domCrearDivInputText(textoValue, codigoOnblur, idEquipo) {
                 input.setAttribute("type", "text");
                 input.setAttribute("value", textoValue);
                 input.setAttribute("onblur", codigoOnblur);
-                //input.setAttribute("style", "text-align: center;");
     div.appendChild(input);
 
     return div;
